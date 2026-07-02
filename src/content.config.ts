@@ -8,14 +8,6 @@ const publishStatus = z.preprocess(
   (value) => (["draft", "published", "archived"].includes(String(value)) ? value : "published"),
   z.enum(["draft", "published", "archived"])
 );
-const clientVisibility = z.preprocess(
-  (value) => (["public", "confidential", "hidden"].includes(String(value)) ? value : "hidden"),
-  z.enum(["public", "confidential", "hidden"])
-);
-const photoSection = z.preprocess(
-  (value) => (["corporate-events", "content", "portraits", "personal"].includes(String(value)) ? value : "corporate-events"),
-  z.enum(["corporate-events", "content", "portraits", "personal"])
-);
 const photographyType = z.preprocess(
   (value) =>
     ["corporate-private-events", "stage-work", "photoshoot", "wedding-rom"].includes(String(value))
@@ -68,15 +60,12 @@ const photography = defineCollection({
     title: optionalString,
     generatedTitle: optionalString,
     date: looseDate.default(new Date(0)),
-    category: stringOrDefault("Photography"),
-    section: photoSection,
     photographyType,
     venue: optionalString,
     client: optionalString,
-    clientVisibility,
-    featured: looseBoolean.default(false),
     featuredRank: rankNumber,
     categoryRank: rankNumber,
+    hidden: looseBoolean.default(false),
     publishStatus,
     coverImage: optionalString,
     googlePhotosUrl: optionalString,

@@ -5,17 +5,20 @@ import ContactSection from "@components/ContactSection.astro";
 import DataFeatureCard from "@components/DataFeatureCard.astro";
 import HomeSocialHighlights from "@components/HomeSocialHighlights.astro";
 import WorkGrid from "@components/WorkGrid.astro";
-import { entrySlug, featured, published } from "@lib/content";
+import { entrySlug, featured, published, rankPhotographyForAll, splitHidden } from "@lib/content";
 import { getGalleryCover } from "@lib/gallery-images";
-import { site } from "@lib/site";
+import { sections, site } from "@lib/site";
 
 const photos = published(await getCollection("photography"));
 const projects = published(await getCollection("data-projects"));
 const contentItems = published(await getCollection("content-work"));
-const latestPhotos = photos.slice(0, 2);
+const latestPhotos = splitHidden(rankPhotographyForAll(photos), 2);
 const featuredProject = featured(projects, 1)[0];
 const socialHighlights = contentItems.filter((item) => item.data.contentType === "embed");
-const pageCover = latestPhotos[0] ? getGalleryCover(entrySlug(latestPhotos[0]), latestPhotos[0].data.coverImage, latestPhotos[0].data.images) : "";
+const visibleCoverPhoto = latestPhotos.find((photo) => !photo.data.hidden);
+const pageCover = visibleCoverPhoto
+  ? getGalleryCover(entrySlug(visibleCoverPhoto), visibleCoverPhoto.data.coverImage, visibleCoverPhoto.data.images)
+  : "";
 ---
 
 <BaseLayout title={site.title} description={site.description} active="home" image={pageCover}>
@@ -36,6 +39,7 @@ const pageCover = latestPhotos[0] ? getGalleryCover(entrySlug(latestPhotos[0]), 
         </p>
         <div class="hero-actions">
           <a class="button button-dark" href="#corporate-work">Find out more</a>
+          <a class="button button-accent" href="/contact/">Enquire for packages</a>
         </div>
       </div>
       {
@@ -48,22 +52,26 @@ const pageCover = latestPhotos[0] ? getGalleryCover(entrySlug(latestPhotos[0]), 
     </div>
   </section>
 
-  <section id="corporate-work" class="home-section corporate-work" aria-labelledby="corporate-work-title">
-    <div class="home-section-heading">
-      <p class="eyebrow">Corporate event work</p>
-      <div>
-        <h2 id="corporate-work-title">Recent coverage, built for business contexts.</h2>
-        <p>Conferences, panels, networking sessions, and branded events presented with clean spacing and a restrained visual system.</p>
-      </div>
-      <a class="button button-dark" href="/photography/">Explore photography</a>
-    </div>
-    <WorkGrid items={latestPhotos} />
-  </section>
+  {
+    sections.photography && (
+      <section id="corporate-work" class="home-section corporate-work" aria-labelledby="corporate-work-title">
+        <div class="home-section-heading">
+          <p class="eyebrow">Corporate event work</p>
+          <div>
+            <h2 id="corporate-work-title">Recent coverage, built for business contexts.</h2>
+            <p>Conferences, panels, networking sessions, and branded events presented with clean spacing and a restrained visual system.</p>
+          </div>
+          <a class="button button-dark" href="/photography/">Explore photography</a>
+        </div>
+        <WorkGrid items={latestPhotos} />
+      </section>
+    )
+  }
 
-  <HomeSocialHighlights items={socialHighlights} />
+  {sections.content && <HomeSocialHighlights items={socialHighlights} />}
 
   {
-    featuredProject && (
+    sections.data && featuredProject && (
       <section class="home-section data-work" aria-labelledby="data-work-title">
         <div class="home-section-heading">
           <p class="eyebrow">Data work</p>

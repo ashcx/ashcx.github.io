@@ -164,26 +164,9 @@ async function generateCopy(data, kind) {
     : "";
   const platformContext = await fetchPlatformContext(data);
   const prompt = buildPrompt(data, metrics, platformContext, kind);
-  const firstCopy = await requestOpenAIText(data, prompt, "summary");
+  const guidance = getGuidance(data);
 
-  if (!firstCopy) return "";
-
-  if (isUsableCopy(firstCopy)) {
-    const guidance = getGuidance(data);
-    if (isTooVerbatim(firstCopy, guidance) || isTooVerbatim(firstCopy, data.platformCaption)) {
-      console.warn(`AI summary generation ignored for "${displayLogTitle(data)}": output copied source wording too closely.`);
-      return "";
-    }
-    return dedupeRepeatedSentences(firstCopy);
-  }
-
-  if (firstCopy) {
-    console.warn(`AI summary generation retrying for "${displayLogTitle(data)}": first output was incomplete.`);
-    console.warn(`First output: ${firstCopy}`);
-  }
-
-  const retryPrompt = [
-    prompt,
+  const incompleteRetryInstruction = [
     "",
     "The previous attempt was incomplete or too short.",
     "Now return exactly two complete sentences.",
@@ -195,24 +178,51 @@ async function generateCopy(data, kind) {
     "Do not start with a fragment such as This, A, An, or The unless it forms a complete sentence.",
     "Do not add any explanation before or after the copy."
   ].join("\n");
-  const retryCopy = await requestOpenAIText(data, retryPrompt, "summary");
 
-  const guidance = getGuidance(data);
-  if (isTooVerbatim(retryCopy, guidance) || isTooVerbatim(retryCopy, data.platformCaption)) {
-    console.warn(`AI summary generation ignored for "${displayLogTitle(data)}": retry copied source wording too closely.`);
-    return "";
+  const verbatimRetryInstruction = [
+    "",
+    "The previous attempt repeated wording from guidedContext, the existing description, or the platform caption too closely.",
+    "Rewrite it with clearly different phrasing. Keep the same meaning and facts, but do not reuse any run of 6 or more consecutive words from the source text.",
+    "Do not add any explanation before or after the copy."
+  ].join("\n");
+
+  const maxAttempts = 3;
+  let attemptPrompt = prompt;
+
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    const rawCopy = await requestOpenAIText(data, attemptPrompt, "summary");
+
+    if (!rawCopy) {
+      console.warn(`AI summary generation got an empty response for "${displayLogTitle(data)}" (attempt ${attempt}/${maxAttempts}).`);
+      continue;
+    }
+
+    if (!isUsableCopy(rawCopy)) {
+      console.warn(`AI summary generation retrying for "${displayLogTitle(data)}" (attempt ${attempt}/${maxAttempts}): output was incomplete.`);
+      console.warn(`Output: ${rawCopy}`);
+      attemptPrompt = prompt + incompleteRetryInstruction;
+      continue;
+    }
+
+    if (isTooVerbatim(rawCopy, guidance) || isTooVerbatim(rawCopy, data.platformCaption)) {
+      console.warn(`AI summary generation retrying for "${displayLogTitle(data)}" (attempt ${attempt}/${maxAttempts}): output copied source wording too closely.`);
+      attemptPrompt = prompt + verbatimRetryInstruction;
+      continue;
+    }
+
+    return dedupeRepeatedSentences(rawCopy);
   }
 
-  return dedupeRepeatedSentences(retryCopy);
+  console.warn(`AI summary generation gave up for "${displayLogTitle(data)}" after ${maxAttempts} attempts.`);
+  return "";
 }
 
 function buildTitlePrompt(data, metrics, platformContext, kind) {
   const contextLines = kind === "photography"
     ? [
-        `Photography category: ${data.category || ""}`,
         `Photography type: ${data.photographyType || ""}`,
         data.venue ? `Venue: ${data.venue}` : "",
-        data.client && data.clientVisibility === "public" ? `Client: ${data.client}` : "",
+        data.client ? `Client: ${data.client}` : "",
         Array.isArray(data.services) && data.services.length > 0 ? `Services: ${data.services.join(", ")}` : "",
         Array.isArray(data.tags) && data.tags.length > 0 ? `Tags: ${data.tags.join(", ")}` : "",
         data.description ? `Existing description: ${data.description}` : ""
@@ -250,12 +260,21 @@ function buildPrompt(data, metrics, platformContext, kind) {
   const taskLine = kind === "photography"
     ? "Write concise portfolio copy for a photography gallery."
     : "Write concise portfolio copy for a social media video.";
+  const guidedContextInstruction =
+    kind === "photography"
+      ? [
+          "guidedContext below is written by the photographer and contains two things: specific, real scene details from the gallery (what actually happened, who was there, what it looked like), and guidance on the story to tell about it.",
+          "Use the scene details only as background so you understand what really happened. Do not restate them as a list of what was captured, and do not describe the gallery scene-by-scene like reciting answers in an oral exam.",
+          "The actual sentences you write should be about client or stakeholder impact and the story behind why the event mattered, not a walkthrough of what is visible.",
+          "Use the title together with guidedContext to understand who this is for and why it happened.",
+          ""
+        ]
+      : [];
   const contextLines = kind === "photography"
     ? [
-        `Photography category: ${data.category || ""}`,
         `Photography type: ${data.photographyType || ""}`,
         data.venue ? `Venue: ${data.venue}` : "",
-        data.client && data.clientVisibility === "public" ? `Client: ${data.client}` : "",
+        data.client ? `Client: ${data.client}` : "",
         Array.isArray(data.services) && data.services.length > 0 ? `Services: ${data.services.join(", ")}` : "",
         Array.isArray(data.tags) && data.tags.length > 0 ? `Tags: ${data.tags.join(", ")}` : "",
         data.description ? `Existing description: ${data.description}` : ""
@@ -268,25 +287,46 @@ function buildPrompt(data, metrics, platformContext, kind) {
         metrics ? `Metrics to mention naturally: ${metrics}` : ""
       ];
 
+  const photographyExample =
+    kind === "photography"
+      ? [
+          "This is the target quality bar. Match its warmth, specificity, and shape as closely as you can, using this gallery's own real facts:",
+          '"Visa\'s international leadership team had a meaningful session at the night safari, where they explored the impact of their sustainability efforts on the creatures of the wild. The gallery gives them a real, usable record of that evening to share with stakeholders and future guests."',
+          "It names the client and the actual reason the event mattered to them, in plain spoken language, not a corporate activity label.",
+          "It closes on one concrete, usable outcome the photography gives the client, not a mood word.",
+          "",
+          "This is the failure mode to avoid — technically correct shape, but flat and corporate:",
+          '"A senior payments leadership team spent the night safari strengthening client relationships and talking through priorities off-site. The gallery keeps that after-dark outing on record with discretion and polish."',
+          "That example fails because it hides behind a job-title description instead of naming the client, and 'on record with discretion and polish' is the same stiff marketing register you must avoid.",
+          "The good example's specific claims (sustainability commitments, wildlife impact) belong to that illustration only. They are not facts about the gallery below. Copy its sentence shape and tone, never its content, unless this gallery's own guidedContext independently says the same thing.",
+          ""
+        ]
+      : [];
+
   return [
     taskLine,
-    "Write with a confident, editorial portfolio voice.",
-    "Make the copy feel commercially useful, not like a literal picture description.",
-    "Write 1 to 2 complete sentences.",
-    "Write 24 to 55 words.",
+    "Write in third person, the way a portfolio site describes its own work, not like ad copy and not like a first-person diary entry.",
+    "Do not use first-person pronouns such as I, me, my, we, us, or our. Never refer to the photographer as a person in the sentence.",
+    ...guidedContextInstruction,
+    ...photographyExample,
+    "Name the client plainly by name when it is known from the context. Do not hide behind a generic role or industry description instead.",
+    "Ground sentence 1 in the real purpose or theme of the event from guidedContext, not a generic activity category like 'networking' or 'coverage'.",
+    "Do not invent facts that are not in the context, such as named animals, exact quotes, or precise headcounts not mentioned in guidedContext.",
+    "Write 2 to 3 short sentences, most under 18 words each.",
+    "Write 30 to 55 words total.",
     "Return complete sentences only.",
-    "Lead with audience impact, brand value, or why the piece worked.",
     "Vary sentence structure across outputs so the copy does not feel templated.",
     "Avoid formulaic cause-and-effect phrasing such as 'By doing X, it achieved Y', 'By pairing X with Y', or 'This helped X feel Y'.",
-    "You may imply cause and effect, but make it read like natural human portfolio commentary.",
+    "Avoid stacking three or more details into one sentence, such as 'X, Y, and Z were captured with W'. Split ideas across separate short sentences instead.",
+    "Avoid stiff noun-phrase marketing language like 'premium event coverage', 'polished record', or 'curated experience'.",
+    "Avoid vague mood filler with no concrete content, such as 'had room to connect', 'worth every minute', or 'a night that actually built relationships'. Every sentence should carry a specific fact, not just a feeling.",
     "Use specific, active verbs instead of flat phrases like shows, features, highlights, or brings to life.",
     "Mention metrics only when they strengthen credibility, and connect them to audience response.",
-    "Keep the tone polished, human, and quietly persuasive.",
+    "Keep the tone warm, human, and quietly confident, like a caption a real photographer would write, not generated copy.",
     "Do not oversell, use hype, or make claims that are not supported by the context.",
-    "Use simple, easy-to-understand language that reads like a human",
-    "Treat guidedContext as the highest-priority source. It may include both strategic framing and factual details.",
+    "Treat guidedContext as the highest-priority source for the real purpose of the event.",
     "Use platform captions/transcripts as supporting evidence, not the main framing.",
-    "Do not copy guidedContext or captions verbatim. Rewrite them into polished portfolio copy.",
+    "Do not copy guidedContext or captions verbatim. Rewrite them into natural, human portfolio copy.",
     "Do not use emojis, hashtags, markdown headings, or bullet points.",
     "",
     `Title: ${data.title || "Untitled"}`,

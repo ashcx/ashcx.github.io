@@ -1,501 +1,77 @@
-# Photographer + Data Analyst Portfolio Website
+# Portfolio Site
 
-Astro-powered static portfolio for photography and data analyst work.
+A static website for photography and data analyst work. No database, no backend — just files in this folder. Add a file, run one command, and the site rebuilds itself.
 
-The public site is fully static and deploys to GitHub Pages or Cloudflare Pages. Routine photography updates use the repo-local magic directory workflow:
+Built with [Astro](https://astro.build) and hosted on GitHub Pages — both free forever, with no vendor lock-in. Everything lives in plain files you own, so you're never stuck paying a platform or migrating off one.
 
-```text
-drop images into inbox/galleries/[gallery-folder]/
-add or edit gallery.md
-run npm run build
-commit the generated Markdown and WebP files
-```
-
-`npm run build` automatically imports magic-directory galleries before building the site. No separate import command is needed for normal updates.
-
-## Commands
+## Getting started
 
 ```bash
 npm install
 npm run dev
-npm run validate
-npm run build
-npm run preview
-npm run social-copy
 ```
 
-Use `npm run dev` while designing and reviewing locally. Use `npm run build` before committing or deploying.
+That opens the site locally so you can see changes as you make them.
 
-## Site Sections
-
-Main routes:
-
-```text
-/
-/photography
-/photography/corporate-events
-/photography/gallery/[slug]
-/content
-/data
-/data/project/[slug]
-/contact
-```
-
-Photography, social media, and data work are intentionally separated so each audience can browse the proof that matters to them.
-
-## Photography Galleries
-
-Photography galleries are usually created from:
-
-```text
-inbox/galleries/[gallery-folder]/gallery.md
-```
-
-Minimum `gallery.md`:
-
-```yaml
----
-title: Corporate Event Name
-generatedTitle: Optional AI-generated display title when title is absent.
-photographyType: corporate-private-events
-guidedContext: "The angle, useful facts, client value, venue, services, and moments the AI summary should use."
----
-```
-
-`title` is the manual title. If it is blank or absent, the site falls back to `generatedTitle`. The AI helper can fill `generatedTitle` from `guidedContext`, but it will not replace a real manual `title`.
-
-`guidedContext` is the single field for AI guidance. Put both the strategic angle and useful facts inside it. `autoSummary` is enabled implicitly for photography galleries, so you only need to set `autoSummary: false` when you do not want AI-assisted summary generation for that gallery.
-
-When the AI summary runs for photography, it updates the generated gallery body and the frontmatter `summary` field, so gallery cards and gallery detail pages both use the improved description.
-
-## Social Media Work
-
-Social media examples live in:
-
-```text
-src/content/content-work/[slug].mdx
-```
-
-The public page is:
-
-```text
-/content/
-```
-
-The Social media page is intentionally one page for now, but the code separates the general embed grid from the featured case-study section. This makes it easy to split case studies into standalone pages later.
-
-Typical frontmatter:
-
-```yaml
-title: Social Media Post
-generatedTitle: Optional AI-generated display title when title is absent.
-date: 2026-06-19
-contentType: embed
-platform: instagram
-socialCategory: corporate
-publishStatus: published
-summary: Short description.
-guidedContext: Strategic angle, useful facts, client value, and any metrics for AI-assisted copy.
-embedHtml: "<blockquote>...</blockquote>"
-externalUrl: https://example.com
-coverImage: /images/example.webp
-metrics:
-  - value: 3k+
-    label: likes
-services:
-  - Short-form editing
-tags:
-  - event-content
-```
-
-Allowed `contentType` values:
-
-```text
-embed
-case-study
-```
-
-Allowed `platform` values:
-
-```text
-instagram
-tiktok
-linkedin
-```
-
-Allowed `socialCategory` values:
-
-```text
-corporate
-lifestyle
-real-estate
-```
-
-Use `corporate` for business-facing, education, training, professional, event, or brand authority content.
-Use `lifestyle` for people-led, creator-style, behind-the-scenes, personality, travel, daily-life, or informal brand content.
-Use `real-estate` for property, agent, developer, home-tour, or listing-adjacent content.
-
-The Social media page selects `All` by default. Tab order is `All`, `Corporate`, `Lifestyle`, then `Real estate`.
-
-`title` is optional for social media items. If you leave it blank, the site uses `generatedTitle`. The AI helper can generate `generatedTitle` from `guidedContext`, captions, metrics, and other frontmatter context.
-
-Use `embedHtml` for native platform embeds. Use `coverImage` plus `externalUrl` when you prefer a screenshot/preview card.
-
-The Social media section shows each embed or linked visual preview in a side-by-side row with the MDX body text beside it. Keep that body text short and concise.
-
-Metrics render as small highlight pills beside the text. Add them only when you want to publicly showcase numbers such as likes, comments, views, or saves.
-
-### Editing Social Media Embeds
-
-To add a normal embedded social post:
-
-1. Create a new file in `src/content/content-work/`, such as `my-video.mdx`.
-2. Set `contentType: embed`.
-3. Set `platform` to `instagram`, `tiktok`, or `linkedin`.
-4. Set `socialCategory` to `corporate`, `lifestyle`, or `real-estate`.
-5. Paste the platform's embed code into `embedHtml`.
-6. Add `externalUrl` so visitors can open the original post.
-7. Add short text under the frontmatter, or use the AI-assisted copy workflow below.
-
-To use a screenshot or image instead of a native embed:
-
-1. Put the image somewhere under `public/images/`.
-2. Set `coverImage` to that public path.
-3. Leave `embedHtml` blank.
-4. Set `externalUrl` if the card should link to the original post.
-
-To hide a social media item without deleting it:
-
-```yaml
-publishStatus: draft
-```
-
-To remove an embedded post permanently, delete its `.mdx` file from `src/content/content-work/`.
-
-### AI-Assisted Summaries
-
-The full build imports magic-directory galleries first, then runs:
-
-```bash
-npm run social-copy
-```
-
-This script is optional and non-blocking. If `OPENAI_API_KEY` is not set, it skips generation and the build continues normally.
-
-Set the key in the root `.env` file:
-
-```env
-OPENAI_API_KEY=your_api_key_here
-OPENAI_MODEL=gpt-5.4-mini
-OPENAI_REASONING_EFFORT=low
-```
-
-Shell environment variables still override values in `.env`. The script uses OpenAI's Responses API and asks for low reasoning effort because this is a language-writing task, not a reasoning-heavy task.
-
-To let the AI helper write concise, portfolio-style copy for a social media item or photography gallery, add:
-
-```yaml
-guidedContext: "Your preferred framing, angle, or selling point."
-platformCaption: "Paste the post caption, transcript, or on-video spoken context here."
-```
-
-`guidedContext` has the highest priority. Use it for both strategy and facts: audience impact, client value, purpose, notable moments, deliverables, and any metrics. `platformCaption` is supporting context for social media posts, so the model should use it as evidence rather than simply repeating it.
-
-`autoSummary` is enabled implicitly for social media and photography content. To opt out for a specific item, add:
-
-```yaml
-autoSummary: false
-```
-
-Then add an AI summary block in the body:
-
-```md
-{/* ai-summary:start */}
-Existing fallback copy goes here.
-{/* ai-summary:end */}
-```
-
-When `OPENAI_API_KEY` is available, the script writes only inside that block. Anything outside the block is preserved.
-
-By default, existing AI summary blocks are preserved so normal builds do not constantly rewrite your copy. To intentionally refresh every AI-powered response, run:
-
-```bash
-npm run social-copy -- --regenerate
-```
-
-The same flag also works through the full build command:
-
-```bash
-npm run build -- --regenerate
-```
-
-Without `--regenerate`, the script only fills AI-powered items that do not already have an AI summary block.
-
-The script rejects very short or incomplete AI outputs, so it should not overwrite good copy with fragments.
-
-Optional model override:
-
-```bash
-OPENAI_MODEL=gpt-5.4-mini OPENAI_REASONING_EFFORT=low npm run social-copy
-```
-
-If you want to test a different OpenAI model later, set `OPENAI_MODEL` to that model name.
-
-### Editing Case Studies
-
-Case studies use the same folder:
-
-```text
-src/content/content-work/
-```
-
-Set:
-
-```yaml
-contentType: case-study
-featured: true
-```
-
-The frontmatter controls the side media window:
-
-```yaml
-embedHtml: "<blockquote>...</blockquote>"
-externalUrl: https://example.com
-coverImage: /images/example.webp
-```
-
-The text underneath the frontmatter becomes the written case-study copy. Edit that Markdown body directly to change the case-study story.
-
-## Photography Categories
-
-The photography page has these category tabs:
-
-```text
-All
-Corporate & private events
-Stage work
-Photoshoot
-Wedding & ROM
-```
-
-Each gallery chooses its category with the `photographyType` field in `gallery.md`.
-
-Allowed `photographyType` values:
-
-```text
-corporate-private-events
-stage-work
-photoshoot
-wedding-rom
-```
-
-The Photography page selects `All` by default. The `All` tab shows every published gallery by `featuredRank`, and each category tab uses `categoryRank`. Lower rank numbers appear first, so `1` is top-tier and blank/missing ranks fall back to `10`.
-
-## Magic Directory Gallery Workflow
-
-Create one folder per gallery:
-
-```text
-inbox/galleries/my-event/
-  DSC001.jpg
-  DSC002.jpg
-  DSC003.webp
-```
-
-Supported source image formats:
-
-```text
-.jpg
-.jpeg
-.png
-.webp
-```
-
-If `gallery.md` is missing, or if it exists without `guidedContext`, the importer will ask for:
-
-- `title`, optional but recommended
-- `context`, mandatory
-- `featuredRank`, optional input but saved with a default of `10`
-- `categoryRank`, optional input but saved with a default of `10`
-
-The context is saved as `guidedContext` and used by the AI summary system to generate the display title when no manual title is provided, plus the gallery description. The rank prompt reminds you that lower numbers appear first: `1` is top-tier, while `10` is the lowest-priority default.
-
-The smallest manual `gallery.md` is:
-
-```md
----
-title: My Event
-photographyType: corporate-private-events
-featuredRank: 10
-categoryRank: 10
-guidedContext: "What happened, who it was for, what the gallery should communicate, and any moments or value to highlight."
----
-
-Optional write-up here.
-```
-
-Then run:
+When you're happy with changes, run:
 
 ```bash
 npm run build
 ```
 
-The build runs the magic importer first. It will:
+This rebuilds the whole site, including any new galleries or posts you've added (see below). Push to `main` on GitHub and the live site updates automatically.
 
-- process images from `inbox/galleries/[slug]/`
-- create 480px long-edge thumbnail WebPs
-- create 2800px long-edge large WebPs
-- strip image metadata during processing
-- write generated images to `public/images/galleries/[slug]/`
-- write `manifest.json` for fast repeat imports
-- create or update `src/content/photography/[slug].md`
-- build the final static site into `dist/`
+---
 
-Generated Markdown stays intentionally simple. It does not need an explicit `images:` list; the site reads gallery images from:
+## Adding a photography gallery
 
-```text
-public/images/galleries/[slug]/manifest.json
+1. Make a new folder inside `inbox/galleries/`, named after the event (e.g. `inbox/galleries/company-retreat-2026/`).
+2. Drop your photos into that folder (`.jpg`, `.jpeg`, `.png`, or `.webp`).
+3. Run:
+   ```bash
+   npm run build
+   ```
+4. The first time you build a new gallery, it'll ask you a few questions in the terminal — a title, some context about the event, and where it should rank. Answer them and it writes the rest for you.
+5. Commit and push. Done — the gallery is live.
+
+The build automatically creates thumbnails, compresses everything, and adds the gallery to the Photography page. You never touch image files directly after this.
+
+**Want to edit a gallery's details later** (title, description, category)? Open `src/content/photography/[gallery-name].md` and edit the text at the top of the file, then rebuild.
+
+## Adding a social media post
+
+1. Go to `src/content/content-work/`.
+2. Copy an existing `.mdx` file as a starting point and rename it.
+3. Update the details at the top of the file:
+   - `platform`: `instagram`, `tiktok`, or `linkedin`
+   - `socialCategory`: `corporate`, `lifestyle`, or `real-estate`
+   - `embedHtml`: paste the platform's embed code, **or** use `coverImage` + `externalUrl` for a simple screenshot-and-link card instead
+   - `publishStatus`: `published` to make it live, `draft` to hide it for now
+4. Save, then run `npm run build`.
+
+## Adding a data project
+
+Same idea — add a new `.mdx` file in `src/content/data-projects/`, based on an existing one. Fill in the title, summary, and write-up, then rebuild.
+
+---
+
+## Turning whole sections on or off
+
+If you want to temporarily hide Photography, Social media, or Data from the entire site (navbar, footer, homepage — everywhere), open `src/lib/site.ts` and flip it to `false`:
+
+```ts
+export const sections = {
+  photography: true,
+  content: true,
+  caseStudy: false,
+  data: true
+};
 ```
 
-If `gallery.md` is missing or missing `guidedContext` during an interactive local run, the importer creates or updates it after asking for the title/context. In non-interactive environments such as GitHub Actions, the importer will stop with a clear message instead of hanging. Run `npm run import:magic` locally first, answer the prompts, then commit the generated `gallery.md`, WebP assets, and Markdown output.
+## AI-assisted descriptions (optional)
 
-Raw inbox images are ignored by Git:
-
-```text
-inbox/
-```
-
-Commit the generated Markdown files, generated WebP files, and `manifest.json` files. That keeps the published site portable without committing original camera JPEGs.
-
-## gallery.md Fields
-
-Recommended fields:
-
-```yaml
-title: My Event
-photographyType: corporate-private-events
-date: 2026-06-19
-category: Corporate Event
-client: Client Name
-clientVisibility: public
-featured: false
-publishStatus: published
-featuredRank: 1
-categoryRank: 1
-summary: Short card summary.
-description: Longer gallery description.
-services:
-  - Event photography
-  - Speaker coverage
-tags:
-  - corporate
-  - event
-coverImage: /images/galleries/my-event/image-001-large.webp
-```
-
-Required in practice:
-
-```yaml
-title: My Event
-```
-
-Strongly recommended:
-
-```yaml
-photographyType: corporate-private-events
-publishStatus: published
-```
-
-If optional metadata is missing, the site should still display the gallery where possible.
-
-### Field Notes
-
-`title`
-: Human-readable gallery title.
-
-`photographyType`
-: Controls which Photography tab the gallery appears under.
-
-`date`
-: Used for sorting. Format should be `YYYY-MM-DD`.
-
-`category`
-: Small card label, such as `Corporate Event`, `Stage Work`, `Photoshoot`, or `Wedding & ROM`.
-
-`client`
-: Optional client name.
-
-`clientVisibility`
-: Controls client-name display. Allowed values are `public`, `confidential`, and `hidden`.
-
-`featured`
-: Marks the gallery as eligible for featured placements.
-
-`featuredRank`
-: Controls ordering in the `All` photography view. Lower numbers appear first; use `1` for top-tier highlights. Missing or blank ranks default to `10`.
-
-`categoryRank`
-: Controls ordering inside the gallery's `photographyType` tab. Lower numbers appear first; missing or blank ranks default to `10`.
-
-`publishStatus`
-: Use `published` for live galleries. Other supported values are `draft` and `archived`.
-
-`summary`
-: Short text for cards and previews.
-
-`description`
-: Longer description for the gallery page.
-
-`services`
-: Optional list of services provided.
-
-`tags`
-: Optional list of tags.
-
-`coverImage`
-: Optional explicit cover image. If omitted, the site uses the first processed gallery image where possible.
-
-## Data Projects
-
-Data projects live in:
-
-```text
-src/content/data-projects/[slug].mdx
-```
-
-Typical frontmatter:
-
-```yaml
-title: Project Title
-date: 2026-06-19
-featured: true
-publishStatus: published
-summary: Short project summary.
-tools:
-  - Python
-  - SQL
-tags:
-  - analytics
-githubUrl: https://github.com/example/project
-demoUrl: https://example.com
-coverImage: /images/data/project-cover.webp
-```
-
-The MDX body is used for the project write-up.
+If you add an `OPENAI_API_KEY` to a `.env` file in this folder, the build will automatically write short descriptions for new galleries and posts. Skip this and it just won't generate them — nothing breaks.
 
 ## Deployment
 
-GitHub Pages uses:
-
-```text
-.github/workflows/deploy-pages.yml
-```
-
-Cloudflare Pages settings:
-
-```text
-Build command: npm run build
-Output directory: dist
-```
-
-No Cloudflare-specific code is required.
+Every push to `main` triggers a GitHub Actions build and deploy automatically. Nothing to do manually.

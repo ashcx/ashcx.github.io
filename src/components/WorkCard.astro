@@ -15,7 +15,7 @@ const title = displayTitle(item);
 const category = photographyTypeLabel(item);
 ---
 
-<a class:list={["work-card", { "large-work-card": large }]} href={galleryUrl(item)}>
+<a class:list={["work-card", { "large-work-card": large, "hidden-gallery-card": item.data.hidden }]} href={galleryUrl(item)}>
   <span class="curation-rank-badge" aria-hidden="true">F{item.data.featuredRank} · C{item.data.categoryRank}</span>
   {cover && <img src={cover} alt={title} loading="lazy" />}
   <div>

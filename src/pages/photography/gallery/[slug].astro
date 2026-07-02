@@ -3,7 +3,7 @@ import { getCollection } from "astro:content";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import JustifiedGallery from "@components/JustifiedGallery.astro";
 import WorkGrid from "@components/WorkGrid.astro";
-import { displayTitle, entrySlug, photographyTypeLabel, published } from "@lib/content";
+import { displayTitle, entrySlug, published, splitHidden } from "@lib/content";
 import { getGalleryCover, getGalleryImages } from "@lib/gallery-images";
 
 export async function getStaticPaths() {
@@ -14,19 +14,29 @@ export async function getStaticPaths() {
 const { item } = Astro.props;
 const { Content } = await item.render();
 const photos = published(await getCollection("photography"));
-const related = photos.filter((photo) => entrySlug(photo) !== entrySlug(item)).slice(0, 2);
+const related = splitHidden(
+  photos.filter((photo) => entrySlug(photo) !== entrySlug(item)),
+  2
+);
 const slug = entrySlug(item);
 const title = displayTitle(item);
-const category = photographyTypeLabel(item);
 const galleryImages = getGalleryImages(slug, item.data.images);
 const coverImage = getGalleryCover(slug, item.data.coverImage, item.data.images);
 ---
 
 <BaseLayout title={`${title} / Photography`} description={item.data.summary || item.data.description || "Photography gallery."} active="photography" image={coverImage}>
-  <section class="page-hero photography-page-hero" aria-labelledby="gallery-title">
-    <p class="eyebrow">{category}</p>
-    <h1 id="gallery-title">{title}</h1>
-    <p>{item.data.description || item.data.summary || "A curated public set from this photography project."}</p>
+  <section class="page-hero photography-page-hero gallery-hero" aria-labelledby="gallery-title">
+    {
+      coverImage && (
+        <figure class="gallery-hero-cover">
+          <img src={coverImage} alt={title} />
+        </figure>
+      )
+    }
+    <div class="gallery-hero-copy">
+      <h1 id="gallery-title">{title}</h1>
+      <p>{item.data.description || item.data.summary || "A curated public set from this photography project."}</p>
+    </div>
   </section>
 
   <section class="gallery-section">

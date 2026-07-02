@@ -43,5 +43,20 @@ const ogImage = image ? new URL(image, Astro.site).toString() : undefined;
       <slot />
     </main>
     <Footer />
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const revealHidden =
+        params.get("hidden") === "1" || params.get("curation") === "1" || params.get("view") === "curation";
+
+      if (revealHidden) {
+        document.documentElement.classList.add("hidden-view");
+
+        document.querySelectorAll<HTMLAnchorElement>("a[href^='/']").forEach((link) => {
+          const url = new URL(link.href);
+          url.searchParams.set("hidden", "1");
+          link.href = `${url.pathname}${url.search}${url.hash}`;
+        });
+      }
+    </script>
   </body>
 </html>

@@ -6,5 +6,4 @@ inbox/
 .env
 .env.*
 .portfolio-auth/
-.google-auth/
 .DS_Store

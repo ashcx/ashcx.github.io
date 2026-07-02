@@ -9,7 +9,10 @@ import { rankPhotographyForAll, rankPhotographyForCategory } from "@lib/content"
 
 const photos = published(await getCollection("photography"));
 const allPhotos = rankPhotographyForAll(photos);
-const pageCover = allPhotos[0] ? getGalleryCover(entrySlug(allPhotos[0]), allPhotos[0].data.coverImage, allPhotos[0].data.images) : "";
+const visibleCoverPhoto = allPhotos.find((photo) => !photo.data.hidden);
+const pageCover = visibleCoverPhoto
+  ? getGalleryCover(entrySlug(visibleCoverPhoto), visibleCoverPhoto.data.coverImage, visibleCoverPhoto.data.images)
+  : "";
 const defaultPhotographyType = "all";
 const photographySections = [
   {
@@ -83,11 +86,6 @@ const photographySections = [
   </section>
 
   <script>
-    const searchParams = new URLSearchParams(window.location.search);
-    if (searchParams.get("view") === "curation" || searchParams.get("curation") === "1") {
-      document.documentElement.classList.add("curation-view");
-    }
-
     const tabs = Array.from(document.querySelectorAll<HTMLElement>("[data-photography-tab]"));
     const panels = Array.from(document.querySelectorAll<HTMLElement>("[data-photography-panel]"));
 

@@ -16,6 +16,15 @@ export function featured<T extends { data: { featured?: boolean } }>(items: T[],
   return (featuredItems.length ? featuredItems : items).slice(0, limit);
 }
 
+// Keeps a visible-count guarantee for capped lists: takes `limit` non-hidden items,
+// then appends any hidden ones after so they still render (revealed client-side via ?hidden=1)
+// instead of silently eating into the visible slice.
+export function splitHidden<T extends { data: { hidden?: boolean } }>(items: T[], limit: number) {
+  const visible = items.filter((item) => !item.data.hidden);
+  const hidden = items.filter((item) => item.data.hidden);
+  return [...visible.slice(0, limit), ...hidden];
+}
+
 export function rankPhotographyForAll(items: PhotographyEntry[]) {
   return sortByRank(items, "featuredRank");
 }
@@ -64,12 +73,6 @@ export function formatDate(date: Date) {
     month: "short",
     day: "numeric"
   }).format(safe);
-}
-
-export function clientLabel(item: PhotographyEntry) {
-  if (item.data.clientVisibility === "hidden") return "";
-  if (item.data.clientVisibility === "confidential") return "Confidential client";
-  return item.data.client || "";
 }
 
 export function safeDate(value: unknown) {

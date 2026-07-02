@@ -1,4 +1,5 @@
 import { mkdir, readdir, readFile, rm, stat, writeFile } from "node:fs/promises";
+import os from "node:os";
 import path from "node:path";
 import { createInterface } from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
@@ -6,6 +7,13 @@ import { fileURLToPath } from "node:url";
 import matter from "gray-matter";
 import sharp from "sharp";
 import YAML from "yaml";
+
+// Must be set before the first threadpool-consuming call (any fs/sharp async op below).
+// One thread per image, and let libuv run as many images at once as there are cores,
+// instead of one image hogging multiple threads via sharp's own thread pool.
+const cpuCount = os.availableParallelism();
+process.env.UV_THREADPOOL_SIZE = String(cpuCount);
+sharp.concurrency(1);
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const inboxRoot = path.join(root, "inbox", "galleries");
@@ -16,6 +24,9 @@ let promptInterface;
 
 const thumbLongEdge = 480;
 const largeLongEdge = 2800;
+const maxOutputBytes = 750 * 1024;
+const minQuality = 40;
+const qualityStep = 5;
 
 function slugify(value) {
   return String(value || "")
@@ -176,19 +187,39 @@ async function readManifest(manifestPath) {
   }
 }
 
-async function writeWebp(inputPath, outputPath, longEdge, quality) {
-  const result = await sharp(inputPath)
-    .rotate()
-    .toColorspace("srgb")
-    .resize({
-      width: longEdge,
-      height: longEdge,
-      fit: "inside",
-      withoutEnlargement: true
-    })
-    .webp({ quality })
-    .toBuffer({ resolveWithObject: true });
+async function encodeWebp(inputPath, longEdge, quality, forThumb = false) {
+  let pipeline = sharp(inputPath).rotate().toColorspace("srgb");
 
+  // Thumb-only: denoise before the resize so sensor noise doesn't alias into
+  // visible speckling once decimated down to 480px, then sharpen after the
+  // resize to restore the edge contrast the downscale softened. Large images
+  // keep enough real detail that neither step is needed.
+  if (forThumb) {
+    pipeline = pipeline.median(3);
+  }
+
+  pipeline = pipeline.resize({
+    width: longEdge,
+    height: longEdge,
+    fit: "inside",
+    withoutEnlargement: true
+  });
+
+  if (forThumb) {
+    pipeline = pipeline.sharpen();
+  }
+
+  const result = await pipeline.webp({ quality, preset: "photo", effort: 4, smartSubsample: true }).toBuffer({ resolveWithObject: true });
+
+  if (result.data.length > maxOutputBytes && quality > minQuality) {
+    return encodeWebp(inputPath, longEdge, Math.max(minQuality, quality - qualityStep), forThumb);
+  }
+
+  return result;
+}
+
+async function writeWebp(inputPath, outputPath, longEdge, quality, forThumb = false) {
+  const result = await encodeWebp(inputPath, longEdge, quality, forThumb);
   await writeFile(outputPath, result.data);
   return result.info;
 }
@@ -217,6 +248,8 @@ async function processGallery({ folderName, folderPath }) {
 
   await mkdir(outputDir, { recursive: true });
 
+  // Pass 1: cheap sequential fs/cache-identity checks only, no encoding yet.
+  const records = [];
   for (const [index, sourceName] of sourceImages.entries()) {
     const sourcePath = path.join(folderPath, sourceName);
     const sourceStat = await stat(sourcePath);
@@ -227,9 +260,9 @@ async function processGallery({ folderName, folderPath }) {
     const largePath = path.join(outputDir, outputLarge);
     const existing = oldByName.get(sourceName);
 
-    let width = existing?.width;
-    let height = existing?.height;
-    let aspectRatio = existing?.aspectRatio;
+    const width = existing?.width;
+    const height = existing?.height;
+    const aspectRatio = existing?.aspectRatio;
     const canReuse =
       existing &&
       existing.size === sourceStat.size &&
@@ -241,23 +274,32 @@ async function processGallery({ folderName, folderPath }) {
       width &&
       height;
 
-    if (!canReuse) {
-      await writeWebp(sourcePath, thumbPath, thumbLongEdge, 80);
-      const large = await writeWebp(sourcePath, largePath, largeLongEdge, 86);
-      width = large.width;
-      height = large.height;
-      aspectRatio = Number((large.width / large.height).toFixed(4));
-    }
+    records.push({ sourceName, sourcePath, sourceStat, outputThumb, outputLarge, thumbPath, largePath, canReuse, width, height, aspectRatio });
+  }
 
+  // Pass 2: encode everything that needs it, thumbs first (they finish fastest)
+  // then larges, each phase as one Promise.all — UV_THREADPOOL_SIZE (cpuCount)
+  // already bounds how many run natively at once, so no manual batching needed.
+  const needsEncode = records.filter((record) => !record.canReuse);
+  await Promise.all(needsEncode.map((record) => writeWebp(record.sourcePath, record.thumbPath, thumbLongEdge, 65, true)));
+  const largeResults = await Promise.all(needsEncode.map((record) => writeWebp(record.sourcePath, record.largePath, largeLongEdge, 85)));
+  needsEncode.forEach((record, index) => {
+    const large = largeResults[index];
+    record.width = large.width;
+    record.height = large.height;
+    record.aspectRatio = Number((large.width / large.height).toFixed(4));
+  });
+
+  for (const record of records) {
     newManifest.sourceFiles.push({
-      name: sourceName,
-      mtimeMs: sourceStat.mtimeMs,
-      size: sourceStat.size,
-      outputThumb,
-      outputLarge,
-      width,
-      height,
-      aspectRatio
+      name: record.sourceName,
+      mtimeMs: record.sourceStat.mtimeMs,
+      size: record.sourceStat.size,
+      outputThumb: record.outputThumb,
+      outputLarge: record.outputLarge,
+      width: record.width,
+      height: record.height,
+      aspectRatio: record.aspectRatio
     });
   }
 
@@ -290,19 +332,22 @@ async function writeGalleryContent({ folderPath, slug, manifest }) {
   const contentPath = path.join(contentRoot, `${slug}.md`);
   const existing = await readExistingContent(contentPath);
   const first = manifest.sourceFiles[0];
+  const coverImageIndex = Number(data.coverImageIndex);
+  const coverBySelectedIndex =
+    Number.isInteger(coverImageIndex) && coverImageIndex >= 1 && coverImageIndex <= manifest.sourceFiles.length
+      ? manifest.sourceFiles[coverImageIndex - 1]
+      : undefined;
+  const cover = coverBySelectedIndex || first;
 
   const frontmatter = cleanFrontmatter({
     title: data.title || undefined,
     generatedTitle: data.generatedTitle || existing.data.generatedTitle || undefined,
     date: data.date || new Date().toISOString().slice(0, 10),
-    category: data.category || "Photography",
-    section: data.section || "corporate-events",
     photographyType: data.photographyType || "corporate-private-events",
     client: data.client || undefined,
-    clientVisibility: data.clientVisibility || "hidden",
-    featured: data.featured === true || data.featured === "true",
     featuredRank: hasRank(data.featuredRank) ? Number(data.featuredRank) : 10,
     categoryRank: hasRank(data.categoryRank) ? Number(data.categoryRank) : 10,
+    hidden: data.hidden === true || data.hidden === "true" ? true : undefined,
     publishStatus: data.publishStatus || "published",
     summary: data.summary || existing.data.summary || undefined,
     description: data.description || undefined,
@@ -312,7 +357,7 @@ async function writeGalleryContent({ folderPath, slug, manifest }) {
     services: Array.isArray(data.services) ? data.services : undefined,
     tags: Array.isArray(data.tags) ? data.tags : undefined,
     googlePhotosUrl: data.googlePhotosUrl || undefined,
-    coverImage: data.coverImage || (first ? `/images/galleries/${slug}/${first.outputLarge}` : undefined)
+    coverImage: data.coverImage || (cover ? `/images/galleries/${slug}/${cover.outputLarge}` : undefined)
   });
 
   await mkdir(contentRoot, { recursive: true });
@@ -320,7 +365,7 @@ async function writeGalleryContent({ folderPath, slug, manifest }) {
   const body = parsed.content.trim() || existing.content.trim();
   await writeFile(
     contentPath,
-    `---\n# photographyType choices: corporate-private-events | stage-work | photoshoot | wedding-rom\n${yaml}\n---\n\n${body}\n`
+    `---\n# photographyType choices: corporate-private-events | stage-work | photoshoot | wedding-rom\n# hidden: true keeps this gallery out of home/photography listings unless ?hidden=1 is in the URL\n# coverImageIndex: N picks the Nth image (1-based, matching image-NNN- output filenames) as the cover instead of the first\n${yaml}\n---\n\n${body}\n`
   );
 }
 
