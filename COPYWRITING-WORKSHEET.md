@@ -67,7 +67,8 @@ Each entry lists its source file so it's traceable when we implement the changes
 | Eyebrow | `Corporate event work` | |
 | Heading | `Recent coverage, built for business contexts.` | |
 | Body | `Conferences, panels, networking sessions, and branded events presented with clean spacing and a restrained visual system.` | |
-| Button | `Explore photography` | |
+| Button (heading) | `Explore photography` | |
+| Button (below gallery grid) | `View all galleries` | |
 
 ### Social media reels section
 **File:** `src/components/HomeSocialHighlights.astro`
@@ -76,6 +77,7 @@ Each entry lists its source file so it's traceable when we implement the changes
 | Eyebrow | `Social media reels` | |
 | Heading | `Short-form content.` | |
 | Body | `Instagram and TikTok-ready reels for influencers, high-net-worth individuals, and companies that need polished stories with clear commercial use.` | |
+| Button (heading) | `Explore social media content` | |
 | Card link text | `View more` | |
 
 ### Data work section
