@@ -24,6 +24,7 @@ guidedContext: "Client and event: Lin Ying Chu, a violin teacher, held a summer
   considering her lessons. Lead the description with what the recital means to
   the students and the studio, then connect it to how the images serve families
   and the teacher. Do not just describe the performances."
+googlePhotosUrl: https://photos.app.goo.gl/ehcdsAqE36nPjfbg8
 coverImage: /images/galleries/lin-ying-chu-s-summer-soiree-violin-recital/image-001-large.webp
 ---
 

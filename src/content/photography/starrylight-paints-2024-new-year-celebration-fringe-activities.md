@@ -25,6 +25,7 @@ guidedContext: "Client and event: Starrylight Paints, a face and body painting
   the description with what this kind of activation does for the business, then
   connect it to how the images help them get booked again. Do not just list the
   face-paint designs."
+googlePhotosUrl: https://photos.app.goo.gl/MPdY83JkybrUsQiB9
 coverImage: /images/galleries/starrylight-paints-2024-new-year-celebration-fringe-activities/image-001-large.webp
 ---
 

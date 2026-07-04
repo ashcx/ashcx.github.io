@@ -26,6 +26,7 @@ guidedContext: "Client and tour: Hello Singapore, a tour operator, runs this as
   travellers who will pay for it. Lead the description with what makes the
   private experience worth it, then connect it to how the images help sell that
   tier. Do not just list the landmarks."
+googlePhotosUrl: https://photos.app.goo.gl/2SJhcWccFcmcAbbS7
 coverImage: /images/galleries/exclusive-private-singapore-walking-tour-by-hello-singapore/image-001-large.webp
 ---
 

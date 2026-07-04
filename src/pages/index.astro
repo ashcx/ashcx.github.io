@@ -2,18 +2,15 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import ContactSection from "@components/ContactSection.astro";
-import DataFeatureCard from "@components/DataFeatureCard.astro";
 import HomeSocialHighlights from "@components/HomeSocialHighlights.astro";
 import WorkGrid from "@components/WorkGrid.astro";
-import { entrySlug, featured, published, rankPhotographyForAll, splitHidden } from "@lib/content";
+import { entrySlug, published, rankPhotographyForAll, splitHidden } from "@lib/content";
 import { getGalleryCover } from "@lib/gallery-images";
 import { sections, site } from "@lib/site";
 
 const photos = published(await getCollection("photography"));
-const projects = published(await getCollection("data-projects"));
 const contentItems = published(await getCollection("content-work"));
 const latestPhotos = splitHidden(rankPhotographyForAll(photos), 2);
-const featuredProject = featured(projects, 1)[0];
 const socialHighlights = contentItems.filter((item) => item.data.contentType === "embed");
 const visibleCoverPhoto = latestPhotos.find((photo) => !photo.data.hidden);
 const pageCover = visibleCoverPhoto
@@ -25,21 +22,21 @@ const pageCover = visibleCoverPhoto
   <section class="home-hero" aria-labelledby="hero-title">
     <div class="home-hero-copy home-intro-grid">
       <div class="home-name-block">
-        <h1 id="hero-title">Hi, I'm <span class="home-name-line">Keith.</span></h1>
+        <h1 id="hero-title">Hi, I'm <span class="home-name-line">Ash.</span></h1>
       </div>
       <ul class="identity-list" aria-label="Short description">
         <li>Event photographer</li>
-        <li>Data analyst</li>
-        <li>Curious Builder</li>
+        <li>Social content creator</li>
+        <li>Digital strategist</li>
       </ul>
       <div class="home-intro-block">
         <p class="hero-lede">
-          I document business moments with a clean visual eye, then bring the same curiosity
-          to dashboards, analytics, and practical technical systems.
+          Helping businesses turn meaningful moments into stories that build
+          trust and drive growth.
         </p>
         <div class="hero-actions">
           <a class="button button-dark" href="#corporate-work">Find out more</a>
-          <a class="button button-accent" href="/contact/">Enquire for packages</a>
+          <a class="button button-accent" href="/contact/">Ask about packages</a>
         </div>
       </div>
       {
@@ -56,10 +53,10 @@ const pageCover = visibleCoverPhoto
     sections.photography && (
       <section id="corporate-work" class="home-section corporate-work" aria-labelledby="corporate-work-title">
         <div class="home-section-heading">
-          <p class="eyebrow">Corporate event work</p>
+          <p class="eyebrow">Event coverage</p>
           <div>
-            <h2 id="corporate-work-title">Recent coverage, built for business contexts.</h2>
-            <p>Conferences, panels, networking sessions, and branded events presented with clean spacing and a restrained visual system.</p>
+            <h2 id="corporate-work-title">Recent coverage of events that matter to you.</h2>
+            <p>Conferences, panels, workshops, and milestone celebrations. Captured with care and a professional eye.</p>
           </div>
           <a class="button button-dark" href="/photography/">Explore photography</a>
         </div>
@@ -72,22 +69,6 @@ const pageCover = visibleCoverPhoto
   }
 
   {sections.content && <HomeSocialHighlights items={socialHighlights} />}
-
-  {
-    sections.data && featuredProject && (
-      <section class="home-section data-work" aria-labelledby="data-work-title">
-        <div class="home-section-heading">
-          <p class="eyebrow">Data work</p>
-          <div>
-            <h2 id="data-work-title">Analytics projects with business context.</h2>
-            <p>A separate technical track for dashboards, automation, modelling, and practical data analysis.</p>
-          </div>
-          <a class="button button-dark" href="/data/">Explore data work</a>
-        </div>
-        <DataFeatureCard project={featuredProject} />
-      </section>
-    )
-  }
 
   <ContactSection />
 

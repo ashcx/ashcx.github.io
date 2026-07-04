@@ -24,6 +24,7 @@ guidedContext: "Client and event: the Eat The World brand ran a corporate
   activation. Lead the description with what this format is trying to do for
   guests and the brand, then connect it to how the images help sell it. Do not
   just describe the food or the mingling."
+googlePhotosUrl: https://photos.app.goo.gl/BgRhgsnB2WL2id9H8
 coverImage: /images/galleries/eat-the-world-corporate-networking-food-tasting-experience/image-001-large.webp
 ---
 

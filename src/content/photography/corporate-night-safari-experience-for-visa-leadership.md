@@ -26,6 +26,7 @@ guidedContext: "Client and event: Visa hosted its leadership team and guests at
   invitations to future events. Name Visa directly. Lead with why the evening
   mattered to the relationship, then land on how the images get reused. Do not
   just list what the animals or the dinner looked like."
+googlePhotosUrl: https://photos.app.goo.gl/jF4KoZNWXY3mJeem8
 coverImage: /images/galleries/corporate-night-safari-experience-for-visa-leadership/image-001-large.webp
 ---
 

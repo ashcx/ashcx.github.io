@@ -23,6 +23,7 @@ guidedContext: "Client and event: H+AI, a festival focused on empowering women
   sponsors, attract speakers and attendees, and grow the next edition. Lead the
   description with the mission and the room's energy, then connect it to how the
   images help H+AI build on it. Do not just list panels and audience shots."
+googlePhotosUrl: https://photos.app.goo.gl/2aSNqtGu3Ygmu8Ts8
 coverImage: /images/galleries/h-ai-ai-festival-empowering-women-in-tech/image-001-large.webp
 ---
 

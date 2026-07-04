@@ -24,6 +24,7 @@ guidedContext: "Client and event: Anime Garden, an anime and pop-culture
   the description with what the event is for the community, then land on how the
   images help the organizers grow it. Do not just describe the DJs or the
   lighting."
+googlePhotosUrl: https://photos.app.goo.gl/aaxtVuGrVcqiniLk9
 coverImage: /images/galleries/anime-garden-golden-mix-dj-event/image-001-large.webp
 ---
 

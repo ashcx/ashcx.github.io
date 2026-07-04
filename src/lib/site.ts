@@ -1,9 +1,11 @@
 export const site = {
-  name: "Keith Tan",
-  title: "Photographer + Data Analyst Portfolio",
-  description: "A portfolio for corporate event photography, social content, and data analytics work.",
+  name: "Ash Chong",
+  title: "Event Photography & Social Content | Ash Chong",
+  description:
+    "Corporate event photography and social media content for businesses and brands in Singapore, from large conferences to small studio launches.",
   whatsapp: "+65 8927 1158",
-  whatsappUrl: "https://wa.me/6589271158"
+  whatsappUrl:
+    "https://api.whatsapp.com/send/?phone=6589271158&text=Hi+Ash%21+I+would+like+to+book+your+photography+%2F+social+media+services.%0A%0ASome+details+of+my+upcoming+event+%2F+marketing+campaign+are+as+follows%3A%0A-+%20&type=phone_number&app_absent=0"
 };
 
 // Master switch: flip a section to `false` to hide it from the navbar, footer

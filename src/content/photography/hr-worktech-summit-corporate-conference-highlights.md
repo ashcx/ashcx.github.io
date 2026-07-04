@@ -25,6 +25,7 @@ guidedContext: "Client and event: the HR WorkTech Summit, a business conference
   the participating companies. Lead with what makes the summit credible, then
   connect it to how the images help the organizers grow it. Do not just list
   panels and portraits."
+googlePhotosUrl: https://photos.app.goo.gl/ZWjVLU2VVXfLSomF6
 coverImage: /images/galleries/hr-worktech-summit-corporate-conference-highlights/image-001-large.webp
 ---
 

@@ -24,6 +24,7 @@ guidedContext: "Client and event: a family celebrating their young children's
   personal. Lead with what the day means to the parents, then connect it to the
   memories the gallery preserves. Do not describe it like a commercial event or
   list the decorations."
+googlePhotosUrl: https://photos.app.goo.gl/EgpP94suQp9aBaRd6
 coverImage: /images/galleries/young-kids-birthday-celebration/image-001-large.webp
 ---
 

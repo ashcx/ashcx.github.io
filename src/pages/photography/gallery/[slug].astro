@@ -3,7 +3,7 @@ import { getCollection } from "astro:content";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import JustifiedGallery from "@components/JustifiedGallery.astro";
 import WorkGrid from "@components/WorkGrid.astro";
-import { displayTitle, entrySlug, published, splitHidden } from "@lib/content";
+import { displayTitle, entrySlug, published, rankPhotographyForCategory, rankPhotographyForAll, splitHidden } from "@lib/content";
 import { getGalleryCover, getGalleryImages } from "@lib/gallery-images";
 
 export async function getStaticPaths() {
@@ -14,17 +14,17 @@ export async function getStaticPaths() {
 const { item } = Astro.props;
 const { Content } = await item.render();
 const photos = published(await getCollection("photography"));
-const related = splitHidden(
-  photos.filter((photo) => entrySlug(photo) !== entrySlug(item)),
-  2
-);
+const others = photos.filter((photo) => entrySlug(photo) !== entrySlug(item));
+const sameType = rankPhotographyForCategory(others.filter((photo) => photo.data.photographyType === item.data.photographyType));
+const otherTypes = rankPhotographyForAll(others.filter((photo) => photo.data.photographyType !== item.data.photographyType));
+const related = splitHidden([...sameType, ...otherTypes], 2);
 const slug = entrySlug(item);
 const title = displayTitle(item);
 const galleryImages = getGalleryImages(slug, item.data.images);
 const coverImage = getGalleryCover(slug, item.data.coverImage, item.data.images);
 ---
 
-<BaseLayout title={`${title} / Photography`} description={item.data.summary || item.data.description || "Photography gallery."} active="photography" image={coverImage}>
+<BaseLayout title={`${title} / Photography`} description={item.data.summary || item.data.description || "A photography gallery from Ash Chong."} active="photography" image={coverImage}>
   <section class="page-hero photography-page-hero gallery-hero" aria-labelledby="gallery-title">
     {
       coverImage && (
@@ -35,7 +35,7 @@ const coverImage = getGalleryCover(slug, item.data.coverImage, item.data.images)
     }
     <div class="gallery-hero-copy">
       <h1 id="gallery-title">{title}</h1>
-      <p>{item.data.description || item.data.summary || "A curated public set from this photography project."}</p>
+      <p>{item.data.description || item.data.summary || "A set of highlights from this event."}</p>
     </div>
   </section>
 
@@ -46,12 +46,12 @@ const coverImage = getGalleryCover(slug, item.data.coverImage, item.data.images)
       {
         item.data.services.length > 0 && (
           <>
-            <h2>Services Delivered</h2>
+            <h2>What I delivered</h2>
             <ul>{item.data.services.map((service) => <li>{service}</li>)}</ul>
           </>
         )
       }
-      {item.data.googlePhotosUrl && <a class="button button-quiet" href={item.data.googlePhotosUrl}>View full client gallery</a>}
+      {item.data.googlePhotosUrl && <a class="button button-dark" href={item.data.googlePhotosUrl}>View full client gallery</a>}
     </div>
   </section>
 

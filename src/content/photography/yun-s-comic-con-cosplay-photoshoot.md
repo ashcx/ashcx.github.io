@@ -24,6 +24,7 @@ guidedContext: "Client and shoot: Yun, a cosplayer, photographed as Starfire
   presence and get shared. Lead the description with what a striking character
   set does for a cosplayer, then connect it to these portraits. Do not just
   describe the costume."
+googlePhotosUrl: https://photos.app.goo.gl/gT4fKKoJ6eCZscdZ9
 coverImage: /images/galleries/yun-s-comic-con-cosplay-photoshoot/image-001-large.webp
 ---
 

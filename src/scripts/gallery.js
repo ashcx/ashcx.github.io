@@ -3,15 +3,12 @@ import justifiedLayout from "justified-layout";
 const galleryShell = document.querySelector("[data-gallery-shell]");
 const gallery = galleryShell?.querySelector("[data-gallery]");
 const imageDataScript = galleryShell?.querySelector("[data-gallery-images]");
-const loadMoreButton = galleryShell?.querySelector("[data-load-more]");
-const loadMoreCount = galleryShell?.querySelector("[data-load-more-count]");
 const lightbox = document.querySelector(".lightbox");
 const lightboxImage = lightbox?.querySelector("img");
 const closeButton = lightbox?.querySelector(".lightbox-close");
 const prevButton = lightbox?.querySelector(".lightbox-prev");
 const nextButton = lightbox?.querySelector(".lightbox-next");
 
-const batchSize = 30;
 const desktopLayout = {
   boxSpacing: 10,
   targetRowHeight: 255
@@ -21,7 +18,6 @@ const mobileLayout = {
   targetRowHeight: 168
 };
 const images = imageDataScript ? JSON.parse(imageDataScript.textContent || "[]") : [];
-let renderedCount = gallery?.querySelectorAll(".shot").length || 0;
 let activeIndex = -1;
 let resizeFrame = 0;
 
@@ -41,27 +37,6 @@ function layoutConfig(containerWidth) {
     showWidows: true,
     widowLayoutStyle: "left"
   };
-}
-
-function shotTemplate(image, index) {
-  const button = document.createElement("button");
-  button.className = "shot";
-  button.type = "button";
-  button.dataset.large = image.large;
-  button.dataset.index = String(index);
-  button.dataset.ratio = String(numericRatio(image));
-  button.style.setProperty("--ratio", button.dataset.ratio);
-
-  const img = document.createElement("img");
-  img.src = image.thumb;
-  img.alt = image.alt || "Gallery image";
-  img.loading = "lazy";
-  if (image.width) img.width = image.width;
-  if (image.height) img.height = image.height;
-
-  button.append(img);
-  button.addEventListener("click", () => openLightbox(index));
-  return button;
 }
 
 function applyFallbackLayout(shots) {
@@ -125,36 +100,10 @@ function scheduleLayout() {
   });
 }
 
-function syncLoadMore() {
-  if (!loadMoreButton || !loadMoreCount) return;
-  const remaining = Math.max(images.length - renderedCount, 0);
-  loadMoreButton.hidden = remaining === 0;
-  loadMoreCount.textContent = `Showing ${renderedCount} of ${images.length}`;
-}
-
-function renderNextBatch() {
-  if (!gallery) return;
-  const nextImages = images.slice(renderedCount, renderedCount + batchSize);
-  nextImages.forEach((image, offset) => {
-    gallery.append(shotTemplate(image, renderedCount + offset));
-  });
-  renderedCount += nextImages.length;
-  layoutGallery();
-  syncLoadMore();
-}
-
-function ensureImageRendered(index) {
-  if (index < renderedCount) return;
-  while (renderedCount <= index && renderedCount < images.length) {
-    renderNextBatch();
-  }
-}
-
 function setLightboxImage(index) {
   if (!lightbox || !lightboxImage || images.length === 0) return;
 
   activeIndex = (index + images.length) % images.length;
-  ensureImageRendered(activeIndex);
   const image = images[activeIndex];
   lightboxImage.src = image.large;
   lightboxImage.alt = image.alt || "Selected gallery image";
@@ -196,7 +145,6 @@ gallery?.querySelectorAll(".shot").forEach((shot) => {
   shot.addEventListener("click", () => openLightbox(index));
 });
 
-loadMoreButton?.addEventListener("click", renderNextBatch);
 closeButton?.addEventListener("click", closeLightbox);
 prevButton?.addEventListener("click", showPreviousImage);
 nextButton?.addEventListener("click", showNextImage);
@@ -215,4 +163,3 @@ window.addEventListener("keydown", (event) => {
 
 window.addEventListener("resize", scheduleLayout);
 layoutGallery();
-syncLoadMore();

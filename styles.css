@@ -485,6 +485,57 @@ p {
   border-color: #150f0e;
 }
 
+.floating-contact-button {
+  position: fixed;
+  right: max(18px, env(safe-area-inset-right));
+  bottom: max(18px, env(safe-area-inset-bottom));
+  z-index: 55;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid #1ea952;
+  border-radius: 999px;
+  padding: 13px 20px 13px 16px;
+  background: #25d366;
+  color: #08210f;
+  font-size: 0.92rem;
+  font-weight: 780;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  box-shadow: 0 14px 32px rgba(18, 71, 36, 0.32);
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.floating-contact-button svg {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.floating-contact-button:hover,
+.floating-contact-button:focus-visible {
+  transform: translateY(-2px);
+  background: #1fbd5c;
+  box-shadow: 0 18px 38px rgba(18, 71, 36, 0.4);
+}
+
+@media (max-width: 620px) {
+  .floating-contact-button {
+    right: max(14px, env(safe-area-inset-right));
+    bottom: max(14px, env(safe-area-inset-bottom));
+    padding: 11px 16px 11px 13px;
+    font-size: 0.86rem;
+  }
+
+  .floating-contact-button svg {
+    width: 19px;
+    height: 19px;
+  }
+}
+
 .hero-proof-grid {
   display: grid;
   grid-template-columns: 1.05fr 0.9fr 1.05fr;
@@ -1114,7 +1165,11 @@ p {
 
 .gallery-section {
   margin-top: clamp(36px, 5vw, 64px);
-  padding-bottom: 24px;
+  padding-bottom: clamp(56px, 8vw, 88px);
+}
+
+.gallery-section .detail-body {
+  margin-top: clamp(32px, 4.5vw, 48px);
 }
 
 .gallery-heading {
@@ -1514,23 +1569,6 @@ p {
 .shot:focus-visible img {
   transform: scale(1.035);
   filter: saturate(1.02) contrast(1.02);
-}
-
-.load-more-wrap {
-  display: grid;
-  justify-items: center;
-  gap: 10px;
-  margin-top: 8px;
-}
-
-.load-more-button[hidden] {
-  display: none;
-}
-
-.load-more-count {
-  margin: 0;
-  color: var(--faint);
-  font-size: 0.9rem;
 }
 
 .empty-gallery-note {

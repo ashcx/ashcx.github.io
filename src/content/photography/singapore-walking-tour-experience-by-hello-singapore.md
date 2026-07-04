@@ -25,6 +25,7 @@ guidedContext: "Client and tour: Hello Singapore, a tour operator, runs this as
   booking pages, and socials. Lead the description with the kind of authentic
   local day this tour promises, then connect it to how the images help fill
   bookings. Do not just list the stops."
+googlePhotosUrl: https://photos.app.goo.gl/YFKKUsRF2D94NMTq5
 coverImage: /images/galleries/singapore-walking-tour-experience-by-hello-singapore/image-001-large.webp
 ---
 

@@ -24,13 +24,12 @@ const renderableImages = images
     aspectRatio: image.aspectRatio || (image.width && image.height ? image.width / image.height : 1.5)
   }))
   .filter((image) => image.thumb || image.large);
-const initialImages = renderableImages.slice(0, 30);
 ---
 
 <div class="justified-gallery-shell" data-gallery-shell>
   <div class="justified-gallery" aria-label={`${title} photographs`} data-gallery>
     {
-      initialImages.map((image, index) => (
+      renderableImages.map((image, index) => (
         <button
           class="shot"
           style={`--ratio: ${image.aspectRatio || 1.5}`}
@@ -49,18 +48,6 @@ const initialImages = renderableImages.slice(0, 30);
       ))
     }
   </div>
-  {
-    renderableImages.length > 30 && (
-      <div class="load-more-wrap">
-        <button class="button button-quiet load-more-button" type="button" data-load-more>
-          Load more photographs
-        </button>
-        <p class="load-more-count" data-load-more-count>
-          Showing 30 of {renderableImages.length}
-        </p>
-      </div>
-    )
-  }
   <script is:inline type="application/json" data-gallery-images set:html={JSON.stringify(renderableImages)} />
 </div>
 

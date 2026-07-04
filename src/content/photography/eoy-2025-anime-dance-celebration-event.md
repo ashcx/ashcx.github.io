@@ -24,6 +24,7 @@ guidedContext: "Event: an end-of-year celebration for an anime and pop-culture
   edition. Lead the description with what this year-end night means to the
   performers and community, then connect it to how the images get used
   afterward. Do not just describe the choreography or the lighting."
+googlePhotosUrl: https://photos.app.goo.gl/wBUuLNWmqhVhouCc6
 coverImage: /images/galleries/eoy-2025-anime-dance-celebration-event/image-001-large.webp
 ---
 

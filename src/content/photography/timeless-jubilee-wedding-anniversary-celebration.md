@@ -24,6 +24,7 @@ guidedContext: "Client and shoot: a married couple celebrating a major milestone
   years, a lasting marker of the occasion. Keep the tone warm and personal. Lead
   with what the milestone means to this family, then connect it to the keepsake
   the gallery becomes. Do not describe it like a commercial event."
+googlePhotosUrl: https://photos.app.goo.gl/q7aUF1i7qua4iqVw9
 coverImage: /images/galleries/timeless-jubilee-wedding-anniversary-celebration/image-001-large.webp
 ---
 

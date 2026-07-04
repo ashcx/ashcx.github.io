@@ -39,12 +39,31 @@ This rebuilds the whole site, including any new galleries or posts you've added 
 
 1. Make a new folder inside `inbox/galleries/`, named after the event (e.g. `inbox/galleries/company-retreat-2026/`).
 2. Drop your photos into that folder (`.jpg`, `.jpeg`, `.png`, or `.webp`).
-3. Run:
+3. Duplicate an existing `gallery.md` from another folder in `inbox/galleries/` into your new folder, then fill in the details directly:
+   ```yaml
+   ---
+   title: Company Retreat 2026
+   photographyType: corporate-private-events
+   publishStatus: published
+   guidedContext: >-
+     Client and event: what happened, who it was for, and why it mattered to
+     them. What the gallery does for them: what these images let them do
+     afterward (recap, resell, invite, etc). Keep the tone specific to this
+     event, not generic.
+   featuredRank: 10
+   categoryRank: 10
+   hidden: false
+   googlePhotosUrl: https://photos.app.goo.gl/your-link-here
+   ---
+   ```
+   `featuredRank`/`categoryRank` control ordering (lower number = appears first; leave at 10 for lowest priority). `googlePhotosUrl` is optional — add it if you want a "View full client gallery" button linking out to the full shoot.
+4. Run:
    ```bash
    npm run build
    ```
-4. The first time you build a new gallery, it'll ask you a few questions in the terminal — a title, some context about the event, and where it should rank. Answer them and it writes the rest for you.
 5. Commit and push. Done — the gallery is live.
+
+Filling in `gallery.md` by hand is the reliable path for scripted or AI-agent-driven imports, since it never blocks on a prompt. If you're doing this yourself at a terminal and don't want to write `gallery.md` up front, you can skip step 3 and just run `npm run build` — it'll notice the new folder has no `gallery.md` and ask you the same questions (title, context, rank) interactively, then write the file for you.
 
 The build automatically creates thumbnails, compresses everything, and adds the gallery to the Photography page. You never touch image files directly after this.
 

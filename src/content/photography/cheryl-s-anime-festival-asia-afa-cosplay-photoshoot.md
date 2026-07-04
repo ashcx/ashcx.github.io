@@ -24,6 +24,7 @@ guidedContext: "Client and shoot: Cheryl, a cosplayer, photographed in full
   convention memories. Lead the description with what a strong portfolio set
   means for a cosplayer's presence, then connect it to these portraits. Do not
   just describe the costume."
+googlePhotosUrl: https://photos.app.goo.gl/VdB9a6cpCb6U4n2X8
 coverImage: /images/galleries/cheryl-s-anime-festival-asia-afa-cosplay-photoshoot/image-001-large.webp
 ---
 
