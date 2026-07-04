@@ -30,7 +30,7 @@ Everything below is copy that appears as fixed UI chrome regardless of which con
 
 | Element | Current copy | New copy |
 |---|---|---|
-| Brand tagline | `Corporate event photographer, content creator, data analyst, and curious builder.` | `Corporate and private event photographer, and social content creator, based in Singapore.` |
+| Brand tagline | `Corporate event photographer, content creator, data analyst, and curious builder.` | `Photography and content that help businesses tell stories, build trust, and grow their brand.` |
 | Sitemap column label | `Sitemap` | *(keep)* |
 | Contact column label | `Work together` | `Let's work together` |
 | WhatsApp link text | `Message on WhatsApp` | `Chat on WhatsApp` |
@@ -67,8 +67,8 @@ Everything below is copy that appears as fixed UI chrome regardless of which con
 | Element | Current copy | New copy |
 |---|---|---|
 | Eyebrow | `Corporate event work` | `Event coverage` |
-| Heading | `Recent coverage, built for business contexts.` | `Recent coverage of events that matter to you.` |
-| Body | `Conferences, panels, networking sessions, and branded events presented with clean spacing and a restrained visual system.` | `Conferences, panels, workshops, and milestone celebrations. Captured with care and a professional eye.` |
+| Heading | `Recent coverage, built for business contexts.` | `Built for more than event day.` |
+| Body | `Conferences, panels, networking sessions, and branded events presented with clean spacing and a restrained visual system.` | `Professional event coverage that supports marketing, communications, stakeholder engagement, and future promotions.` |
 | Button (heading) | `Explore photography` | *(keep)* |
 | Button (below gallery grid) | `View all galleries` | *(keep)* |
 
