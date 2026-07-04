@@ -14,7 +14,7 @@ Built with [Astro](https://astro.build) and hosted on GitHub Pages — both free
 
 4. **Fully automated CI/CD via GitHub Actions** — every push to `main` triggers build, validation, and deployment with no manual steps: commit locally, and the live site updates itself.
 
-5. **Scalable-by-design architecture (Astro + MDX)** — Astro ships zero JavaScript by default and pre-renders every page to static HTML at build time, so there's no server-side rendering, no database, and no runtime bottleneck to scale in the first place. Content lives as MDX/Markdown files, so adding galleries, posts, or projects doesn't touch infrastructure — it's just more static files for the CDN to serve. The architecture itself has no ceiling; it's built to grow with the content, not against it.
+5. **Scalable-by-design architecture (Astro + MDX)** — Astro pre-renders every page to static HTML at build time, so there's zero server-side JavaScript, no database, and no runtime bottleneck to scale in the first place — just files served off a CDN. Client-side JS is kept to the absolute minimum. Content lives as MDX/Markdown files, so adding galleries, posts, or projects doesn't touch infrastructure — it's just more static files for the CDN to serve. The architecture itself has no ceiling; it's built to grow with the content, not against it.
 
 ## Getting started
 
