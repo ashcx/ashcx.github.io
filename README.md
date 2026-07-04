@@ -4,6 +4,18 @@ A static website for photography and data analyst work. No database, no backend 
 
 Built with [Astro](https://astro.build) and hosted on GitHub Pages — both free forever, with no vendor lock-in. Everything lives in plain files you own, so you're never stuck paying a platform or migrating off one.
 
+## Highlights
+
+1. **Zero-cost, fully open-source, hand-built architecture** — no templates, no page builders, no paid hosting or services. Built entirely on open-source packages (Astro, Sharp, gray-matter), custom-coded from scratch, and deployed free forever on GitHub Pages. The whole site costs $0 to run at any traffic level.
+
+2. **AI-generated content pipeline** — gallery and social post titles/descriptions are generated automatically via the OpenAI API, analyzing sample images plus guided context with zero manual writing. Turns "dump photos in a folder" into publish-ready copy without a human touching a keyboard.
+
+3. **Adaptive, self-scaling, multi-core image compression pipeline** — a single `npm run build` ingests as many galleries as you throw at it, generating thumb + full-size WebP variants per photo, with each image's quality adaptively stepped down until it hits a web-delivery byte budget — all parallelized across every CPU core. Verified handling 1,000+ photos in one run with zero manual intervention.
+
+4. **Fully automated CI/CD via GitHub Actions** — every push to `main` triggers build, validation, and deployment with no manual steps: commit locally, and the live site updates itself.
+
+5. **Scalable-by-design architecture (Astro + MDX)** — Astro ships zero JavaScript by default and pre-renders every page to static HTML at build time, so there's no server-side rendering, no database, and no runtime bottleneck to scale in the first place. Content lives as MDX/Markdown files, so adding galleries, posts, or projects doesn't touch infrastructure — it's just more static files for the CDN to serve. The architecture itself has no ceiling; it's built to grow with the content, not against it.
+
 ## Getting started
 
 ```bash

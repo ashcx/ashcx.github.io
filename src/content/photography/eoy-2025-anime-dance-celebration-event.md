@@ -3,7 +3,7 @@
 # hidden: true keeps this gallery out of home/photography listings unless ?hidden=1 is in the URL
 # coverImageIndex: N picks the Nth image (1-based, matching image-NNN- output filenames) as the cover instead of the first
 title: EOY 2025 Anime Dance Celebration Event
-date: 2026-07-02
+date: 2026-07-04
 photographyType: stage-work
 featuredRank: 11
 categoryRank: 2

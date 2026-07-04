@@ -3,7 +3,7 @@
 # hidden: true keeps this gallery out of home/photography listings unless ?hidden=1 is in the URL
 # coverImageIndex: N picks the Nth image (1-based, matching image-NNN- output filenames) as the cover instead of the first
 title: Starrylight Paints 2024 New Year Celebration & Fringe Activities
-date: 2026-07-02
+date: 2026-07-04
 photographyType: corporate-private-events
 featuredRank: 5
 categoryRank: 5
