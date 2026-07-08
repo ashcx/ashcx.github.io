@@ -391,8 +391,7 @@ p {
 
 .home-portrait-card img {
   width: 100%;
-  aspect-ratio: 3 / 2;
-  height: auto;
+  height: clamp(420px, 48vw, 610px);
   border-radius: 28px;
   object-fit: cover;
   box-shadow: 0 32px 88px rgba(40, 33, 25, 0.14);
@@ -2269,6 +2268,11 @@ p {
 
   .home-hero {
     padding-top: 46px;
+  }
+
+  .home-portrait-card img {
+    aspect-ratio: 3 / 2;
+    height: auto;
   }
 
   .home-name-block h1 {
