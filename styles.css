@@ -387,7 +387,8 @@ p {
 
 .home-portrait-card img {
   width: 100%;
-  height: clamp(420px, 48vw, 610px);
+  aspect-ratio: 3 / 2;
+  height: auto;
   border-radius: 28px;
   object-fit: cover;
   box-shadow: 0 32px 88px rgba(40, 33, 25, 0.14);
@@ -1986,10 +1987,6 @@ p {
     justify-self: center;
   }
 
-  .home-portrait-card img {
-    height: clamp(320px, 58vw, 520px);
-  }
-
   .hero-lede,
   .home-hero h1,
   .home-section-heading,
@@ -2270,6 +2267,12 @@ p {
     padding-top: 46px;
   }
 
+  .home-name-block h1 {
+    max-width: 100%;
+    font-size: 16vw;
+    white-space: nowrap;
+  }
+
   .content-tabs {
     justify-content: flex-start;
     overflow-x: auto;
@@ -2342,5 +2345,14 @@ p {
   .lightbox-stage img {
     max-width: calc(100vw - 36px);
     max-height: calc(100vh - 116px);
+  }
+
+  .work-grid,
+  .project-list-grid {
+    gap: 40px;
+  }
+
+  .project-card {
+    gap: 36px;
   }
 }
