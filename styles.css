@@ -290,6 +290,10 @@ p {
   font-size: clamp(1.12rem, 1.6vw, 1.28rem);
 }
 
+.page-hero p + p {
+  margin-top: -20px;
+}
+
 .home-hero-copy {
   max-width: 1160px;
   margin: 0 auto;

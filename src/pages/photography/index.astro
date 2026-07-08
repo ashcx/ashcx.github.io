@@ -13,7 +13,7 @@ const visibleCoverPhoto = allPhotos.find((photo) => !photo.data.hidden);
 const pageCover = visibleCoverPhoto
   ? getGalleryCover(entrySlug(visibleCoverPhoto), visibleCoverPhoto.data.coverImage, visibleCoverPhoto.data.images)
   : "";
-const defaultPhotographyType = "all";
+const defaultPhotographyType = "corporate-private-events";
 const photographySections = [
   {
     id: "all",
@@ -48,6 +48,7 @@ const photographySections = [
     <p class="eyebrow">Photography</p>
     <h1 id="photography-title">Your event, captured the way it deserves.</h1>
     <p>From large conferences to intimate celebrations, I bring the same care and professional eye to every shoot.</p>
+    <p>Corporate and private events are my focus. I also take on creative portrait and celebration work when the story's a good one.</p>
   </section>
 
   <section class="gallery-index-section photography-browser" aria-label="Photography galleries">
