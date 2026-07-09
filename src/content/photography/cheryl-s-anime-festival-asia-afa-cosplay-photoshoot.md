@@ -3,7 +3,7 @@
 # hidden: true keeps this gallery out of home/photography listings unless ?hidden=1 is in the URL
 # coverImageIndex: N picks the Nth image (1-based, matching image-NNN- output filenames) as the cover instead of the first
 title: Cheryl's Anime Festival Asia (AFA) Cosplay Photoshoot
-date: 2026-07-08
+date: 2026-07-09
 photographyType: photoshoot
 featuredRank: 13
 categoryRank: 1

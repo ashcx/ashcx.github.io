@@ -1,0 +1,35 @@
+---
+interface Row {
+  label: string;
+  value: string;
+}
+
+interface Props {
+  id: string;
+  rows: Row[];
+  eyebrow?: string;
+  heading?: string;
+}
+
+const { id, rows, eyebrow = "What to expect", heading = "Good to know before you reach out." } = Astro.props;
+---
+
+<section class="wtx-section" id={id} aria-labelledby={`${id}-title`}>
+  <div class="content-section-rule" />
+  <div class="home-section-heading">
+    <p class="eyebrow">{eyebrow}</p>
+    <div>
+      <h2 id={`${id}-title`}>{heading}</h2>
+    </div>
+  </div>
+  <dl class="wtx-rows">
+    {
+      rows.map((row) => (
+        <div class="wtx-row">
+          <dt>{row.label}</dt>
+          <dd>{row.value}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</section>

@@ -3,9 +3,21 @@ import { getCollection, render } from "astro:content";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import ContentEmbedGrid from "@components/ContentEmbedGrid.astro";
 import FeaturedCaseStudy from "@components/FeaturedCaseStudy.astro";
+import TestimonialsSection from "@components/TestimonialsSection.astro";
+import WhatToExpectSection from "@components/WhatToExpectSection.astro";
 import ContactSection from "@components/ContactSection.astro";
 import { published } from "@lib/content";
-import { sections } from "@lib/site";
+import { pricing, sections } from "@lib/site";
+
+const contentRows = [
+  {
+    label: "Pricing",
+    value: `Single pieces start from $${pricing.content.single}. Campaign packages (multiple pieces for a launch or promotion) start from $${pricing.content.campaign}. Ongoing content partnerships start from $${pricing.content.retainer}/month.`
+  },
+  { label: "Scope", value: "A typical monthly scope covers up to 4 pieces across Instagram, TikTok, or LinkedIn, with 1 round of revisions per piece." },
+  { label: "Turnaround", value: "A single video is delivered within 3 business days of filming." },
+  { label: "Commitment", value: "Ongoing partnerships run month-to-month — no lock-in contract." }
+];
 
 const contentItems = published(await getCollection("content-work"));
 const embedItems = contentItems.filter((item) => item.data.contentType === "embed");
@@ -32,6 +44,9 @@ const pageCover = featuredCaseStudy?.data.coverImage || embedItems.find((item) =
       </FeaturedCaseStudy>
     )
   }
+
+  <TestimonialsSection />
+  <WhatToExpectSection id="what-to-expect" rows={contentRows} />
 
   <ContactSection />
 

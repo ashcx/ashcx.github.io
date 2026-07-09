@@ -1,11 +1,22 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from "@layouts/BaseLayout.astro";
+import TestimonialsSection from "@components/TestimonialsSection.astro";
+import WhatToExpectSection from "@components/WhatToExpectSection.astro";
 import WorkGrid from "@components/WorkGrid.astro";
 import { photographyTypeName, published } from "@lib/content";
 import { entrySlug } from "@lib/content";
 import { getGalleryCover } from "@lib/gallery-images";
 import { rankPhotographyForAll, rankPhotographyForCategory } from "@lib/content";
+import { pricing } from "@lib/site";
+
+const photographyRows = [
+  { label: "Pricing", value: `Coverage starts from $${pricing.photography.halfDay} for half-day events (2-3hr), $${pricing.photography.fullDay} for full-day.` },
+  { label: "Deliverables", value: "Every gallery includes 60-100 edited images and a private online gallery to share or download from." },
+  { label: "Turnaround", value: "Edited galleries are delivered within 5 business days." },
+  { label: "Booking", value: "Weekend and peak-season dates book out fast — reach out at least 2 weeks ahead if you can." },
+  { label: "Usage", value: "Images are yours to use for marketing, recaps, and future promotion." }
+];
 
 const photos = published(await getCollection("photography"));
 const allPhotos = rankPhotographyForAll(photos);
@@ -85,6 +96,9 @@ const photographySections = [
       ))
     }
   </section>
+
+  <TestimonialsSection />
+  <WhatToExpectSection id="what-to-expect" rows={photographyRows} />
 
   <script>
     const tabs = Array.from(document.querySelectorAll<HTMLElement>("[data-photography-tab]"));

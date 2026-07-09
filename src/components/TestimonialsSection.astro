@@ -1,0 +1,48 @@
+---
+import { getCollection } from "astro:content";
+import { published } from "@lib/content";
+
+const testimonials = published(await getCollection("testimonials"))
+  .sort((a, b) => a.data.rank - b.data.rank)
+  .slice(0, 3);
+
+function initials(name: string) {
+  return name
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((part) => part[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+}
+---
+
+{
+  testimonials.length > 0 && (
+    <section class="testimonials-section" aria-labelledby="testimonials-title">
+      <div class="content-section-rule" />
+      <div class="home-section-heading">
+        <p class="eyebrow">What clients say</p>
+        <div>
+          <h2 id="testimonials-title">People I've worked with.</h2>
+        </div>
+      </div>
+      <div class="testimonial-strip">
+        {testimonials.map((testimonial) => (
+          <div class="testimonial-item">
+            <p class="testimonial-quote">{testimonial.data.quote}</p>
+            <div class="testimonial-person">
+              <span class="testimonial-avatar" aria-hidden="true">
+                {initials(testimonial.data.name)}
+              </span>
+              <div>
+                <strong>{testimonial.data.name}</strong>
+                {testimonial.data.role && <span>{testimonial.data.role}</span>}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}

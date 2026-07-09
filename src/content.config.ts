@@ -98,6 +98,17 @@ const dataProjects = defineCollection({
   })
 });
 
+const testimonials = defineCollection({
+  type: "content",
+  schema: z.object({
+    name: stringOrDefault("Anonymous"),
+    role: optionalString,
+    quote: stringOrDefault(""),
+    rank: rankNumber,
+    publishStatus
+  })
+});
+
 const contentWork = defineCollection({
   type: "content",
   schema: z.object({
@@ -127,5 +138,6 @@ const contentWork = defineCollection({
 export const collections = {
   photography,
   "data-projects": dataProjects,
-  "content-work": contentWork
+  "content-work": contentWork,
+  testimonials
 };
