@@ -1868,7 +1868,7 @@ p {
 }
 
 .contact-explore {
-  max-width: 720px;
+  max-width: 480px;
   margin: clamp(64px, 12vw, 96px) auto 0;
 }
 
