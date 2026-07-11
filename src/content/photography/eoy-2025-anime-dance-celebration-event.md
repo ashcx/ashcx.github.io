@@ -28,4 +28,3 @@ googlePhotosUrl: https://photos.app.goo.gl/wBUuLNWmqhVhouCc6
 coverImage: /images/galleries/eoy-2025-anime-dance-celebration-event/image-001-large.webp
 ---
 
-

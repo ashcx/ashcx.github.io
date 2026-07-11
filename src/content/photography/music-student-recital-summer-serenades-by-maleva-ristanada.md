@@ -28,4 +28,3 @@ googlePhotosUrl: https://photos.app.goo.gl/jvqo1uW8yDvRFeAx9
 coverImage: /images/galleries/music-student-recital-summer-serenades-by-maleva-ristanada/image-001-large.webp
 ---
 
-

@@ -28,4 +28,3 @@ googlePhotosUrl: https://photos.app.goo.gl/BgRhgsnB2WL2id9H8
 coverImage: /images/galleries/eat-the-world-corporate-networking-food-tasting-experience/image-001-large.webp
 ---
 
-

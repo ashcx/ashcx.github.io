@@ -29,4 +29,3 @@ googlePhotosUrl: https://photos.app.goo.gl/Ddw4rX8Jygp7vBBv7
 coverImage: /images/galleries/pre-wedding-photoshoot/image-001-large.webp
 ---
 
-

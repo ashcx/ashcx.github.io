@@ -30,4 +30,3 @@ googlePhotosUrl: https://photos.app.goo.gl/jF4KoZNWXY3mJeem8
 coverImage: /images/galleries/corporate-night-safari-experience-for-visa-leadership/image-001-large.webp
 ---
 
-

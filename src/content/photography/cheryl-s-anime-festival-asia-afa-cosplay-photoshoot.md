@@ -28,4 +28,3 @@ googlePhotosUrl: https://photos.app.goo.gl/VdB9a6cpCb6U4n2X8
 coverImage: /images/galleries/cheryl-s-anime-festival-asia-afa-cosplay-photoshoot/image-001-large.webp
 ---
 
-

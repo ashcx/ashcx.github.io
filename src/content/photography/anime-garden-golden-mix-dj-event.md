@@ -28,4 +28,3 @@ googlePhotosUrl: https://photos.app.goo.gl/aaxtVuGrVcqiniLk9
 coverImage: /images/galleries/anime-garden-golden-mix-dj-event/image-001-large.webp
 ---
 
-

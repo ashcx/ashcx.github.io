@@ -29,4 +29,3 @@ googlePhotosUrl: https://photos.app.goo.gl/MPdY83JkybrUsQiB9
 coverImage: /images/galleries/starrylight-paints-2024-new-year-celebration-fringe-activities/image-001-large.webp
 ---
 
-

@@ -29,4 +29,3 @@ googlePhotosUrl: https://photos.app.goo.gl/YFKKUsRF2D94NMTq5
 coverImage: /images/galleries/singapore-walking-tour-experience-by-hello-singapore/image-001-large.webp
 ---
 
-

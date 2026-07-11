@@ -28,4 +28,3 @@ googlePhotosUrl: https://photos.app.goo.gl/EgpP94suQp9aBaRd6
 coverImage: /images/galleries/young-kids-birthday-celebration/image-001-large.webp
 ---
 
-

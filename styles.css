@@ -1868,7 +1868,7 @@ p {
 }
 
 .contact-explore {
-  max-width: 480px;
+  max-width: 960px;
   margin: clamp(64px, 12vw, 96px) auto 0;
 }
 
@@ -2115,6 +2115,10 @@ p {
   .wtx-row,
   .contact-explore-grid {
     grid-template-columns: 1fr;
+  }
+
+  .contact-explore {
+    max-width: 480px;
   }
 
   .wtx-row {

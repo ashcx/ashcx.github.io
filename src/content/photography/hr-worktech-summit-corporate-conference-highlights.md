@@ -29,4 +29,3 @@ googlePhotosUrl: https://photos.app.goo.gl/ZWjVLU2VVXfLSomF6
 coverImage: /images/galleries/hr-worktech-summit-corporate-conference-highlights/image-001-large.webp
 ---
 
-

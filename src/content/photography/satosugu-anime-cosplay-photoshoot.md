@@ -29,4 +29,3 @@ googlePhotosUrl: https://photos.app.goo.gl/mMy6C69AfX9cPuH56
 coverImage: /images/galleries/satosugu-anime-cosplay-photoshoot/image-001-large.webp
 ---
 
-

@@ -28,4 +28,3 @@ googlePhotosUrl: https://photos.app.goo.gl/ehcdsAqE36nPjfbg8
 coverImage: /images/galleries/lin-ying-chu-s-summer-soiree-violin-recital/image-001-large.webp
 ---
 
-

@@ -28,4 +28,3 @@ googlePhotosUrl: https://photos.app.goo.gl/q7aUF1i7qua4iqVw9
 coverImage: /images/galleries/timeless-jubilee-wedding-anniversary-celebration/image-001-large.webp
 ---
 
-

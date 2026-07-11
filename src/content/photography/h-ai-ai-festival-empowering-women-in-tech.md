@@ -27,4 +27,3 @@ googlePhotosUrl: https://photos.app.goo.gl/2aSNqtGu3Ygmu8Ts8
 coverImage: /images/galleries/h-ai-ai-festival-empowering-women-in-tech/image-001-large.webp
 ---
 
-

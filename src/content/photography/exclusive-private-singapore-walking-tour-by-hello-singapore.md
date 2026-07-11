@@ -30,4 +30,3 @@ googlePhotosUrl: https://photos.app.goo.gl/2SJhcWccFcmcAbbS7
 coverImage: /images/galleries/exclusive-private-singapore-walking-tour-by-hello-singapore/image-001-large.webp
 ---
 
-

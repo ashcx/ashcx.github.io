@@ -19,4 +19,3 @@ guidedContext: Position this as a photoshoot gallery with strong character,
 coverImage: /images/galleries/cosplay/image-001-large.webp
 ---
 
-

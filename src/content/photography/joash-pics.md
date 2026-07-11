@@ -19,4 +19,3 @@ guidedContext: Position this as stage-work photography that captures
 coverImage: /images/galleries/joash-pics/image-001-large.webp
 ---
 
-
