@@ -6,8 +6,8 @@ import matter from "gray-matter";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 await loadEnv(path.join(root, ".env"));
 const apiKey = process.env.OPENAI_API_KEY;
-const model = process.env.OPENAI_MODEL || "gpt-5.4-mini";
-const reasoningEffort = process.env.OPENAI_REASONING_EFFORT || "low";
+const model = process.env.OPENAI_MODEL || "gpt-5.6-luna";
+const reasoningEffort = process.env.OPENAI_REASONING_EFFORT || "none";
 const startMarker = "{/* ai-summary:start */}";
 const endMarker = "{/* ai-summary:end */}";
 const regenerate = process.argv.includes("--regenerate");
@@ -29,6 +29,8 @@ const collections = [
 if (!apiKey) {
   console.log("AI summary generation skipped: OPENAI_API_KEY is not set.");
   process.exit(0);
+} else {
+  console.log(`AI summary generation using model: ${model}; reasoning effort: ${reasoningEffort}.`);
 }
 
 let updated = 0;
