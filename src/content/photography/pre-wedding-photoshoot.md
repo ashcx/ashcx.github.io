@@ -3,7 +3,7 @@
 # hidden: true keeps this gallery out of home/photography listings unless ?hidden=1 is in the URL
 # coverImageIndex: N picks the Nth image (1-based, matching image-NNN- output filenames) as the cover instead of the first
 title: Alex & ML Pre-Wedding Photoshoot
-date: 2026-07-09
+date: 2026-07-12
 photographyType: wedding-rom
 featuredRank: 17
 categoryRank: 10
@@ -28,4 +28,5 @@ guidedContext: "Client and shoot: a couple, Alex and ML, photographed together
 googlePhotosUrl: https://photos.app.goo.gl/Ddw4rX8Jygp7vBBv7
 coverImage: /images/galleries/pre-wedding-photoshoot/image-001-large.webp
 ---
+
 

@@ -3,7 +3,7 @@
 # hidden: true keeps this gallery out of home/photography listings unless ?hidden=1 is in the URL
 # coverImageIndex: N picks the Nth image (1-based, matching image-NNN- output filenames) as the cover instead of the first
 title: Yun's Comic Con Cosplay Photoshoot
-date: 2026-07-09
+date: 2026-07-12
 photographyType: photoshoot
 featuredRank: 14
 categoryRank: 2
@@ -27,4 +27,5 @@ guidedContext: "Client and shoot: Yun, a cosplayer, photographed as Starfire
 googlePhotosUrl: https://photos.app.goo.gl/gT4fKKoJ6eCZscdZ9
 coverImage: /images/galleries/yun-s-comic-con-cosplay-photoshoot/image-001-large.webp
 ---
+
 

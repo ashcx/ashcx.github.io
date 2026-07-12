@@ -3,7 +3,7 @@
 # hidden: true keeps this gallery out of home/photography listings unless ?hidden=1 is in the URL
 # coverImageIndex: N picks the Nth image (1-based, matching image-NNN- output filenames) as the cover instead of the first
 generatedTitle: Live Stage Performance Coverage
-date: 2026-07-09
+date: 2026-07-12
 photographyType: stage-work
 featuredRank: 1
 categoryRank: 2
@@ -18,4 +18,5 @@ guidedContext: Position this as stage-work photography that captures
   discipline, and images that preserve the energy of a live setting.
 coverImage: /images/galleries/joash-pics/image-001-large.webp
 ---
+
 

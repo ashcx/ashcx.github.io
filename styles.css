@@ -1470,7 +1470,17 @@ p {
   display: flex;
   flex: 1;
   flex-direction: column;
+  min-width: 0;
   padding: 0 clamp(20px, 3vw, 32px);
+}
+
+.testimonial-mark {
+  display: block;
+  height: 30px;
+  color: var(--accent);
+  font-family: Georgia, serif;
+  font-size: 3.4rem;
+  line-height: 0.8;
 }
 
 .testimonial-item:first-child {
@@ -1493,24 +1503,16 @@ p {
   line-height: 1.68;
 }
 
+.testimonial-quote mark {
+  padding: 0 0.08em;
+  background: linear-gradient(transparent 64%, rgba(210, 182, 133, 0.34) 64%);
+  color: inherit;
+}
+
 .testimonial-person {
   display: flex;
   align-items: center;
-  gap: 12px;
-}
-
-.testimonial-avatar {
-  display: flex;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 999px;
-  background: rgba(138, 115, 84, 0.14);
-  color: var(--accent);
-  font-size: 0.74rem;
-  font-weight: 760;
+  min-height: 54px;
 }
 
 .testimonial-person strong {
@@ -1521,8 +1523,32 @@ p {
 }
 
 .testimonial-person span {
+  display: block;
+  margin-top: 3px;
   color: var(--muted);
   font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.testimonials-cta {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 680px;
+  margin-top: clamp(46px, 6vw, 68px);
+  margin-right: auto;
+  margin-left: auto;
+  padding-top: 24px;
+  border-top: 1px solid var(--hairline);
+  text-align: center;
+}
+
+.testimonials-cta p {
+  margin: 2vh 0vh 0.2vh 0vh;
+  color: var(--ink);
+  font-size: 1.12rem;
+  line-height: 1.5;
 }
 
 /* ── What to expect ── */

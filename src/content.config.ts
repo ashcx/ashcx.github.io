@@ -104,6 +104,7 @@ const testimonials = defineCollection({
     name: stringOrDefault("Anonymous"),
     role: optionalString,
     quote: stringOrDefault(""),
+    highlight: optionalString,
     rank: rankNumber,
     publishStatus
   })

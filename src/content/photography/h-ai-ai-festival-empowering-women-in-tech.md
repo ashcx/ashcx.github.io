@@ -3,7 +3,7 @@
 # hidden: true keeps this gallery out of home/photography listings unless ?hidden=1 is in the URL
 # coverImageIndex: N picks the Nth image (1-based, matching image-NNN- output filenames) as the cover instead of the first
 title: H+AI - AI Festival Empowering Women in Tech
-date: 2026-07-09
+date: 2026-07-12
 photographyType: corporate-private-events
 featuredRank: 3
 categoryRank: 3
@@ -26,4 +26,5 @@ guidedContext: "Client and event: H+AI, a festival focused on empowering women
 googlePhotosUrl: https://photos.app.goo.gl/2aSNqtGu3Ygmu8Ts8
 coverImage: /images/galleries/h-ai-ai-festival-empowering-women-in-tech/image-001-large.webp
 ---
+
 

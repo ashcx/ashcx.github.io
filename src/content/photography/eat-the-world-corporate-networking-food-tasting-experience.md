@@ -3,7 +3,7 @@
 # hidden: true keeps this gallery out of home/photography listings unless ?hidden=1 is in the URL
 # coverImageIndex: N picks the Nth image (1-based, matching image-NNN- output filenames) as the cover instead of the first
 title: Eat The World - Corporate Networking & Food Tasting Experience
-date: 2026-07-09
+date: 2026-07-12
 photographyType: corporate-private-events
 featuredRank: 4
 categoryRank: 4
@@ -27,4 +27,5 @@ guidedContext: "Client and event: the Eat The World brand ran a corporate
 googlePhotosUrl: https://photos.app.goo.gl/BgRhgsnB2WL2id9H8
 coverImage: /images/galleries/eat-the-world-corporate-networking-food-tasting-experience/image-001-large.webp
 ---
+
 

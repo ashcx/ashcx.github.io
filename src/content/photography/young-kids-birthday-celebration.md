@@ -3,7 +3,7 @@
 # hidden: true keeps this gallery out of home/photography listings unless ?hidden=1 is in the URL
 # coverImageIndex: N picks the Nth image (1-based, matching image-NNN- output filenames) as the cover instead of the first
 title: Young Kids' Birthday Celebration
-date: 2026-07-09
+date: 2026-07-12
 photographyType: photoshoot
 featuredRank: 16
 categoryRank: 4
@@ -27,4 +27,5 @@ guidedContext: "Client and event: a family celebrating their young children's
 googlePhotosUrl: https://photos.app.goo.gl/EgpP94suQp9aBaRd6
 coverImage: /images/galleries/young-kids-birthday-celebration/image-001-large.webp
 ---
+
 

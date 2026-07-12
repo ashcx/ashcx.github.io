@@ -3,7 +3,7 @@
 # hidden: true keeps this gallery out of home/photography listings unless ?hidden=1 is in the URL
 # coverImageIndex: N picks the Nth image (1-based, matching image-NNN- output filenames) as the cover instead of the first
 title: HR WorkTech Summit — Corporate Conference Highlights
-date: 2026-07-09
+date: 2026-07-12
 photographyType: corporate-private-events
 featuredRank: 2
 categoryRank: 2
@@ -28,4 +28,5 @@ guidedContext: "Client and event: the HR WorkTech Summit, a business conference
 googlePhotosUrl: https://photos.app.goo.gl/ZWjVLU2VVXfLSomF6
 coverImage: /images/galleries/hr-worktech-summit-corporate-conference-highlights/image-001-large.webp
 ---
+
 

@@ -3,7 +3,7 @@
 # hidden: true keeps this gallery out of home/photography listings unless ?hidden=1 is in the URL
 # coverImageIndex: N picks the Nth image (1-based, matching image-NNN- output filenames) as the cover instead of the first
 title: Starrylight Paints 2024 New Year Celebration & Fringe Activities
-date: 2026-07-09
+date: 2026-07-12
 photographyType: corporate-private-events
 featuredRank: 5
 categoryRank: 5
@@ -28,4 +28,5 @@ guidedContext: "Client and event: Starrylight Paints, a face and body painting
 googlePhotosUrl: https://photos.app.goo.gl/MPdY83JkybrUsQiB9
 coverImage: /images/galleries/starrylight-paints-2024-new-year-celebration-fringe-activities/image-001-large.webp
 ---
+
 

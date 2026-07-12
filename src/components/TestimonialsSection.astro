@@ -5,16 +5,6 @@ import { published } from "@lib/content";
 const testimonials = published(await getCollection("testimonials"))
   .sort((a, b) => a.data.rank - b.data.rank)
   .slice(0, 3);
-
-function initials(name: string) {
-  return name
-    .split(/\s+/)
-    .filter(Boolean)
-    .map((part) => part[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
-}
 ---
 
 {
@@ -24,24 +14,42 @@ function initials(name: string) {
       <div class="home-section-heading">
         <p class="eyebrow">What clients say</p>
         <div>
-          <h2 id="testimonials-title">People I've worked with.</h2>
+          <h2 id="testimonials-title">Trusted by clients and collaborators.</h2>
         </div>
       </div>
       <div class="testimonial-strip">
         {testimonials.map((testimonial) => (
-          <div class="testimonial-item">
-            <p class="testimonial-quote">{testimonial.data.quote}</p>
+          <article class="testimonial-item">
+            <span class="testimonial-mark" aria-hidden="true">“</span>
+            <blockquote class="testimonial-quote">
+              {testimonial.data.highlight ? (
+                (() => {
+                  const [before, ...after] = testimonial.data.quote.split(testimonial.data.highlight);
+                  return <>{before}<strong>{testimonial.data.highlight}</strong>{after.join(testimonial.data.highlight)}</>;
+                })()
+              ) : testimonial.data.quote}
+            </blockquote>
             <div class="testimonial-person">
-              <span class="testimonial-avatar" aria-hidden="true">
-                {initials(testimonial.data.name)}
-              </span>
               <div>
                 <strong>{testimonial.data.name}</strong>
-                {testimonial.data.role && <span>{testimonial.data.role}</span>}
+                {testimonial.data.role && (
+                  <span>
+                    {testimonial.data.role.split("\n").map((line, index) => (
+                      <Fragment key={line}>
+                        {index > 0 && <br />}
+                        {line}
+                      </Fragment>
+                    ))}
+                  </span>
+                )}
               </div>
             </div>
-          </div>
+          </article>
         ))}
+      </div>
+      <div class="testimonials-cta">
+        <p>Planning an event or content shoot? Let’s create something worth remembering.</p>
+        <a class="button button-accent" href="/contact/">Work with me</a>
       </div>
     </section>
   )

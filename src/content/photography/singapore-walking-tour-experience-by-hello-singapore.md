@@ -3,7 +3,7 @@
 # hidden: true keeps this gallery out of home/photography listings unless ?hidden=1 is in the URL
 # coverImageIndex: N picks the Nth image (1-based, matching image-NNN- output filenames) as the cover instead of the first
 title: Singapore Walking Tour Experience by Hello Singapore
-date: 2026-07-09
+date: 2026-07-12
 photographyType: corporate-private-events
 featuredRank: 7
 categoryRank: 7
@@ -28,4 +28,5 @@ guidedContext: "Client and tour: Hello Singapore, a tour operator, runs this as
 googlePhotosUrl: https://photos.app.goo.gl/YFKKUsRF2D94NMTq5
 coverImage: /images/galleries/singapore-walking-tour-experience-by-hello-singapore/image-001-large.webp
 ---
+
 

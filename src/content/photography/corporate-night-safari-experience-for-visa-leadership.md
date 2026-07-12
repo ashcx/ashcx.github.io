@@ -3,7 +3,7 @@
 # hidden: true keeps this gallery out of home/photography listings unless ?hidden=1 is in the URL
 # coverImageIndex: N picks the Nth image (1-based, matching image-NNN- output filenames) as the cover instead of the first
 title: Corporate Night Safari Experience for Visa Leadership
-date: 2026-07-09
+date: 2026-07-12
 photographyType: corporate-private-events
 client: Visa
 featuredRank: 1
@@ -29,4 +29,5 @@ guidedContext: "Client and event: Visa hosted its leadership team and guests at
 googlePhotosUrl: https://photos.app.goo.gl/jF4KoZNWXY3mJeem8
 coverImage: /images/galleries/corporate-night-safari-experience-for-visa-leadership/image-001-large.webp
 ---
+
 

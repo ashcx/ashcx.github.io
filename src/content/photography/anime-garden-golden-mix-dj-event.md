@@ -3,7 +3,7 @@
 # hidden: true keeps this gallery out of home/photography listings unless ?hidden=1 is in the URL
 # coverImageIndex: N picks the Nth image (1-based, matching image-NNN- output filenames) as the cover instead of the first
 title: Anime Garden - Golden Mix DJ Event
-date: 2026-07-09
+date: 2026-07-12
 photographyType: stage-work
 featuredRank: 10
 categoryRank: 1
@@ -27,4 +27,5 @@ guidedContext: "Client and event: Anime Garden, an anime and pop-culture
 googlePhotosUrl: https://photos.app.goo.gl/aaxtVuGrVcqiniLk9
 coverImage: /images/galleries/anime-garden-golden-mix-dj-event/image-001-large.webp
 ---
+
 
