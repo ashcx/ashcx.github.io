@@ -7,3 +7,4 @@ inbox/
 .env.*
 .portfolio-auth/
 .DS_Store
+.claude/
