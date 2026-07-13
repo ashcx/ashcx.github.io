@@ -3,7 +3,7 @@
 # hidden: true keeps this gallery out of home/photography listings unless ?hidden=1 is in the URL
 # coverImageIndex: N picks the Nth image (1-based, matching image-NNN- output filenames) as the cover instead of the first
 title: Yun's Comic Con Cosplay Photoshoot
-date: 2026-07-12
+date: 2026-07-13
 photographyType: photoshoot
 featuredRank: 14
 categoryRank: 2
@@ -12,6 +12,8 @@ summary: Yun needed Starfire portraits that cut through Comic Con noise and read
   instantly. The red wig and purple-silver look land with real presence, even on
   a busy floor. One frame with Nightwing adds a shared cosplay moment Yun can
   post, share, and use to grow a following.
+cardSummary: Scroll stopping Starfire portraits, including a shared Nightwing
+  cosplay moment on the busy convention floor
 guidedContext: "Client and shoot: Yun, a cosplayer, photographed as Starfire
   (Teen Titans) at a Comic Con convention, with a bold red wig,
   purple-and-silver costume, and confident posing. One shot pairs her in

@@ -3,7 +3,7 @@
 # hidden: true keeps this gallery out of home/photography listings unless ?hidden=1 is in the URL
 # coverImageIndex: N picks the Nth image (1-based, matching image-NNN- output filenames) as the cover instead of the first
 title: Timeless Jubilee Wedding Anniversary Celebration
-date: 2026-07-12
+date: 2026-07-13
 photographyType: wedding-rom
 featuredRank: 12
 categoryRank: 1
@@ -12,6 +12,7 @@ summary: A rare anniversary milestone brought this family together in Singapore.
   Tender portraits around the city landmarks honour the couple’s years side by
   side. The gallery leaves them and their daughters with heirloom images to keep
   and share for years.
+cardSummary: A family milestone, preserved in heirloom portraits with their grown daughters
 guidedContext: "Client and shoot: a married couple celebrating a major milestone
   anniversary, photographed around Singapore landmarks (the Singapore Flyer, the
   Gardens by the Bay Supertrees). The gallery mixes tender portraits of the two

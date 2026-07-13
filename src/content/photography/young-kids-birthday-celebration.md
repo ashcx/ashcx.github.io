@@ -3,7 +3,7 @@
 # hidden: true keeps this gallery out of home/photography listings unless ?hidden=1 is in the URL
 # coverImageIndex: N picks the Nth image (1-based, matching image-NNN- output filenames) as the cover instead of the first
 title: Young Kids' Birthday Celebration
-date: 2026-07-12
+date: 2026-07-13
 photographyType: photoshoot
 featuredRank: 16
 categoryRank: 4
@@ -12,6 +12,7 @@ summary: The family marked a young child’s birthday with an ocean-themed
   celebration meant to hold onto how quickly early childhood passes. The gallery
   preserves the unposed moments, the gathered family, and the memories they will
   want to keep and share.
+cardSummary: Unposed family memories from an ocean themed birthday celebration
 guidedContext: "Client and event: a family celebrating their young children's
   birthday at an ocean-themed party. The gallery captures the kids in the moment
   (a toddler exploring the soft-play area, a child lost in a stream of bubbles)

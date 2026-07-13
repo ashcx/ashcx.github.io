@@ -21,6 +21,6 @@ const category = photographyTypeLabel(item);
   <div>
     <span class="meta-label">{category}</span>
     <strong>{title}</strong>
-    <p>{item.data.summary || item.data.description || "A set of highlights from this shoot."}</p>
+    <p class="card-summary">{item.data.cardSummary || item.data.summary || item.data.description || "A set of highlights from this shoot."}</p>
   </div>
 </a>

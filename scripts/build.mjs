@@ -5,6 +5,7 @@ const regenerateArgs = args.includes("--regenerate") ? ["--regenerate"] : [];
 
 await run("node", ["scripts/import-magic-directory.mjs"]);
 await run("npm", ["run", "social-copy", "--", ...regenerateArgs]);
+await run("npm", ["run", "card-summaries", "--", ...regenerateArgs]);
 await run("npm", ["run", "validate"]);
 await run("npm", ["exec", "astro", "--", "build"], {
   ASTRO_TELEMETRY_DISABLED: "1"

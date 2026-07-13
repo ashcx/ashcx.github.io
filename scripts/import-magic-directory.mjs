@@ -350,6 +350,7 @@ async function writeGalleryContent({ folderPath, slug, manifest }) {
     hidden: data.hidden === true || data.hidden === "true" ? true : undefined,
     publishStatus: data.publishStatus || "published",
     summary: data.summary || existing.data.summary || undefined,
+    cardSummary: data.cardSummary || existing.data.cardSummary || undefined,
     description: data.description || undefined,
     guidedContext: data.guidedContext || undefined,
     platformCaption: data.platformCaption || undefined,

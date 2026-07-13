@@ -3,7 +3,7 @@
 # hidden: true keeps this gallery out of home/photography listings unless ?hidden=1 is in the URL
 # coverImageIndex: N picks the Nth image (1-based, matching image-NNN- output filenames) as the cover instead of the first
 title: EOY 2025 Anime Dance Celebration Event
-date: 2026-07-12
+date: 2026-07-13
 photographyType: stage-work
 featuredRank: 11
 categoryRank: 2
@@ -12,6 +12,8 @@ summary: The anime and pop-culture community closed the year with a stage built
   for its performers. Coordinated dance groups and idol-style singers gave the
   scene a proper send-off. The gallery gives performers sharp images for
   portfolios and socials, and organizers proof of a full showcase for next year.
+cardSummary: Year end send off with dance groups and idol singers, images for
+  portfolios and socials.
 guidedContext: "Event: an end-of-year celebration for an anime and pop-culture
   community, built around live stage performances. The line-up included
   coordinated dance-cover groups, idol-style singers performing with mics in

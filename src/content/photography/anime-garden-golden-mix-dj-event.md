@@ -3,7 +3,7 @@
 # hidden: true keeps this gallery out of home/photography listings unless ?hidden=1 is in the URL
 # coverImageIndex: N picks the Nth image (1-based, matching image-NNN- output filenames) as the cover instead of the first
 title: Anime Garden - Golden Mix DJ Event
-date: 2026-07-12
+date: 2026-07-13
 photographyType: stage-work
 featuredRank: 10
 categoryRank: 1
@@ -12,6 +12,8 @@ summary: Anime Garden’s Golden Mix DJ event turned an online fandom into a liv
   local scene. Daylight sets and the later indoor crowd gave the brand a clear
   sense of momentum. The gallery gives Anime Garden proof to court sponsors,
   book talent, and sell the next edition.
+cardSummary: Anime Garden bringing online fandom into a live community scene,
+  building future event momentum
 guidedContext: "Client and event: Anime Garden, an anime and pop-culture
   community brand, ran its Golden Mix DJ event across an outdoor daytime stage
   and a darker indoor set later on. DJs performed in anime graphic tees on

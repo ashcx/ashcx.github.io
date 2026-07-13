@@ -3,7 +3,7 @@
 # hidden: true keeps this gallery out of home/photography listings unless ?hidden=1 is in the URL
 # coverImageIndex: N picks the Nth image (1-based, matching image-NNN- output filenames) as the cover instead of the first
 title: Exclusive Private Singapore Walking Tour by Hello Singapore
-date: 2026-07-12
+date: 2026-07-13
 photographyType: corporate-private-events
 featuredRank: 6
 categoryRank: 6
@@ -13,6 +13,8 @@ summary: Hello Singapore’s private Singapore walking tour is built around
   and center as a small group moves through heritage districts and guide-led
   stops. It gives Hello Singapore clear proof to sell the premium tier to
   discerning travellers.
+cardSummary: Small group exploring Singapore heritage districts with a guide led
+  temple visit
 guidedContext: "Client and tour: Hello Singapore, a tour operator, runs this as
   its premium private offering. The gallery follows a small group (a guide and
   just a couple of travellers) through Singapore's heritage districts, with

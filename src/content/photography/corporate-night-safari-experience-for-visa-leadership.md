@@ -3,7 +3,7 @@
 # hidden: true keeps this gallery out of home/photography listings unless ?hidden=1 is in the URL
 # coverImageIndex: N picks the Nth image (1-based, matching image-NNN- output filenames) as the cover instead of the first
 title: Corporate Night Safari Experience for Visa Leadership
-date: 2026-07-12
+date: 2026-07-13
 photographyType: corporate-private-events
 client: Visa
 featuredRank: 1
@@ -14,6 +14,8 @@ summary: Visa brought its leadership team and guests together for a private
   gave senior relationships a memorable way to connect in person. The gallery
   gives Visa a discreet record for recaps, thank-you notes, and future
   invitations.
+cardSummary: Visa leadership building relationships through shared experiences,
+  with images for recaps and future invitations.
 guidedContext: "Client and event: Visa hosted its leadership team and guests at
   a private after-dark night safari, an experiential evening built to thank and
   connect with people in person rather than in a boardroom. The evening moved

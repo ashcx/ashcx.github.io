@@ -70,6 +70,7 @@ const photography = defineCollection({
     coverImage: optionalString,
     googlePhotosUrl: optionalString,
     summary: optionalString,
+    cardSummary: optionalString,
     description: optionalString,
     guidedContext: optionalString,
     platformCaption: optionalString,

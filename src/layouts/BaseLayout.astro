@@ -40,7 +40,7 @@ const ogImage = image ? new URL(image, Astro.site).toString() : undefined;
   </head>
   <body>
     <Nav active={active} />
-    <main>
+    <main class:list={[{ "home-page": active === "home" }]}>
       <slot />
     </main>
     <Footer />

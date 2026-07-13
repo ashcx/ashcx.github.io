@@ -2,6 +2,12 @@
 import { getCollection } from "astro:content";
 import { published } from "@lib/content";
 
+interface Props {
+  showRule?: boolean;
+}
+
+const { showRule = true } = Astro.props;
+
 const testimonials = published(await getCollection("testimonials"))
   .sort((a, b) => a.data.rank - b.data.rank)
   .slice(0, 3);
@@ -10,7 +16,7 @@ const testimonials = published(await getCollection("testimonials"))
 {
   testimonials.length > 0 && (
     <section class="testimonials-section" aria-labelledby="testimonials-title">
-      <div class="content-section-rule" />
+      {showRule && <div class="content-section-rule" />}
       <div class="home-section-heading">
         <p class="eyebrow">What clients say</p>
         <div>

@@ -3,7 +3,7 @@
 # hidden: true keeps this gallery out of home/photography listings unless ?hidden=1 is in the URL
 # coverImageIndex: N picks the Nth image (1-based, matching image-NNN- output filenames) as the cover instead of the first
 title: Music Student Recital - Summer Serenades by Maleva Ristanada
-date: 2026-07-12
+date: 2026-07-13
 photographyType: corporate-private-events
 featuredRank: 9
 categoryRank: 9
@@ -12,6 +12,8 @@ summary: Maleva Ristanada’s Summer Serenades recital marked a term of progress
   for her piano students. Families left with proud portraits of a milestone
   worth keeping. The gallery also gives her studio a warm showcase for
   prospective parents.
+cardSummary: Young pianists receiving achievement certificates as families
+  celebrate their progress on stage
 guidedContext: "Client and event: Maleva Ristanada, a piano teacher, hosted the
   \"Summer Serenades\" recital for her students. The gallery shows young
   pianists performing solos and duets on a grand piano, and families posing

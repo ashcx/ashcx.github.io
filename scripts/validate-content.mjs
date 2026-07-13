@@ -101,6 +101,9 @@ async function validatePhotography() {
     seenFiles.add(gallery.slugFromFile);
 
     if (!gallery.data.guidedContext) warn(`Photography gallery "${gallery.file}" has no guidedContext; AI title and summary generation will have little context.`);
+    if (gallery.data.cardSummary && !isValidCardSummary(gallery.data.cardSummary, gallery.data.title || gallery.data.generatedTitle)) {
+      warn(`Photography gallery "${gallery.file}" has a cardSummary outside the 6-15 word or title-distinctness limits.`);
+    }
     if (gallery.data.slug && gallery.data.slug !== gallery.slugFromFile) {
       warn(`Photography gallery "${gallery.file}" slug does not match filename; filename route will be used.`);
     }
@@ -143,6 +146,40 @@ function hasPositiveNumber(value) {
   const number = Number(value);
   return Number.isFinite(number) && number > 0;
 }
+
+function isValidCardSummary(value, title = "") {
+  const summary = String(value || "").replace(/\s+/g, " ").trim();
+  const words = summary.split(/\s+/).filter(Boolean);
+  if (words.length < 6 || words.length > 15) return false;
+  if (/[/#*_`]|https?:\/\/|www\./i.test(summary) || /[\p{Extended_Pictographic}]/u.test(summary)) return false;
+  if (/\b(?:captured|documented|showcasing|featuring|highlighting)\s+(?:for|the|a|an)\b/i.test(summary)) return false;
+
+  const titleWords = normalizeForCardSummary(title).split(/\s+/).filter(Boolean);
+  const summaryWords = normalizeForCardSummary(summary).split(/\s+/).filter(Boolean);
+  const titleSet = new Set(titleWords);
+  const meaningfulSummaryWords = summaryWords.filter((word) => word.length > 2 && !cardSummaryStopWords.has(word));
+  const novelWords = meaningfulSummaryWords.filter((word) => !titleSet.has(word));
+  if (meaningfulSummaryWords.length > 0 && novelWords.length < 2) return false;
+
+  for (let index = 0; index <= summaryWords.length - 3; index += 1) {
+    const phrase = summaryWords.slice(index, index + 3).join(" ");
+    if (phrase && titleWords.join(" ").includes(phrase)) return false;
+  }
+
+  return true;
+}
+
+function normalizeForCardSummary(value) {
+  return String(value || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+const cardSummaryStopWords = new Set([
+  "a", "an", "and", "at", "by", "for", "from", "in", "of", "on", "or", "the", "to", "with"
+]);
 
 async function validateDataProjects() {
   const projects = await readContentFiles("data-projects", [".md", ".mdx"]);

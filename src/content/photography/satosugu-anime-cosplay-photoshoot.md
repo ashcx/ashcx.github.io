@@ -3,7 +3,7 @@
 # hidden: true keeps this gallery out of home/photography listings unless ?hidden=1 is in the URL
 # coverImageIndex: N picks the Nth image (1-based, matching image-NNN- output filenames) as the cover instead of the first
 title: Satosugu Anime Cosplay Photoshoot
-date: 2026-07-12
+date: 2026-07-13
 photographyType: photoshoot
 featuredRank: 15
 categoryRank: 3
@@ -12,6 +12,8 @@ summary: This photoshoot leans into the bond fans follow between Gojo and Geto
   from the fan-favourite anime Jujutsu Kaisen. Shot from golden hour into night,
   it gives the pair a cinematic character set for socials that feels rooted in
   the fandom.
+cardSummary: A cinematic character set exploring Gojo and Geto's bond from
+  golden hour into night.
 guidedContext: 'Client and shoot: two cosplayers portraying the "Satosugu"
   pairing (Satoru Gojo and Suguru Geto from Jujutsu Kaisen), shot on location at
   a beach from golden hour into the night. This is a cinematic, story-driven

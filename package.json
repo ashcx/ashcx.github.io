@@ -10,6 +10,7 @@
     "validate": "ASTRO_TELEMETRY_DISABLED=1 astro check && node scripts/validate-content.mjs",
     "import:magic": "node scripts/import-magic-directory.mjs",
     "social-copy": "node scripts/generate-social-copy.mjs",
+    "card-summaries": "node scripts/generate-card-summaries.mjs",
     "check": "npm run validate"
   },
   "dependencies": {

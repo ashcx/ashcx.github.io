@@ -3,7 +3,7 @@
 # hidden: true keeps this gallery out of home/photography listings unless ?hidden=1 is in the URL
 # coverImageIndex: N picks the Nth image (1-based, matching image-NNN- output filenames) as the cover instead of the first
 title: Cheryl's Anime Festival Asia (AFA) Cosplay Photoshoot
-date: 2026-07-12
+date: 2026-07-13
 photographyType: photoshoot
 featuredRank: 13
 categoryRank: 1
@@ -12,6 +12,8 @@ summary: For a cosplayer, a strong portfolio set defines how the character is
   seen online. Cheryl’s AFA portraits give her clean, editorial images that hold
   up beyond the convention floor. She now has character-accurate photos ready to
   lead her socials and cosplay portfolio.
+cardSummary: Polished character portraits for Cheryl's cosplay portfolio and
+  social media presence
 guidedContext: "Client and shoot: Cheryl, a cosplayer, photographed in full
   character costume during Anime Festival Asia (AFA), the region's biggest anime
   convention. The set is clean editorial portraits shot around the convention

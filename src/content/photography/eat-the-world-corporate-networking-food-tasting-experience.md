@@ -3,7 +3,7 @@
 # hidden: true keeps this gallery out of home/photography listings unless ?hidden=1 is in the URL
 # coverImageIndex: N picks the Nth image (1-based, matching image-NNN- output filenames) as the cover instead of the first
 title: Eat The World - Corporate Networking & Food Tasting Experience
-date: 2026-07-12
+date: 2026-07-13
 photographyType: corporate-private-events
 featuredRank: 4
 categoryRank: 4
@@ -12,6 +12,8 @@ summary: Eat The World’s corporate networking format turns food tasting into a
   warmer way to build business relationships. Live cooking and a steady emcee
   kept the evening moving without losing its professional feel. The gallery
   gives the brand proof to share with corporate clients and F&B partners.
+cardSummary: Warm corporate networking through live cooking, tasting plates, and
+  guided conversation
 guidedContext: "Client and event: the Eat The World brand ran a corporate
   networking session built around live cooking and food tasting. Guests in
   business attire mingled over tasting plates while a chef cooked and plated at

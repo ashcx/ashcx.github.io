@@ -3,7 +3,7 @@
 # hidden: true keeps this gallery out of home/photography listings unless ?hidden=1 is in the URL
 # coverImageIndex: N picks the Nth image (1-based, matching image-NNN- output filenames) as the cover instead of the first
 title: Singapore Walking Tour Experience by Hello Singapore
-date: 2026-07-12
+date: 2026-07-13
 photographyType: corporate-private-events
 featuredRank: 7
 categoryRank: 7
@@ -12,6 +12,8 @@ summary: Hello Singapore’s walking tour promises a true taste of Singapore, fr
   culture to local food. The gallery captures that everyday traveller experience
   with energy and appetite. It gives the team fresh images for listings, booking
   pages, and social posts that help fill seats.
+cardSummary: Everyday travellers exploring Singaporean culture and hawker food
+  on a public walking tour
 guidedContext: "Client and tour: Hello Singapore, a tour operator, runs this as
   its standard public walking tour. The gallery follows a group through a
   cultural gallery stop, hawker food tasting (travellers eating local dishes

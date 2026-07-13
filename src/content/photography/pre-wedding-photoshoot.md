@@ -3,7 +3,7 @@
 # hidden: true keeps this gallery out of home/photography listings unless ?hidden=1 is in the URL
 # coverImageIndex: N picks the Nth image (1-based, matching image-NNN- output filenames) as the cover instead of the first
 title: Alex & ML Pre-Wedding Photoshoot
-date: 2026-07-12
+date: 2026-07-13
 photographyType: wedding-rom
 featuredRank: 17
 categoryRank: 10
@@ -12,6 +12,8 @@ summary: Alex and ML’s pre-wedding session gave them quiet time together befor
   the wedding-day rush. Shot in natural outdoor light, the gallery holds relaxed
   portraits and close, candid moments. It leaves them with a set of couple
   images to keep and share on their own.
+cardSummary: Unhurried time together, with relaxed outdoor portraits before
+  their wedding day
 guidedContext: "Client and shoot: a couple, Alex and ML, photographed together
   ahead of their wedding day for a set of relaxed pre-wedding portraits in
   natural outdoor light. The gallery holds posed couple portraits and close,
