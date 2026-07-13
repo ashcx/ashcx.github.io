@@ -1960,6 +1960,21 @@ p {
   text-align: center;
 }
 
+.contact-page-intro {
+  padding-bottom: 0;
+}
+
+.contact-page-followup {
+  padding-top: 0;
+  padding-bottom: clamp(104px, 10vw, 144px);
+}
+
+.contact-page-followup > .content-section-rule {
+  width: min(var(--max), calc(100vw - var(--gutter) * 2));
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+
 .contact-page h1,
 .contact-page > p {
   margin-right: auto;
@@ -1968,20 +1983,20 @@ p {
 
 .contact-explore {
   max-width: 1000px;
-  margin: clamp(64px, 12vw, 96px) auto 0;
+  margin: 0 auto;
 }
 
 .contact-explore-subhead {
-  margin-bottom: 10px;
-  font-size: clamp(1.4rem, 2.6vw, 1.8rem);
-  font-weight: 760;
-  letter-spacing: -0.045em;
-  line-height: 1.05;
+  margin-bottom: clamp(16px, 2vw, 22px);
+  font-size: clamp(40px, 4.6vw, 60px);
+  font-weight: 720;
+  letter-spacing: -1px;
+  line-height: 1.02;
   color: var(--ink);
 }
 
 .contact-explore-lead {
-  margin: 0 auto 20px;
+  margin: 0 auto clamp(24px, 3vw, 32px);
   max-width: 360px;
   color: var(--muted);
   font-size: 0.98rem;
@@ -1991,7 +2006,7 @@ p {
 .contact-explore-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(16px, 2.2vw, 24px);
+  gap: clamp(24px, 3vw, 40px);
   text-align: left;
 }
 

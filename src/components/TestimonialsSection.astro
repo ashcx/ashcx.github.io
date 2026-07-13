@@ -4,9 +4,10 @@ import { published } from "@lib/content";
 
 interface Props {
   showRule?: boolean;
+  showCta?: boolean;
 }
 
-const { showRule = true } = Astro.props;
+const { showRule = true, showCta = true } = Astro.props;
 
 const testimonials = published(await getCollection("testimonials"))
   .sort((a, b) => a.data.rank - b.data.rank)
@@ -53,10 +54,12 @@ const testimonials = published(await getCollection("testimonials"))
           </article>
         ))}
       </div>
-      <div class="testimonials-cta">
-        <p>Planning an event or content shoot? Let’s create something worth remembering.</p>
-        <a class="button button-accent" href="/contact/">Work with me</a>
-      </div>
+      {showCta && (
+        <div class="testimonials-cta">
+          <p>Planning an event or content shoot? Let’s create something worth remembering.</p>
+          <a class="button button-accent" href="/contact/">Work with me</a>
+        </div>
+      )}
     </section>
   )
 }

@@ -1,10 +1,11 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
+import TestimonialsSection from "@components/TestimonialsSection.astro";
 import { site } from "@lib/site";
 ---
 
 <BaseLayout title="Contact" description="Contact Ash for event photography, social media content, and collaboration enquiries." active="contact">
-  <section class="contact-page" aria-labelledby="contact-title">
+  <section class="contact-page contact-page-intro" aria-labelledby="contact-title">
     <p class="eyebrow">Contact</p>
     <h1 id="contact-title">Let's talk about your event.</h1>
     <p>For event coverage, content work, or a collaboration you have in mind, WhatsApp is the fastest way to reach me.</p>
@@ -18,6 +19,12 @@ import { site } from "@lib/site";
       </a>
     </div>
 
+  </section>
+
+  <TestimonialsSection showCta={false} />
+
+  <section class="contact-page contact-page-followup" aria-label="Explore more work">
+    <div class="content-section-rule" />
     <div class="contact-explore">
       <h2 class="contact-explore-subhead">Want to see the work first?</h2>
       <p class="contact-explore-lead">Browse recent photography and social content.</p>
