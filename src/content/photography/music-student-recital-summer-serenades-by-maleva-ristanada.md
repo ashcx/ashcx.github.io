@@ -3,7 +3,7 @@
 # hidden: true keeps this gallery out of home/photography listings unless ?hidden=1 is in the URL
 # coverImageIndex: N picks the Nth image (1-based, matching image-NNN- output filenames) as the cover instead of the first
 title: Music Student Recital - Summer Serenades by Maleva Ristanada
-date: 2026-07-13
+date: 2026-07-31
 photographyType: corporate-private-events
 featuredRank: 9
 categoryRank: 9
