@@ -8,6 +8,7 @@ photographyType: corporate-private-events
 featuredRank: 4
 categoryRank: 4
 publishStatus: published
+coverImageIndex: 24
 summary: Eat The World’s corporate networking format turns food tasting into a
   warmer way to build business relationships. Live cooking and a steady emcee
   kept the evening moving without losing its professional feel. The gallery
@@ -27,7 +28,7 @@ guidedContext: "Client and event: the Eat The World brand ran a corporate
   guests and the brand, then connect it to how the images help sell it. Do not
   just describe the food or the mingling."
 googlePhotosUrl: https://photos.app.goo.gl/BgRhgsnB2WL2id9H8
-coverImage: /images/galleries/eat-the-world-corporate-networking-food-tasting-experience/image-001-large.webp
+coverImage: /images/galleries/eat-the-world-corporate-networking-food-tasting-experience/image-024-large.webp
 ---
 
 

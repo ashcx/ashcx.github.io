@@ -9,6 +9,7 @@ featuredRank: 1
 categoryRank: 2
 hidden: true
 publishStatus: published
+coverImageIndex: 21
 summary: This photoshoot leans into character, with styling that gives each
   portrait a clear point of view. Costume details and composed poses add texture
   throughout. The gallery offers a ready set of images that can anchor a
@@ -18,7 +19,7 @@ cardSummary: Expressive portraits with costume details and composed poses in a
 guidedContext: Position this as a photoshoot gallery with strong character,
   styling, and visual personality. Emphasize expressive portraits, costume
   details, and a curated set that feels more intentional than casual snapshots.
-coverImage: /images/galleries/cosplay/image-001-large.webp
+coverImage: /images/galleries/cosplay/image-021-large.webp
 ---
 
 

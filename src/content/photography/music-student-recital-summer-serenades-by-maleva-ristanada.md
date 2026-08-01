@@ -8,6 +8,7 @@ photographyType: corporate-private-events
 featuredRank: 9
 categoryRank: 9
 publishStatus: published
+coverImageIndex: 13
 summary: Maleva Ristanada’s Summer Serenades recital marked a term of progress
   for her piano students. Families left with proud portraits of a milestone
   worth keeping. The gallery also gives her studio a warm showcase for
@@ -27,7 +28,7 @@ guidedContext: "Client and event: Maleva Ristanada, a piano teacher, hosted the
   students and families, then connect it to how the images serve them and the
   studio. Do not just describe the piano playing."
 googlePhotosUrl: https://photos.app.goo.gl/jvqo1uW8yDvRFeAx9
-coverImage: /images/galleries/music-student-recital-summer-serenades-by-maleva-ristanada/image-001-large.webp
+coverImage: /images/galleries/music-student-recital-summer-serenades-by-maleva-ristanada/image-013-large.webp
 ---
 
 

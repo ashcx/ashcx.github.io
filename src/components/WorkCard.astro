@@ -10,7 +10,7 @@ interface Props {
 
 const { item, large = false } = Astro.props;
 const slug = entrySlug(item);
-const cover = getGalleryCover(slug, item.data.coverImage, item.data.images);
+const cover = getGalleryCover(slug, item.data.coverImage, item.data.images, item.data.coverImageIndex);
 const title = displayTitle(item);
 const category = photographyTypeLabel(item);
 ---

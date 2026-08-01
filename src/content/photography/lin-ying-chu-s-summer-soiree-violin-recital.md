@@ -8,6 +8,7 @@ photographyType: corporate-private-events
 featuredRank: 8
 categoryRank: 8
 publishStatus: published
+coverImageIndex: 25
 summary: Lin Ying Chu’s summer recital marked the term’s big milestone for her
   young students and their families. The gallery holds that proud step on stage,
   along with the celebrations after. It gives families keepsakes and gives her
@@ -26,7 +27,7 @@ guidedContext: "Client and event: Lin Ying Chu, a violin teacher, held a summer
   the students and the studio, then connect it to how the images serve families
   and the teacher. Do not just describe the performances."
 googlePhotosUrl: https://photos.app.goo.gl/ehcdsAqE36nPjfbg8
-coverImage: /images/galleries/lin-ying-chu-s-summer-soiree-violin-recital/image-001-large.webp
+coverImage: /images/galleries/lin-ying-chu-s-summer-soiree-violin-recital/image-025-large.webp
 ---
 
 

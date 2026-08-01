@@ -8,6 +8,7 @@ photographyType: wedding-rom
 featuredRank: 12
 categoryRank: 1
 publishStatus: published
+coverImageIndex: 1
 summary: A rare anniversary milestone brought this family together in Singapore.
   Tender portraits around the city landmarks honour the couple’s years side by
   side. The gallery leaves them and their daughters with heirloom images to keep

@@ -78,7 +78,16 @@ export function getGalleryImages(slug: string, frontmatterImages: GalleryImage[]
   return fromFolder(slug);
 }
 
-export function getGalleryCover(slug: string, coverImage?: string, frontmatterImages: GalleryImage[] = []) {
+export function getGalleryCover(
+  slug: string,
+  coverImage?: string,
+  frontmatterImages: GalleryImage[] = [],
+  coverImageIndex?: number
+) {
   const images = getGalleryImages(slug, frontmatterImages);
+  const selectedImage = Number.isInteger(coverImageIndex) && coverImageIndex! >= 1
+    ? images[coverImageIndex! - 1]
+    : undefined;
+  if (selectedImage) return selectedImage.large || selectedImage.thumb || "";
   return coverImage || images[0]?.large || images[0]?.thumb || "";
 }

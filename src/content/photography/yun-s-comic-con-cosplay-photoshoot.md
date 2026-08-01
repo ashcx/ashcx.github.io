@@ -8,6 +8,7 @@ photographyType: photoshoot
 featuredRank: 14
 categoryRank: 2
 publishStatus: published
+coverImageIndex: 8
 summary: Yun needed Starfire portraits that cut through Comic Con noise and read
   instantly. The red wig and purple-silver look land with real presence, even on
   a busy floor. One frame with Nightwing adds a shared cosplay moment Yun can
@@ -27,7 +28,7 @@ guidedContext: "Client and shoot: Yun, a cosplayer, photographed as Starfire
   set does for a cosplayer, then connect it to these portraits. Do not just
   describe the costume."
 googlePhotosUrl: https://photos.app.goo.gl/gT4fKKoJ6eCZscdZ9
-coverImage: /images/galleries/yun-s-comic-con-cosplay-photoshoot/image-001-large.webp
+coverImage: /images/galleries/yun-s-comic-con-cosplay-photoshoot/image-008-large.webp
 ---
 
 

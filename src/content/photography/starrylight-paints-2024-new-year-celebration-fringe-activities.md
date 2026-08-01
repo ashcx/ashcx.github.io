@@ -8,6 +8,7 @@ photographyType: corporate-private-events
 featuredRank: 5
 categoryRank: 5
 publishStatus: published
+coverImageIndex: 1
 summary: Starrylight Atelier turned a public New Year celebration into a live
   showcase for its face and body art. The gallery captures the skill, speed, and
   delight that organizers want from a crowd-facing activation. It gives

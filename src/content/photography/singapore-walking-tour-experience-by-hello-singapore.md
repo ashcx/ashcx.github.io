@@ -8,6 +8,7 @@ photographyType: corporate-private-events
 featuredRank: 7
 categoryRank: 7
 publishStatus: published
+coverImageIndex: 30
 summary: Hello Singapore’s walking tour promises a true taste of Singapore, from
   culture to local food. The gallery captures that everyday traveller experience
   with energy and appetite. It gives the team fresh images for listings, booking
@@ -28,7 +29,7 @@ guidedContext: "Client and tour: Hello Singapore, a tour operator, runs this as
   local day this tour promises, then connect it to how the images help fill
   bookings. Do not just list the stops."
 googlePhotosUrl: https://photos.app.goo.gl/YFKKUsRF2D94NMTq5
-coverImage: /images/galleries/singapore-walking-tour-experience-by-hello-singapore/image-001-large.webp
+coverImage: /images/galleries/singapore-walking-tour-experience-by-hello-singapore/image-030-large.webp
 ---
 
 

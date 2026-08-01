@@ -8,6 +8,7 @@ photographyType: wedding-rom
 featuredRank: 17
 categoryRank: 10
 publishStatus: published
+coverImageIndex: 15
 summary: Alex and ML’s pre-wedding session gave them quiet time together before
   the wedding-day rush. Shot in natural outdoor light, the gallery holds relaxed
   portraits and close, candid moments. It leaves them with a set of couple
@@ -28,7 +29,7 @@ guidedContext: "Client and shoot: a couple, Alex and ML, photographed together
   shoot from June 2024, so treat it as a lower-priority archive gallery rather
   than a recent highlight."
 googlePhotosUrl: https://photos.app.goo.gl/Ddw4rX8Jygp7vBBv7
-coverImage: /images/galleries/pre-wedding-photoshoot/image-001-large.webp
+coverImage: /images/galleries/pre-wedding-photoshoot/image-015-large.webp
 ---
 
 

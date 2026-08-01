@@ -15,7 +15,7 @@ const latestPhotos = splitHidden(rankPhotographyForAll(photos), 2);
 const socialHighlights = contentItems.filter((item) => item.data.contentType === "embed");
 const visibleCoverPhoto = latestPhotos.find((photo) => !photo.data.hidden);
 const pageCover = visibleCoverPhoto
-  ? getGalleryCover(entrySlug(visibleCoverPhoto), visibleCoverPhoto.data.coverImage, visibleCoverPhoto.data.images)
+  ? getGalleryCover(entrySlug(visibleCoverPhoto), visibleCoverPhoto.data.coverImage, visibleCoverPhoto.data.images, visibleCoverPhoto.data.coverImageIndex)
   : "";
 ---
 

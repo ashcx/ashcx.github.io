@@ -8,6 +8,7 @@ photographyType: corporate-private-events
 featuredRank: 3
 categoryRank: 3
 publishStatus: published
+coverImageIndex: 1
 summary: H+AI’s AI Festival was built to make women in tech feel seen and
   connected. The gallery captures a room that was genuinely engaged, from
   registration through the speaker sessions. It gives H+AI clear proof to share

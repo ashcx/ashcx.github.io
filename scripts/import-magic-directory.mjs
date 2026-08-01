@@ -331,8 +331,11 @@ async function writeGalleryContent({ folderPath, slug, manifest }) {
   const data = parsed.data || {};
   const contentPath = path.join(contentRoot, `${slug}.md`);
   const existing = await readExistingContent(contentPath);
+  const existingDate = existing.data.date instanceof Date
+    ? existing.data.date.toISOString().slice(0, 10)
+    : existing.data.date;
   const first = manifest.sourceFiles[0];
-  const coverImageIndex = Number(data.coverImageIndex);
+  const coverImageIndex = Number(data.coverImageIndex ?? existing.data.coverImageIndex);
   const coverBySelectedIndex =
     Number.isInteger(coverImageIndex) && coverImageIndex >= 1 && coverImageIndex <= manifest.sourceFiles.length
       ? manifest.sourceFiles[coverImageIndex - 1]
@@ -342,13 +345,14 @@ async function writeGalleryContent({ folderPath, slug, manifest }) {
   const frontmatter = cleanFrontmatter({
     title: data.title || undefined,
     generatedTitle: data.generatedTitle || existing.data.generatedTitle || undefined,
-    date: data.date || new Date().toISOString().slice(0, 10),
+    date: data.date || existingDate || new Date().toISOString().slice(0, 10),
     photographyType: data.photographyType || "corporate-private-events",
     client: data.client || undefined,
     featuredRank: hasRank(data.featuredRank) ? Number(data.featuredRank) : 10,
     categoryRank: hasRank(data.categoryRank) ? Number(data.categoryRank) : 10,
     hidden: data.hidden === true || data.hidden === "true" ? true : undefined,
     publishStatus: data.publishStatus || "published",
+    coverImageIndex: coverBySelectedIndex ? coverImageIndex : undefined,
     summary: data.summary || existing.data.summary || undefined,
     cardSummary: data.cardSummary || existing.data.cardSummary || undefined,
     description: data.description || undefined,

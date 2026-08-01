@@ -8,6 +8,7 @@ photographyType: stage-work
 featuredRank: 11
 categoryRank: 2
 publishStatus: published
+coverImageIndex: 1
 summary: The anime and pop-culture community closed the year with a stage built
   for its performers. Coordinated dance groups and idol-style singers gave the
   scene a proper send-off. The gallery gives performers sharp images for

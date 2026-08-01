@@ -8,6 +8,7 @@ photographyType: photoshoot
 featuredRank: 15
 categoryRank: 3
 publishStatus: published
+coverImageIndex: 10
 summary: This photoshoot leans into the bond fans follow between Gojo and Geto
   from the fan-favourite anime Jujutsu Kaisen. Shot from golden hour into night,
   it gives the pair a cinematic character set for socials that feels rooted in
@@ -28,7 +29,7 @@ guidedContext: 'Client and shoot: two cosplayers portraying the "Satosugu"
   it to what it gives the cosplayers. Do not just describe the costumes or the
   beach.'
 googlePhotosUrl: https://photos.app.goo.gl/mMy6C69AfX9cPuH56
-coverImage: /images/galleries/satosugu-anime-cosplay-photoshoot/image-001-large.webp
+coverImage: /images/galleries/satosugu-anime-cosplay-photoshoot/image-010-large.webp
 ---
 
 

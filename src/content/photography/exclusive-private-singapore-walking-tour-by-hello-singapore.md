@@ -8,6 +8,7 @@ photographyType: corporate-private-events
 featuredRank: 6
 categoryRank: 6
 publishStatus: published
+coverImageIndex: 1
 summary: Hello Singapore’s private Singapore walking tour is built around
   personal attention and unhurried access. The gallery keeps that intimacy front
   and center as a small group moves through heritage districts and guide-led

@@ -8,6 +8,7 @@ photographyType: stage-work
 featuredRank: 10
 categoryRank: 1
 publishStatus: published
+coverImageIndex: 16
 summary: Anime Garden’s Golden Mix DJ event turned an online fandom into a live,
   local scene. Daylight sets and the later indoor crowd gave the brand a clear
   sense of momentum. The gallery gives Anime Garden proof to court sponsors,
@@ -27,7 +28,7 @@ guidedContext: "Client and event: Anime Garden, an anime and pop-culture
   images help the organizers grow it. Do not just describe the DJs or the
   lighting."
 googlePhotosUrl: https://photos.app.goo.gl/aaxtVuGrVcqiniLk9
-coverImage: /images/galleries/anime-garden-golden-mix-dj-event/image-001-large.webp
+coverImage: /images/galleries/anime-garden-golden-mix-dj-event/image-016-large.webp
 ---
 
 

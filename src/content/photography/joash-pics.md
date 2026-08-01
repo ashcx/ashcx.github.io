@@ -9,6 +9,7 @@ featuredRank: 1
 categoryRank: 2
 hidden: true
 publishStatus: published
+coverImageIndex: 1
 summary: Stage-work photography here preserves the timing, atmosphere, and
   expressive moments that make a live performance matter. Shot with care in low
   light, the gallery keeps the energy of the night intact. It gives the team a
@@ -19,5 +20,3 @@ guidedContext: Position this as stage-work photography that captures
   discipline, and images that preserve the energy of a live setting.
 coverImage: /images/galleries/joash-pics/image-001-large.webp
 ---
-
-

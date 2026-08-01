@@ -8,6 +8,7 @@ photographyType: photoshoot
 featuredRank: 13
 categoryRank: 1
 publishStatus: published
+coverImageIndex: 7
 summary: For a cosplayer, a strong portfolio set defines how the character is
   seen online. Cheryl’s AFA portraits give her clean, editorial images that hold
   up beyond the convention floor. She now has character-accurate photos ready to
@@ -27,7 +28,7 @@ guidedContext: "Client and shoot: Cheryl, a cosplayer, photographed in full
   means for a cosplayer's presence, then connect it to these portraits. Do not
   just describe the costume."
 googlePhotosUrl: https://photos.app.goo.gl/VdB9a6cpCb6U4n2X8
-coverImage: /images/galleries/cheryl-s-anime-festival-asia-afa-cosplay-photoshoot/image-001-large.webp
+coverImage: /images/galleries/cheryl-s-anime-festival-asia-afa-cosplay-photoshoot/image-007-large.webp
 ---
 
 

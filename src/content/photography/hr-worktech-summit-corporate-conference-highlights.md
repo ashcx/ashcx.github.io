@@ -8,6 +8,7 @@ photographyType: corporate-private-events
 featuredRank: 2
 categoryRank: 2
 publishStatus: published
+coverImageIndex: 1
 summary: HR WorkTech Summit brought together serious voices on HR technology and
   work in the AI era. Speakers from DP World and Standard Chartered gave the
   summit clear weight. The gallery gives organizers polished proof for sponsor

@@ -8,6 +8,7 @@ photographyType: photoshoot
 featuredRank: 16
 categoryRank: 4
 publishStatus: published
+coverImageIndex: 26
 summary: The family marked a young child’s birthday with an ocean-themed
   celebration meant to hold onto how quickly early childhood passes. The gallery
   preserves the unposed moments, the gathered family, and the memories they will
@@ -26,7 +27,7 @@ guidedContext: "Client and event: a family celebrating their young children's
   memories the gallery preserves. Do not describe it like a commercial event or
   list the decorations."
 googlePhotosUrl: https://photos.app.goo.gl/EgpP94suQp9aBaRd6
-coverImage: /images/galleries/young-kids-birthday-celebration/image-001-large.webp
+coverImage: /images/galleries/young-kids-birthday-celebration/image-026-large.webp
 ---
 
 
