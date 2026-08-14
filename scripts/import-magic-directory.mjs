@@ -24,7 +24,7 @@ let promptInterface;
 
 const thumbLongEdge = 480;
 const largeLongEdge = 2800;
-const maxOutputBytes = 750 * 1024;
+const maxOutputBytes = 600 * 1024;
 const minQuality = 40;
 const qualityStep = 5;
 
@@ -282,7 +282,7 @@ async function processGallery({ folderName, folderPath }) {
   // already bounds how many run natively at once, so no manual batching needed.
   const needsEncode = records.filter((record) => !record.canReuse);
   await Promise.all(needsEncode.map((record) => writeWebp(record.sourcePath, record.thumbPath, thumbLongEdge, 65, true)));
-  const largeResults = await Promise.all(needsEncode.map((record) => writeWebp(record.sourcePath, record.largePath, largeLongEdge, 85)));
+  const largeResults = await Promise.all(needsEncode.map((record) => writeWebp(record.sourcePath, record.largePath, largeLongEdge, 80)));
   needsEncode.forEach((record, index) => {
     const large = largeResults[index];
     record.width = large.width;

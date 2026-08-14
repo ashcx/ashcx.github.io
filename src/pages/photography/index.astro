@@ -24,7 +24,7 @@ const visibleCoverPhoto = allPhotos.find((photo) => !photo.data.hidden);
 const pageCover = visibleCoverPhoto
   ? getGalleryCover(entrySlug(visibleCoverPhoto), visibleCoverPhoto.data.coverImage, visibleCoverPhoto.data.images, visibleCoverPhoto.data.coverImageIndex)
   : "";
-const defaultPhotographyType = "corporate-private-events";
+const defaultPhotographyType = "all";
 const photographySections = [
   {
     id: "all",
