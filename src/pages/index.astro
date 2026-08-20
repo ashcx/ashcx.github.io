@@ -7,7 +7,8 @@ import TestimonialsSection from "@components/TestimonialsSection.astro";
 import WorkGrid from "@components/WorkGrid.astro";
 import { entrySlug, published, rankPhotographyForAll, splitHidden } from "@lib/content";
 import { getGalleryCover } from "@lib/gallery-images";
-import { sections, site } from "@lib/site";
+import EventFilmFeature from "@components/EventFilmFeature.astro";
+import { featuredEventFilm, sections, site } from "@lib/site";
 
 const photos = published(await getCollection("photography"));
 const contentItems = published(await getCollection("content-work"));
@@ -70,6 +71,12 @@ const pageCover = visibleCoverPhoto
   }
 
   {sections.content && <HomeSocialHighlights items={socialHighlights} />}
+
+  {sections.content && (
+    <section class="home-section home-event-film" aria-labelledby="home-event-film-title">
+      <EventFilmFeature {...featuredEventFilm} id="home-event-film-title" loading="lazy" />
+    </section>
+  )}
 
   <TestimonialsSection showRule={false} />
 

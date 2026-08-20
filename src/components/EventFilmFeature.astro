@@ -1,0 +1,296 @@
+---
+interface Props {
+  videoId: string;
+  posterUrl: string;
+  linkedinUrl: string;
+  label: string;
+  title: string;
+  titleLineTwo: string;
+  description: string;
+  id?: string;
+  loading?: "eager" | "lazy";
+}
+
+const {
+  videoId,
+  posterUrl,
+  linkedinUrl,
+  label,
+  title,
+  titleLineTwo,
+  description,
+  id = "event-film-title",
+  loading = "lazy"
+} = Astro.props;
+
+const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
+---
+
+<article class="event-film-feature" data-event-film aria-labelledby={id}>
+  <div class="event-film-intro">
+    <span class="event-film-meta">{label}</span>
+    <h2 id={id} class="event-film-title">
+      <span>{title}</span>
+      <span>{titleLineTwo}</span>
+    </h2>
+    <p class="event-film-description">{description}</p>
+  </div>
+
+  <div class="event-film-media">
+    <img src={posterUrl} alt={`${title} ${titleLineTwo} event film still`} loading={loading} />
+    <button class="event-film-trigger" type="button" data-event-film-trigger aria-label={`Play ${title} ${titleLineTwo} event film`}>
+      <span class="event-film-play" aria-hidden="true"><span></span></span>
+    </button>
+    <iframe
+      title={`${title} ${titleLineTwo} event film`}
+      data-event-film-frame
+      data-embed-url={embedUrl}
+      loading="lazy"
+      allow="autoplay; encrypted-media; picture-in-picture"
+      allowfullscreen
+    ></iframe>
+  </div>
+
+  <div class="event-film-footer">
+    <a class="event-film-link" href={linkedinUrl} target="_blank" rel="noreferrer">
+      View LinkedIn post <span aria-hidden="true">↗</span>
+    </a>
+  </div>
+</article>
+
+<script is:inline>
+  const eventFilmCards = Array.from(document.querySelectorAll("[data-event-film]"));
+
+  eventFilmCards.forEach((card) => {
+    const container = card.querySelector(".event-film-media");
+    const frame = card.querySelector("[data-event-film-frame]");
+    const trigger = card.querySelector("[data-event-film-trigger]");
+    const embedUrl = frame?.getAttribute("data-embed-url");
+
+    if (!container || !frame || !trigger || !embedUrl) return;
+
+    trigger.addEventListener("click", () => {
+      frame.setAttribute("src", embedUrl);
+      frame.setAttribute("data-loaded", "true");
+      container.setAttribute("data-loaded", "true");
+      trigger.blur();
+      trigger.setAttribute("aria-hidden", "true");
+      trigger.setAttribute("tabindex", "-1");
+    }, { once: true });
+  });
+</script>
+
+<style>
+  .event-film-feature {
+    width: 100%;
+    color: var(--paper-bright);
+  }
+
+  .event-film-intro {
+    max-width: 900px;
+    margin: 0 auto clamp(42px, 5vw, 60px);
+    text-align: center;
+  }
+
+  .event-film-meta {
+    display: block;
+    margin-bottom: 17px;
+    color: rgba(255, 250, 241, 0.62);
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .event-film-intro h2 {
+    max-width: 900px;
+    margin: 0 auto 20px;
+    color: var(--paper-bright);
+    font-size: clamp(40px, 4.6vw, 60px);
+    letter-spacing: -1px;
+    line-height: 1.02;
+    text-wrap: balance;
+  }
+
+  .event-film-title span {
+    display: block;
+  }
+
+  .event-film-description {
+    max-width: 680px;
+    margin: 0 auto clamp(24px, 3vw, 34px);
+    color: rgba(255, 250, 241, 0.72);
+    font-size: 18px;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+    text-rendering: geometricPrecision;
+  }
+
+  .event-film-footer {
+    display: flex;
+    justify-content: center;
+    margin-top: clamp(34px, 4vw, 48px);
+  }
+
+  .event-film-link {
+    display: inline-flex;
+    min-height: 54px;
+    align-items: center;
+    gap: 14px;
+    border: 1px solid var(--paper-bright);
+    border-radius: 999px;
+    padding: 0 24px;
+    background: var(--paper-bright);
+    color: var(--charcoal);
+    font-size: 0.96rem;
+    font-weight: 800;
+    text-decoration: none;
+    transition: transform 180ms ease, background 180ms ease;
+  }
+
+  .event-film-link:hover,
+  .event-film-link:focus-visible {
+    border-color: var(--paper-deep);
+    background: var(--paper-deep);
+    color: var(--charcoal);
+    text-decoration: none;
+    transform: translateY(-2px);
+  }
+
+  .event-film-link span {
+    display: grid;
+    width: 32px;
+    height: 32px;
+    place-items: center;
+    border: 1px solid rgba(31, 32, 29, 0.28);
+    border-radius: 50%;
+    font-size: 1rem;
+  }
+
+  .event-film-trigger:focus-visible,
+  .event-film-link:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 4px;
+  }
+
+  .event-film-media {
+    position: relative;
+    width: min(100%, 960px);
+    margin: 0 auto;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border: 1px solid rgba(255, 250, 241, 0.16);
+    border-radius: clamp(16px, 2vw, 24px);
+    background: #151716;
+  }
+
+  .event-film-media img,
+  .event-film-media iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    object-fit: cover;
+  }
+
+  .event-film-media img {
+    opacity: 0.88;
+    transition: transform 500ms ease;
+  }
+
+  .event-film-feature:hover .event-film-media img {
+    transform: scale(1.025);
+  }
+
+  .event-film-media iframe:not([data-loaded]) {
+    display: none;
+  }
+
+  .event-film-media::after {
+    position: absolute;
+    inset: 0;
+    content: "";
+    background: linear-gradient(90deg, rgba(18, 19, 18, 0.04), rgba(18, 19, 18, 0.5));
+  }
+
+  .event-film-media[data-loaded]::after,
+  .event-film-media[data-loaded] img,
+  .event-film-media[data-loaded] .event-film-trigger {
+    display: none;
+  }
+
+  .event-film-trigger {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .event-film-play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 3;
+    display: grid;
+    width: clamp(58px, 7vw, 76px);
+    height: clamp(58px, 7vw, 76px);
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(255, 250, 241, 0.93);
+    color: var(--charcoal);
+    transform: translate(-50%, -50%);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  }
+
+  .event-film-play span {
+    width: 0;
+    height: 0;
+    margin-left: 4px;
+    border-top: 9px solid transparent;
+    border-bottom: 9px solid transparent;
+    border-left: 14px solid currentColor;
+  }
+
+  @media (max-width: 720px) {
+    .event-film-intro {
+      margin-bottom: 38px;
+    }
+
+    .event-film-intro h2 {
+      font-size: clamp(2.35rem, 9vw, 3.3rem);
+    }
+
+    .event-film-description {
+      max-width: 500px;
+      font-size: 18px;
+    }
+
+    .event-film-media {
+      aspect-ratio: 16 / 10;
+      border-radius: 16px;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .event-film-meta {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+    }
+
+    .event-film-intro h2 {
+      font-size: clamp(2.1rem, 10vw, 3rem);
+    }
+
+    .event-film-link {
+      width: min(100%, 340px);
+      justify-content: center;
+    }
+  }
+</style>

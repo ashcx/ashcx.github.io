@@ -7,9 +7,9 @@ date: 2026-08-14
 photographyType: wedding-rom
 client: Gracia & Eze
 featuredRank: 3
-categoryRank: 2
+categoryRank: 1
 publishStatus: published
-coverImageIndex: 5
+coverImageIndex: 18
 summary: Gracia and Eze’s wedding celebration brought family and friends
   together for an evening of warm conversations, joyful toasts, and easy
   laughter. The gallery holds the small interactions, group portraits, and
@@ -20,7 +20,7 @@ guidedContext: "Client and event: Gracia and Eze’s wedding reception with fami
   portraits, and playful candid interactions. Keep the description personal and
   lightly joyful, and do not invent venue, location, or ceremony details."
 googlePhotosUrl: https://photos.app.goo.gl/vHiFToZgxR2Yy2cN6
-coverImage: /images/galleries/gracia-eze-wedding-shoot/image-005-large.webp
+coverImage: /images/galleries/gracia-eze-wedding-shoot/image-018-large.webp
 ---
 
 

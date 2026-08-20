@@ -1,0 +1,536 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import EventFilmFeature from "@components/EventFilmFeature.astro";
+import { featuredEventFilm } from "@lib/site";
+---
+
+<BaseLayout
+  title="Airwallex x Ecom North event film"
+  description="Standalone design preview for an Airwallex corporate event-film section."
+  active="content"
+>
+  <div class="aw-preview-shell">
+    <header class="aw-preview-intro">
+      <p class="eyebrow">Standalone design preview</p>
+      <h1>Homepage teaser<br /><span>→ inline event film</span></h1>
+      <p>
+        A clear editorial handoff from social-content work into event videography.
+        Use the play control to watch the film without leaving the page.
+      </p>
+    </header>
+
+    <section class="aw-preview-context" aria-labelledby="context-title">
+      <div class="aw-preview-context-label">
+        <p class="eyebrow">Homepage context</p>
+        <p>Social content stays first. The film appears as a distinct supporting capability.</p>
+      </div>
+
+      <div class="aw-mock-social-grid" aria-label="Social-content portfolio preview">
+        <div class="aw-mock-reel aw-mock-reel-corporate">
+          <span>Corporate</span>
+          <strong>Short-form<br />campaign</strong>
+          <small>500k+ views</small>
+        </div>
+        <div class="aw-mock-reel aw-mock-reel-lifestyle">
+          <span>Lifestyle</span>
+          <strong>Creator-led<br />storytelling</strong>
+          <small>10k+ likes</small>
+        </div>
+        <div class="aw-mock-reel aw-mock-reel-property">
+          <span>Real estate</span>
+          <strong>Social-first<br />showcase</strong>
+          <small>Vertical video</small>
+        </div>
+      </div>
+
+      <div class="aw-teaser-wrap">
+        <EventFilmFeature {...featuredEventFilm} loading="eager" />
+      </div>
+    </section>
+
+    <section class="aw-preview-notes" aria-labelledby="notes-title">
+      <div>
+        <p class="eyebrow">What this pattern solves</p>
+        <h2 id="notes-title">The social page stays focused. The film gets its own frame.</h2>
+      </div>
+      <p>
+        The dark section creates a deliberate change of pace after the social reels. The headline establishes the event
+        context first, then the wide film gives visitors a direct way to experience the work.
+      </p>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .aw-preview-shell {
+    width: min(var(--max), calc(100% - var(--gutter) * 2));
+    margin: 0 auto;
+    padding: clamp(48px, 7vw, 94px) 0 clamp(74px, 10vw, 134px);
+  }
+
+  .aw-preview-intro {
+    max-width: 850px;
+    margin: 0 auto clamp(54px, 8vw, 98px);
+    text-align: center;
+  }
+
+  .aw-preview-intro .eyebrow,
+  .aw-preview-notes .eyebrow {
+    margin-bottom: 20px;
+  }
+
+  .aw-preview-intro h1 {
+    margin-bottom: 26px;
+    font-size: clamp(52px, 7.3vw, 94px);
+    letter-spacing: -0.075em;
+  }
+
+  .aw-preview-intro h1 span {
+    color: var(--muted);
+  }
+
+  .aw-preview-intro > p:last-child {
+    max-width: 620px;
+    margin: 0 auto;
+    font-size: clamp(1.05rem, 1.6vw, 1.26rem);
+  }
+
+  .aw-preview-context {
+    padding: 0;
+}
+
+  .aw-preview-context-label {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: clamp(30px, 4vw, 48px);
+  }
+
+  .aw-preview-context-label p {
+    margin: 0;
+  }
+
+  .aw-preview-context-label .eyebrow {
+    flex: 0 0 auto;
+  }
+
+  .aw-preview-context-label p:last-child {
+    max-width: 430px;
+    font-size: 0.98rem;
+    text-align: right;
+  }
+
+  .aw-mock-social-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(14px, 2.5vw, 28px);
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  .aw-mock-reel {
+    display: flex;
+    min-height: clamp(250px, 31vw, 420px);
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid rgba(255, 250, 241, 0.25);
+    border-radius: 28px;
+    padding: 20px;
+    color: var(--paper-bright);
+    box-shadow: 0 20px 48px rgba(40, 33, 25, 0.13);
+  }
+
+  .aw-mock-reel span,
+  .aw-mock-reel small {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .aw-mock-reel strong {
+    font-size: clamp(1.55rem, 3vw, 2.7rem);
+    letter-spacing: -0.065em;
+    line-height: 0.94;
+  }
+
+  .aw-mock-reel small {
+    letter-spacing: 0.08em;
+    opacity: 0.72;
+  }
+
+  .aw-mock-reel-corporate {
+    background: linear-gradient(150deg, #20433f 0%, #6e806d 48%, #c8a873 100%);
+  }
+
+  .aw-mock-reel-lifestyle {
+    background: linear-gradient(150deg, #ad6e55 0%, #d6ad8a 52%, #e7ddc9 100%);
+  }
+
+  .aw-mock-reel-property {
+    background: linear-gradient(150deg, #1f2731 0%, #536676 52%, #c5b39d 100%);
+  }
+
+  .aw-teaser-wrap {
+    position: relative;
+    isolation: isolate;
+    max-width: 1180px;
+    margin: clamp(48px, 7vw, 86px) auto 0;
+    padding: clamp(46px, 7vw, 84px) clamp(22px, 5vw, 72px);
+  }
+
+  .aw-teaser-wrap::before {
+    position: absolute;
+    inset-block: 0;
+    left: 50%;
+    z-index: -1;
+    width: 100vw;
+    content: "";
+    background: var(--charcoal);
+    transform: translateX(-50%);
+  }
+
+  .aw-teaser {
+    display: grid;
+    width: 100%;
+    grid-template-columns: minmax(0, 1.24fr) minmax(280px, 0.76fr);
+    border: 1px solid var(--soft-line);
+    border-radius: 30px;
+    overflow: hidden;
+    padding: 0;
+    background: var(--charcoal);
+    color: var(--paper-bright);
+    text-align: left;
+    box-shadow: 0 24px 64px rgba(40, 33, 25, 0.14);
+    transition: transform 220ms ease, box-shadow 220ms ease;
+  }
+
+  .aw-teaser:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 30px 76px rgba(40, 33, 25, 0.2);
+  }
+
+  .aw-video-trigger:focus-visible,
+  .aw-teaser-link:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 4px;
+  }
+
+  .aw-teaser-media {
+    position: relative;
+    display: block;
+    align-self: stretch;
+    min-height: 0;
+    overflow: hidden;
+    background: #202320;
+  }
+
+  .aw-teaser-media img,
+  .aw-teaser-media iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    object-fit: cover;
+  }
+
+  .aw-teaser-media img {
+    opacity: 0.88;
+    transition: transform 500ms ease;
+  }
+
+  .aw-teaser:hover .aw-teaser-media img {
+    transform: scale(1.035);
+  }
+
+  .aw-teaser-media iframe:not([data-loaded]) {
+    display: none;
+  }
+
+  .aw-teaser-media::after {
+    position: absolute;
+    inset: 0;
+    content: "";
+    background: linear-gradient(90deg, rgba(18, 19, 18, 0.04), rgba(18, 19, 18, 0.5));
+  }
+
+  .aw-teaser-media[data-loaded]::after {
+    display: none;
+  }
+
+  .aw-teaser-media[data-loaded] img,
+  .aw-teaser-media[data-loaded] .aw-video-trigger {
+    display: none;
+  }
+
+  .aw-video-trigger {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .aw-play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 3;
+    display: grid;
+    width: 60px;
+    height: 60px;
+    place-items: center;
+    border-radius: 50%;
+    background: rgba(255, 250, 241, 0.93);
+    color: var(--charcoal);
+    transform: translate(-50%, -50%);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  }
+
+  .aw-play span {
+    width: 0;
+    height: 0;
+    margin-left: 4px;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 12px solid currentColor;
+  }
+
+  .aw-teaser-copy {
+    display: flex;
+    min-width: 0;
+    min-height: 310px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: clamp(28px, 4vw, 58px);
+  }
+
+  .aw-teaser-meta {
+    margin-bottom: 22px;
+    color: rgba(255, 250, 241, 0.64);
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.17em;
+    text-transform: uppercase;
+  }
+
+  .aw-teaser-copy h2 {
+    max-width: 360px;
+    margin: 0 0 18px;
+    color: var(--paper-bright);
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    letter-spacing: -0.075em;
+    line-height: 0.94;
+  }
+
+  .aw-teaser-description {
+    max-width: 340px;
+    margin: 0 0 30px;
+    color: rgba(255, 250, 241, 0.68);
+    font-size: 1rem;
+    line-height: 1.45;
+  }
+
+  .aw-teaser-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .aw-teaser-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    color: rgba(255, 250, 241, 0.68);
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 250, 241, 0.28);
+    text-underline-offset: 4px;
+  }
+
+  .aw-teaser-link-primary {
+    min-height: 46px;
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    padding: 0 18px;
+    background: var(--accent);
+    color: var(--charcoal);
+    font-size: 0.9rem;
+    font-weight: 800;
+    text-decoration: none;
+    transition: transform 180ms ease, background 180ms ease;
+  }
+
+  .aw-teaser-link-primary:hover,
+  .aw-teaser-link-primary:focus-visible {
+    background: var(--paper-bright);
+    color: var(--charcoal);
+    text-decoration: none;
+    transform: translateY(-2px);
+  }
+
+  .aw-teaser-link-primary span {
+    display: grid;
+    width: 28px;
+    height: 28px;
+    place-items: center;
+    border: 1px solid rgba(255, 250, 241, 0.34);
+    border-radius: 50%;
+    font-size: 1rem;
+    border-color: rgba(31, 32, 29, 0.28);
+  }
+
+  .aw-preview-notes {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 0.7fr);
+    gap: clamp(28px, 7vw, 100px);
+    align-items: end;
+    max-width: 1180px;
+    margin: clamp(74px, 10vw, 136px) auto 0;
+    padding-top: 34px;
+    border-top: 1px solid var(--hairline);
+  }
+
+  .aw-preview-notes h2 {
+    max-width: 650px;
+    margin: 0;
+    font-size: clamp(2rem, 4.2vw, 3.8rem);
+    letter-spacing: -0.075em;
+  }
+
+  .aw-preview-notes > p {
+    max-width: 360px;
+    margin: 0;
+    font-size: 1.04rem;
+  }
+
+  @media (max-width: 980px) {
+    .aw-preview-context-label,
+    .aw-preview-notes {
+      display: block;
+    }
+
+    .aw-preview-context-label p:last-child {
+      max-width: 440px;
+      margin-top: 12px;
+      text-align: left;
+    }
+
+    .aw-mock-social-grid {
+      gap: 10px;
+    }
+
+    .aw-mock-reel {
+      min-height: 230px;
+      padding: 14px;
+      border-radius: 20px;
+    }
+
+    .aw-mock-reel strong {
+      font-size: clamp(1.22rem, 5vw, 1.7rem);
+    }
+
+    .aw-teaser {
+      grid-template-columns: 1fr;
+      border-radius: 26px;
+    }
+
+    .aw-teaser-media,
+    .aw-teaser-copy {
+      min-height: 0;
+    }
+
+    .aw-teaser-media {
+      aspect-ratio: 16 / 9;
+    }
+
+    .aw-teaser-copy {
+      padding: clamp(28px, 5vw, 42px) clamp(26px, 5vw, 48px) clamp(32px, 5vw, 46px);
+    }
+
+    .aw-preview-notes > p {
+      margin-top: 22px;
+    }
+
+    .aw-teaser-actions {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .aw-mock-social-grid {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .aw-mock-reel {
+      min-height: 150px;
+    }
+
+    .aw-teaser-media {
+      aspect-ratio: 16 / 10;
+    }
+
+    .aw-teaser-copy h2 {
+      font-size: clamp(1.95rem, 8.5vw, 2.85rem);
+    }
+
+    .aw-teaser-description {
+      max-width: none;
+      font-size: 0.96rem;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .aw-preview-shell {
+      width: min(100% - 28px, var(--max));
+      padding-top: 40px;
+    }
+
+    .aw-preview-intro h1 {
+      font-size: clamp(46px, 14vw, 74px);
+    }
+
+    .aw-mock-reel {
+      min-height: 190px;
+      border-radius: 18px;
+    }
+
+    .aw-mock-reel span,
+    .aw-mock-reel small {
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+    }
+
+    .aw-mock-reel strong {
+      font-size: 1.08rem;
+    }
+
+    .aw-teaser-link {
+      font-size: 0.78rem;
+    }
+
+    .aw-teaser {
+      border-radius: 22px;
+    }
+
+    .aw-teaser-copy {
+      padding: 26px 22px 30px;
+    }
+
+    .aw-teaser-link-primary {
+      width: 100%;
+    }
+  }
+</style>

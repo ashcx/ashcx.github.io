@@ -8,6 +8,17 @@ export const site = {
     "https://api.whatsapp.com/send/?phone=6589271158&text=Hi+Ash%21+I+would+like+to+book+your+photography+%2F+social+media+services.%0A%0ASome+details+of+my+upcoming+event+%2F+marketing+campaign+are+as+follows%3A%0A-+%20&type=phone_number&app_absent=0"
 };
 
+export const featuredEventFilm = {
+  videoId: "BefG_TBCul0",
+  posterUrl: "/images/airwallex-ecom-north.webp",
+  linkedinUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7493109029649645568/",
+  label: "Corporate event films",
+  title: "Airwallex x Ecom North.",
+  titleLineTwo: "Built to Scale.",
+  description:
+    "Capturing the people, ideas and energy behind Airwallex’s Ecom North Singapore Summit, where 800+ retail and e-commerce operators came together to explore scaling with more efficiency, speed and AI."
+} as const;
+
 // Single source of truth for published pricing figures — referenced by the
 // Photography/Social media "What to expect" sections and the Contact page
 // pricing teaser, so a number only ever needs to change in one place.
