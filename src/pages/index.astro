@@ -6,21 +6,85 @@ import HomeSocialHighlights from "@components/HomeSocialHighlights.astro";
 import TestimonialsSection from "@components/TestimonialsSection.astro";
 import WorkGrid from "@components/WorkGrid.astro";
 import { entrySlug, published, rankPhotographyForAll, splitHidden } from "@lib/content";
-import { getGalleryCover } from "@lib/gallery-images";
+import type { PhotographyEntry } from "@lib/content";
+import { getGalleryCover, getGalleryImages, getHomePortraitCover, getPortraitImages } from "@lib/gallery-images";
+import type { GalleryImage } from "@lib/gallery-images";
 import EventFilmFeature from "@components/EventFilmFeature.astro";
 import { featuredEventFilm, sections, site } from "@lib/site";
 
 const photos = published(await getCollection("photography"));
 const contentItems = published(await getCollection("content-work"));
-const latestPhotos = splitHidden(rankPhotographyForAll(photos), 2);
+const allRankedPhotos = rankPhotographyForAll(photos);
+const latestPhotos = splitHidden(allRankedPhotos, 2);
 const socialHighlights = contentItems.filter((item) => item.data.contentType === "embed");
-const visibleCoverPhoto = latestPhotos.find((photo) => !photo.data.hidden);
+
+const corporateCoverUrl = (photo: PhotographyEntry) =>
+  getGalleryCover(entrySlug(photo), photo.data.coverImage, photo.data.images, photo.data.coverImageIndex);
+
+// Carousel landscape sources: cover images in a curated order (up to 5).
+const landscapeCoverSlugs = [
+  "corporate-night-safari-experience-for-visa-leadership",
+  "h-ai-ai-festival-empowering-women-in-tech",
+  "gracia-eze-wedding-shoot",
+  "starrylight-paints-2024-new-year-celebration-fringe-activities",
+  "exclusive-private-singapore-walking-tour-by-hello-singapore"
+];
+const corporateCovers = landscapeCoverSlugs
+  .map((slug) => {
+    const photo = photos.find((candidate) => entrySlug(candidate) === slug);
+    return photo ? corporateCoverUrl(photo) : "";
+  })
+  .filter(Boolean);
+
+// Carousel portrait sources: portrait shots alternating between the h+AI and
+// Eat the World galleries. The final slide is the second-to-last photo of the
+// Hello Singapore walking tour.
+const portraitSourceSlugs = [
+  "h-ai-ai-festival-empowering-women-in-tech",
+  "eat-the-world-corporate-networking-food-tasting-experience"
+];
+const walkingTourSlug = "exclusive-private-singapore-walking-tour-by-hello-singapore";
+const walkingTourEntry = photos.find((candidate) => entrySlug(candidate) === walkingTourSlug);
+
+const portraitsBySource = new Map<string, GalleryImage[]>();
+for (const slug of portraitSourceSlugs) {
+  const entry = photos.find((candidate) => entrySlug(candidate) === slug);
+  portraitsBySource.set(slug, entry ? getPortraitImages(slug, entry.data.images, 5) : []);
+}
+const portraitImages: GalleryImage[] = [];
+const portraitCursor = new Map<string, number>();
+let sourceTurn = 0;
+const portraitTarget = walkingTourEntry ? 4 : 5;
+while (portraitImages.length < portraitTarget) {
+  const slug = portraitSourceSlugs[sourceTurn % portraitSourceSlugs.length];
+  sourceTurn += 1;
+  const list = portraitsBySource.get(slug) ?? [];
+  const cursor = portraitCursor.get(slug) ?? 0;
+  if (cursor >= list.length) continue;
+  portraitCursor.set(slug, cursor + 1);
+  portraitImages.push(list[cursor]);
+}
+
+if (walkingTourEntry) {
+  const walkingTourImages = getGalleryImages(walkingTourSlug, walkingTourEntry.data.images);
+  const secondLast = walkingTourImages[walkingTourImages.length - 2];
+  if (secondLast) portraitImages.push(secondLast);
+}
+
+const carouselSlides = portraitImages.slice(0, 5).map((image, index) => ({
+  portrait: image.large || image.thumb || "",
+  landscape: corporateCovers[index % corporateCovers.length] || image.large || image.thumb || "",
+  alt: "Featured portfolio image"
+}));
+
+const visibleCoverPhoto = allRankedPhotos.find((photo) => !photo.data.hidden);
 const pageCover = visibleCoverPhoto
-  ? getGalleryCover(entrySlug(visibleCoverPhoto), visibleCoverPhoto.data.coverImage, visibleCoverPhoto.data.images, visibleCoverPhoto.data.coverImageIndex)
+  ? getHomePortraitCover(entrySlug(visibleCoverPhoto), visibleCoverPhoto.data.images)
   : "";
+const ogImage = carouselSlides[0]?.portrait || pageCover;
 ---
 
-<BaseLayout title={site.title} description={site.description} active="home" image={pageCover}>
+<BaseLayout title={site.title} description={site.description} active="home" image={ogImage}>
   <section class="home-hero" aria-labelledby="hero-title">
     <div class="home-hero-copy home-intro-grid">
       <div class="home-name-block">
@@ -42,11 +106,52 @@ const pageCover = visibleCoverPhoto
         </div>
       </div>
       {
-        pageCover && (
+        carouselSlides.length > 1 ? (
+          <figure class="home-portrait-card" data-home-carousel>
+            <div class="home-carousel-track">
+              {carouselSlides.map((slide, index) => (
+                <picture
+                  class:list={["home-carousel-slide", { "is-active": index === 0 }]}
+                  data-home-slide
+                  aria-hidden={index === 0 ? "false" : "true"}
+                >
+                  <source media="(max-width: 810px)" srcset={slide.landscape} />
+                  <img src={slide.portrait} alt={`${slide.alt} ${index + 1}`} loading={index === 0 ? "eager" : "lazy"} />
+                </picture>
+              ))}
+            </div>
+            <div class="home-carousel-dots" role="tablist" aria-label="Featured portfolio images">
+              {carouselSlides.map((_, index) => (
+                <button
+                  class:list={["home-carousel-dot", { "is-active": index === 0 }]}
+                  type="button"
+                  role="tab"
+                  aria-label={`Featured image ${index + 1}`}
+                  aria-selected={index === 0 ? "true" : "false"}
+                  data-home-dot
+                />
+              ))}
+            </div>
+            <button class="home-carousel-arrow home-carousel-prev" type="button" aria-label="Previous image" data-home-prev>
+              <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
+                <path d="M15 5 8 12l7 7"></path>
+              </svg>
+            </button>
+            <button class="home-carousel-arrow home-carousel-next" type="button" aria-label="Next image" data-home-next>
+              <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
+                <path d="m9 5 7 7-7 7"></path>
+              </svg>
+            </button>
+          </figure>
+        ) : carouselSlides.length === 1 ? (
+          <figure class="home-portrait-card">
+            <img src={carouselSlides[0].portrait} alt={carouselSlides[0].alt} />
+          </figure>
+        ) : pageCover ? (
           <figure class="home-portrait-card">
             <img src={pageCover} alt="Featured portfolio image" />
           </figure>
-        )
+        ) : null
       }
     </div>
   </section>
@@ -84,4 +189,122 @@ const pageCover = visibleCoverPhoto
 
   <script is:inline async src="https://www.instagram.com/embed.js"></script>
   <script is:inline async src="https://www.tiktok.com/embed.js"></script>
+
+  <script>
+    const carousel = document.querySelector<HTMLElement>("[data-home-carousel]");
+
+    if (carousel) {
+      const slides = Array.from(carousel.querySelectorAll<HTMLElement>("[data-home-slide]"));
+      const dots = Array.from(carousel.querySelectorAll<HTMLElement>("[data-home-dot]"));
+      const track = carousel.querySelector<HTMLElement>(".home-carousel-track");
+      const prevButton = carousel.querySelector<HTMLElement>("[data-home-prev]");
+      const nextButton = carousel.querySelector<HTMLElement>("[data-home-next]");
+      let current = 0;
+      let timer: number | undefined;
+      let swipeStartX: number | null = null;
+      let swipeStartY: number | null = null;
+      let wheelDeltaX = 0;
+      let wheelGesture = 0;
+      let wheelNavigated = false;
+
+      function goTo(index: number) {
+        current = (index + slides.length) % slides.length;
+        slides.forEach((slide, i) => {
+          slide.classList.toggle("is-active", i === current);
+          slide.setAttribute("aria-hidden", String(i !== current));
+        });
+        dots.forEach((dot, i) => {
+          dot.classList.toggle("is-active", i === current);
+          dot.setAttribute("aria-selected", String(i === current));
+        });
+      }
+
+      function advance(offset: number) {
+        goTo(current + offset);
+        start();
+      }
+
+      function start() {
+        stop();
+        if (slides.length > 1) timer = window.setInterval(() => goTo(current + 1), 5000);
+      }
+
+      function stop() {
+        if (timer !== undefined) window.clearInterval(timer);
+        timer = undefined;
+      }
+
+      dots.forEach((dot, i) => {
+        dot.addEventListener("click", () => {
+          goTo(i);
+          start();
+        });
+      });
+
+      prevButton?.addEventListener("click", () => advance(-1));
+      nextButton?.addEventListener("click", () => advance(1));
+
+      track?.addEventListener("pointerdown", (event) => {
+        swipeStartX = event.clientX;
+        swipeStartY = event.clientY;
+        track.setPointerCapture(event.pointerId);
+      });
+
+      track?.addEventListener("pointerup", (event) => {
+        if (swipeStartX === null || swipeStartY === null) return;
+        const deltaX = event.clientX - swipeStartX;
+        const deltaY = event.clientY - swipeStartY;
+        swipeStartX = null;
+        swipeStartY = null;
+        if (Math.abs(deltaX) < 40 || Math.abs(deltaX) < Math.abs(deltaY)) return;
+        advance(deltaX < 0 ? 1 : -1);
+      });
+
+      track?.addEventListener("pointercancel", () => {
+        swipeStartX = null;
+        swipeStartY = null;
+      });
+
+      // Touchpad two-finger horizontal swipes arrive as `wheel` events with a
+      // dominant deltaX. Vertical scroll is left untouched so the page scrolls
+      // normally. One swipe gesture navigates exactly one slide: horizontal
+      // events spaced less than 300ms apart belong to the same gesture, and a
+      // gesture navigates at most once.
+      track?.addEventListener(
+        "wheel",
+        (event) => {
+          if (Math.abs(event.deltaY) >= Math.abs(event.deltaX)) {
+            wheelDeltaX = 0;
+            return;
+          }
+          event.preventDefault();
+
+          const now = Date.now();
+          if (now - wheelGesture > 300) {
+            wheelDeltaX = 0;
+            wheelNavigated = false;
+          }
+          wheelGesture = now;
+          wheelDeltaX += event.deltaX;
+
+          if (Math.abs(wheelDeltaX) < 40 || wheelNavigated) return;
+          wheelNavigated = true;
+          advance(wheelDeltaX < 0 ? 1 : -1);
+        },
+        { passive: false }
+      );
+
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        carousel.addEventListener("mouseenter", stop);
+        carousel.addEventListener("mouseleave", start);
+        carousel.addEventListener("focusin", stop);
+        carousel.addEventListener("focusout", start);
+        document.addEventListener("visibilitychange", () => {
+          if (document.hidden) stop();
+          else start();
+        });
+        start();
+      }
+    }
+  </script>
 </BaseLayout>
