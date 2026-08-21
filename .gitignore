@@ -8,3 +8,5 @@ inbox/
 .portfolio-auth/
 .DS_Store
 .claude/
+
+*.report.html
