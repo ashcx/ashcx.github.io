@@ -156,7 +156,7 @@ p {
 }
 
 .site-footer {
-  background: #172322;
+  background: var(--charcoal);
   color: rgba(255, 250, 241, 0.82);
 }
 

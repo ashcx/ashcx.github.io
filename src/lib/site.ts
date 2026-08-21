@@ -12,7 +12,7 @@ export const featuredEventFilm = {
   videoId: "BefG_TBCul0",
   posterUrl: "/images/airwallex-ecom-north.webp",
   linkedinUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7493109029649645568/",
-  label: "Corporate event films",
+  label: "Event films",
   title: "Airwallex x Ecom North.",
   titleLineTwo: "Built to Scale.",
   description:
