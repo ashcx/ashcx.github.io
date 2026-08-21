@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-20T16:24:59.002Z",
+  "generatedAt": "2026-08-21T01:32:48.498Z",
   "sourceFiles": [
     {
       "name": "_DSC2615.jpg",
@@ -159,7 +159,8 @@
       "outputLarge": "image-016-large.webp",
       "width": 2800,
       "height": 1856,
-      "aspectRatio": 1.5086
+      "aspectRatio": 1.5086,
+      "outputMedium": "image-016-medium.webp"
     },
     {
       "name": "_DSC2856.jpg",

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-20T16:24:59.043Z",
+  "generatedAt": "2026-08-21T01:32:48.542Z",
   "sourceFiles": [
     {
       "name": "_1000181.jpg",
@@ -9,7 +9,8 @@
       "outputLarge": "image-001-large.webp",
       "width": 2800,
       "height": 2100,
-      "aspectRatio": 1.3333
+      "aspectRatio": 1.3333,
+      "outputMedium": "image-001-medium.webp"
     },
     {
       "name": "_1000208.jpg",

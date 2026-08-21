@@ -23,8 +23,10 @@ const supportedExtensions = new Set([".jpg", ".jpeg", ".png", ".webp"]);
 let promptInterface;
 
 const thumbLongEdge = 480;
+const mediumLongEdge = 1152;
 const largeLongEdge = 2800;
 const maxOutputBytes = 600 * 1024;
+const mediumMaxBytes = 130 * 1024;
 const minQuality = 40;
 const qualityStep = 5;
 
@@ -187,7 +189,9 @@ async function readManifest(manifestPath) {
   }
 }
 
-async function encodeWebp(inputPath, longEdge, quality, forThumb = false) {
+async function encodeWebp(inputPath, longEdge, quality, forThumb = false, options = {}) {
+  const maxBytes = options.maxBytes ?? maxOutputBytes;
+  const effort = options.effort ?? 4;
   let pipeline = sharp(inputPath).rotate().toColorspace("srgb");
 
   // Thumb-only: denoise before the resize so sensor noise doesn't alias into
@@ -209,17 +213,17 @@ async function encodeWebp(inputPath, longEdge, quality, forThumb = false) {
     pipeline = pipeline.sharpen();
   }
 
-  const result = await pipeline.webp({ quality, preset: "photo", effort: 4, smartSubsample: true }).toBuffer({ resolveWithObject: true });
+  const result = await pipeline.webp({ quality, preset: "photo", effort, smartSubsample: true }).toBuffer({ resolveWithObject: true });
 
-  if (result.data.length > maxOutputBytes && quality > minQuality) {
-    return encodeWebp(inputPath, longEdge, Math.max(minQuality, quality - qualityStep), forThumb);
+  if (result.data.length > maxBytes && quality > minQuality) {
+    return encodeWebp(inputPath, longEdge, Math.max(minQuality, quality - qualityStep), forThumb, options);
   }
 
   return result;
 }
 
-async function writeWebp(inputPath, outputPath, longEdge, quality, forThumb = false) {
-  const result = await encodeWebp(inputPath, longEdge, quality, forThumb);
+async function writeWebp(inputPath, outputPath, longEdge, quality, forThumb = false, options = {}) {
+  const result = await encodeWebp(inputPath, longEdge, quality, forThumb, options);
   await writeFile(outputPath, result.data);
   return result.info;
 }
@@ -248,6 +252,15 @@ async function processGallery({ folderName, folderPath }) {
 
   await mkdir(outputDir, { recursive: true });
 
+  // Which images get a medium derivative: the gallery cover (via
+  // coverImageIndex) plus any indices listed in gallery.md `mediumImages`.
+  const galleryMd = await readGalleryMarkdown(folderPath);
+  const galleryData = galleryMd.data || {};
+  const existingContent = await readExistingContent(path.join(contentRoot, `${slug}.md`));
+  const coverIndex = Number(galleryData.coverImageIndex ?? existingContent.data.coverImageIndex ?? 1);
+  const mediumImages = Array.isArray(galleryData.mediumImages) ? galleryData.mediumImages.map(Number) : [];
+  const mediumSet = new Set([coverIndex, ...mediumImages].filter((n) => Number.isInteger(n) && n >= 1));
+
   // Pass 1: cheap sequential fs/cache-identity checks only, no encoding yet.
   const records = [];
   for (const [index, sourceName] of sourceImages.entries()) {
@@ -256,8 +269,10 @@ async function processGallery({ folderName, folderPath }) {
     const number = String(index + 1).padStart(3, "0");
     const outputThumb = `image-${number}-thumb.webp`;
     const outputLarge = `image-${number}-large.webp`;
+    const outputMedium = mediumSet.has(index + 1) ? `image-${number}-medium.webp` : undefined;
     const thumbPath = path.join(outputDir, outputThumb);
     const largePath = path.join(outputDir, outputLarge);
+    const mediumPath = outputMedium ? path.join(outputDir, outputMedium) : undefined;
     const existing = oldByName.get(sourceName);
 
     const width = existing?.width;
@@ -273,13 +288,18 @@ async function processGallery({ folderName, folderPath }) {
       (await exists(largePath)) &&
       width &&
       height;
+    const canReuseMedium =
+      Boolean(outputMedium) &&
+      canReuse &&
+      existing?.outputMedium === outputMedium &&
+      (await exists(mediumPath));
 
-    records.push({ sourceName, sourcePath, sourceStat, outputThumb, outputLarge, thumbPath, largePath, canReuse, width, height, aspectRatio });
+    records.push({ sourceName, sourcePath, sourceStat, outputThumb, outputLarge, outputMedium, thumbPath, largePath, mediumPath, canReuse, canReuseMedium, width, height, aspectRatio });
   }
 
   // Pass 2: encode everything that needs it, thumbs first (they finish fastest)
-  // then larges, each phase as one Promise.all — UV_THREADPOOL_SIZE (cpuCount)
-  // already bounds how many run natively at once, so no manual batching needed.
+  // then larges, then mediums, each phase as one Promise.all —
+  // UV_THREADPOOL_SIZE (cpuCount) already bounds how many run natively at once.
   const needsEncode = records.filter((record) => !record.canReuse);
   await Promise.all(needsEncode.map((record) => writeWebp(record.sourcePath, record.thumbPath, thumbLongEdge, 65, true)));
   const largeResults = await Promise.all(needsEncode.map((record) => writeWebp(record.sourcePath, record.largePath, largeLongEdge, 80)));
@@ -289,9 +309,13 @@ async function processGallery({ folderName, folderPath }) {
     record.height = large.height;
     record.aspectRatio = Number((large.width / large.height).toFixed(4));
   });
+  const needsMediumEncode = records.filter((record) => record.outputMedium && !record.canReuseMedium);
+  await Promise.all(needsMediumEncode.map((record) =>
+    writeWebp(record.sourcePath, record.mediumPath, mediumLongEdge, 80, false, { maxBytes: mediumMaxBytes, effort: 6 })
+  ));
 
   for (const record of records) {
-    newManifest.sourceFiles.push({
+    const entry = {
       name: record.sourceName,
       mtimeMs: record.sourceStat.mtimeMs,
       size: record.sourceStat.size,
@@ -300,7 +324,9 @@ async function processGallery({ folderName, folderPath }) {
       width: record.width,
       height: record.height,
       aspectRatio: record.aspectRatio
-    });
+    };
+    if (record.outputMedium) entry.outputMedium = record.outputMedium;
+    newManifest.sourceFiles.push(entry);
   }
 
   await removeStaleOutputs(outputDir, newManifest);
@@ -314,6 +340,7 @@ async function removeStaleOutputs(outputDir, manifest) {
   for (const file of manifest.sourceFiles) {
     keep.add(file.outputThumb);
     keep.add(file.outputLarge);
+    if (file.outputMedium) keep.add(file.outputMedium);
   }
 
   const entries = await readdir(outputDir, { withFileTypes: true });

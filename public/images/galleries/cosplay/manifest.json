@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-20T16:24:59.050Z",
+  "generatedAt": "2026-08-21T01:32:48.548Z",
   "sourceFiles": [
     {
       "name": "2023-08-21_12-33-05_UTC.jpg",
@@ -209,7 +209,8 @@
       "outputLarge": "image-021-large.webp",
       "width": 1440,
       "height": 1800,
-      "aspectRatio": 0.8
+      "aspectRatio": 0.8,
+      "outputMedium": "image-021-medium.webp"
     },
     {
       "name": "2023-11-24_04-18-37_UTC.jpg",

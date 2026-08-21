@@ -5,6 +5,7 @@ const root = process.cwd();
 
 export interface GalleryImage {
   thumb: string;
+  medium?: string;
   large: string;
   width?: number;
   height?: number;
@@ -15,6 +16,7 @@ export interface GalleryImage {
 interface ManifestSourceFile {
   name?: string;
   outputThumb?: string;
+  outputMedium?: string;
   outputLarge?: string;
   width?: number;
   height?: number;
@@ -39,6 +41,7 @@ function fromManifest(slug: string): GalleryImage[] {
     return (manifest.sourceFiles || [])
       .map((file: ManifestSourceFile) => ({
         thumb: publicPath(slug, file.outputThumb),
+        medium: file.outputMedium ? publicPath(slug, file.outputMedium) : undefined,
         large: publicPath(slug, file.outputLarge),
         width: file.width,
         height: file.height,
@@ -87,13 +90,14 @@ export function getGalleryCover(
   slug: string,
   coverImage?: string,
   frontmatterImages: GalleryImage[] = [],
-  coverImageIndex?: number
+  coverImageIndex?: number,
+  preferredSize: "large" | "medium" = "large"
 ) {
   const images = getGalleryImages(slug, frontmatterImages);
   const selectedImage = Number.isInteger(coverImageIndex) && coverImageIndex! >= 1
     ? images[coverImageIndex! - 1]
     : undefined;
-  if (selectedImage) return selectedImage.large || selectedImage.thumb || "";
+  if (selectedImage) return selectedImage[preferredSize] || selectedImage.large || selectedImage.thumb || "";
   return coverImage || images[0]?.large || images[0]?.thumb || "";
 }
 
@@ -142,4 +146,14 @@ export function getPortraitImages(slug: string, frontmatterImages: GalleryImage[
     .sort((a, b) => Math.abs(a.ratio - homePortraitTargetRatio) - Math.abs(b.ratio - homePortraitTargetRatio) || a.index - b.index)
     .slice(0, limit)
     .map((entry) => entry.image);
+}
+
+// Like getPortraitImages, but only images that have an optimized medium
+// derivative — so the home carousel never silently falls back to a heavy
+// 2800px large. Falls back to all portraits (large) if none have a medium.
+export function getMediumPortraitImages(slug: string, frontmatterImages: GalleryImage[] = [], limit = 5): GalleryImage[] {
+  const portraits = getPortraitImages(slug, frontmatterImages, limit * 2);
+  const withMedium = portraits.filter((image) => image.medium);
+  const pool = withMedium.length > 0 ? withMedium : portraits;
+  return pool.slice(0, limit);
 }

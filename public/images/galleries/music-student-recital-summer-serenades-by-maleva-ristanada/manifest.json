@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-20T16:24:59.031Z",
+  "generatedAt": "2026-08-21T01:32:48.528Z",
   "sourceFiles": [
     {
       "name": "_DSC6163.jpg",
@@ -129,7 +129,8 @@
       "outputLarge": "image-013-large.webp",
       "width": 2800,
       "height": 1831,
-      "aspectRatio": 1.5292
+      "aspectRatio": 1.5292,
+      "outputMedium": "image-013-medium.webp"
     },
     {
       "name": "_DSC6669.jpg",

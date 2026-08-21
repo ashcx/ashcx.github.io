@@ -22,6 +22,8 @@ const slug = entrySlug(item);
 const title = displayTitle(item);
 const galleryImages = getGalleryImages(slug, item.data.images);
 const coverImage = getGalleryCover(slug, item.data.coverImage, item.data.images, item.data.coverImageIndex);
+const heroCoverMedium = getGalleryCover(slug, item.data.coverImage, item.data.images, item.data.coverImageIndex, "medium");
+const heroCoverLarge = coverImage;
 ---
 
 <BaseLayout title={`${title} / Photography`} description={item.data.summary || item.data.description || "A photography gallery from Ash Chong."} active="photography" image={coverImage}>
@@ -29,7 +31,10 @@ const coverImage = getGalleryCover(slug, item.data.coverImage, item.data.images,
     {
       coverImage && (
         <figure class="gallery-hero-cover">
-          <img src={coverImage} alt={title} />
+          <picture>
+            <source media="(max-width: 810px)" srcset={heroCoverMedium} />
+            <img src={heroCoverLarge} alt={title} />
+          </picture>
         </figure>
       )
     }

@@ -50,6 +50,31 @@ const pageCover = featuredCaseStudy?.data.coverImage || embedItems.find((item) =
 
   <ContactSection />
 
-  <script is:inline async src="https://www.instagram.com/embed.js"></script>
-  <script is:inline async src="https://www.tiktok.com/embed.js"></script>
+  <script is:inline>
+    (() => {
+      const roots = Array.from(document.querySelectorAll("[data-social-embeds]"));
+      if (roots.length === 0) return;
+
+      const load = () => {
+        ["https://www.instagram.com/embed.js", "https://www.tiktok.com/embed.js"].forEach((src) => {
+          const script = document.createElement("script");
+          script.src = src;
+          script.async = true;
+          document.head.appendChild(script);
+        });
+      };
+
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver((entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) {
+            observer.disconnect();
+            load();
+          }
+        }, { rootMargin: "800px 0px" });
+        roots.forEach((root) => observer.observe(root));
+      } else {
+        load();
+      }
+    })();
+  </script>
 </BaseLayout>

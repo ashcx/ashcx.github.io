@@ -7,7 +7,7 @@ import TestimonialsSection from "@components/TestimonialsSection.astro";
 import WorkGrid from "@components/WorkGrid.astro";
 import { entrySlug, published, rankPhotographyForAll, splitHidden } from "@lib/content";
 import type { PhotographyEntry } from "@lib/content";
-import { getGalleryCover, getGalleryImages, getHomePortraitCover, getPortraitImages } from "@lib/gallery-images";
+import { getGalleryCover, getGalleryImages, getHomePortraitCover, getMediumPortraitImages } from "@lib/gallery-images";
 import type { GalleryImage } from "@lib/gallery-images";
 import EventFilmFeature from "@components/EventFilmFeature.astro";
 import { featuredEventFilm, sections, site } from "@lib/site";
@@ -19,7 +19,7 @@ const latestPhotos = splitHidden(allRankedPhotos, 2);
 const socialHighlights = contentItems.filter((item) => item.data.contentType === "embed");
 
 const corporateCoverUrl = (photo: PhotographyEntry) =>
-  getGalleryCover(entrySlug(photo), photo.data.coverImage, photo.data.images, photo.data.coverImageIndex);
+  getGalleryCover(entrySlug(photo), photo.data.coverImage, photo.data.images, photo.data.coverImageIndex, "medium");
 
 // Carousel landscape sources: cover images in a curated order (up to 5).
 const landscapeCoverSlugs = [
@@ -49,7 +49,7 @@ const walkingTourEntry = photos.find((candidate) => entrySlug(candidate) === wal
 const portraitsBySource = new Map<string, GalleryImage[]>();
 for (const slug of portraitSourceSlugs) {
   const entry = photos.find((candidate) => entrySlug(candidate) === slug);
-  portraitsBySource.set(slug, entry ? getPortraitImages(slug, entry.data.images, 5) : []);
+  portraitsBySource.set(slug, entry ? getMediumPortraitImages(slug, entry.data.images, 5) : []);
 }
 const portraitImages: GalleryImage[] = [];
 const portraitCursor = new Map<string, number>();
@@ -72,8 +72,8 @@ if (walkingTourEntry) {
 }
 
 const carouselSlides = portraitImages.slice(0, 5).map((image, index) => ({
-  portrait: image.large || image.thumb || "",
-  landscape: corporateCovers[index % corporateCovers.length] || image.large || image.thumb || "",
+  portrait: image.medium || image.large || image.thumb || "",
+  landscape: corporateCovers[index % corporateCovers.length] || image.medium || image.large || image.thumb || "",
   alt: "Featured portfolio image"
 }));
 
@@ -116,7 +116,13 @@ const ogImage = carouselSlides[0]?.portrait || pageCover;
                   aria-hidden={index === 0 ? "false" : "true"}
                 >
                   <source media="(max-width: 810px)" srcset={slide.landscape} />
-                  <img src={slide.portrait} alt={`${slide.alt} ${index + 1}`} loading={index === 0 ? "eager" : "lazy"} />
+                  <img
+                    src={slide.portrait}
+                    alt={`${slide.alt} ${index + 1}`}
+                    loading={index === 0 ? "eager" : "lazy"}
+                    fetchpriority={index === 0 ? "high" : "auto"}
+                    decoding="async"
+                  />
                 </picture>
               ))}
             </div>
@@ -187,8 +193,33 @@ const ogImage = carouselSlides[0]?.portrait || pageCover;
 
   <ContactSection />
 
-  <script is:inline async src="https://www.instagram.com/embed.js"></script>
-  <script is:inline async src="https://www.tiktok.com/embed.js"></script>
+  <script is:inline>
+    (() => {
+      const roots = Array.from(document.querySelectorAll("[data-social-embeds]"));
+      if (roots.length === 0) return;
+
+      const load = () => {
+        ["https://www.instagram.com/embed.js", "https://www.tiktok.com/embed.js"].forEach((src) => {
+          const script = document.createElement("script");
+          script.src = src;
+          script.async = true;
+          document.head.appendChild(script);
+        });
+      };
+
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver((entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) {
+            observer.disconnect();
+            load();
+          }
+        }, { rootMargin: "800px 0px" });
+        roots.forEach((root) => observer.observe(root));
+      } else {
+        load();
+      }
+    })();
+  </script>
 
   <script>
     const carousel = document.querySelector<HTMLElement>("[data-home-carousel]");

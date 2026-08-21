@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-20T16:24:59.016Z",
+  "generatedAt": "2026-08-21T01:32:48.513Z",
   "sourceFiles": [
     {
       "name": "_1000364.jpg",
@@ -199,7 +199,8 @@
       "outputLarge": "image-020-large.webp",
       "width": 2084,
       "height": 2800,
-      "aspectRatio": 0.7443
+      "aspectRatio": 0.7443,
+      "outputMedium": "image-020-medium.webp"
     },
     {
       "name": "_1012149.jpg",
@@ -209,7 +210,8 @@
       "outputLarge": "image-021-large.webp",
       "width": 2088,
       "height": 2800,
-      "aspectRatio": 0.7457
+      "aspectRatio": 0.7457,
+      "outputMedium": "image-021-medium.webp"
     },
     {
       "name": "_1012287.jpg",
@@ -239,7 +241,8 @@
       "outputLarge": "image-024-large.webp",
       "width": 2800,
       "height": 2051,
-      "aspectRatio": 1.3652
+      "aspectRatio": 1.3652,
+      "outputMedium": "image-024-medium.webp"
     },
     {
       "name": "_1012488.jpg",

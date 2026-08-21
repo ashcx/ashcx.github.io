@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-20T16:24:59.029Z",
+  "generatedAt": "2026-08-21T01:32:48.525Z",
   "sourceFiles": [
     {
       "name": "_DSC4087.jpg",
@@ -249,7 +249,8 @@
       "outputLarge": "image-025-large.webp",
       "width": 2800,
       "height": 1944,
-      "aspectRatio": 1.4403
+      "aspectRatio": 1.4403,
+      "outputMedium": "image-025-medium.webp"
     },
     {
       "name": "Summer Soiree 198.jpg",
