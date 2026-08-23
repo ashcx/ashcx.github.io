@@ -1,11 +1,22 @@
+const whatsappMessage = `Hi Ash! I’m interested in your photography / social media services.
+
+Here are some details about my project:
+
+- Date:
+- Type of project:
+- Location:
+- Duration:
+- Requirements:
+
+Could you let me know if you're available? Thank you!`;
+
 export const site = {
   name: "Ash Chong",
   title: "Event Photography & Social Content | Ash Chong",
   description:
     "Corporate event photography and social media content for businesses and brands in Singapore, from large conferences to small studio launches.",
   whatsapp: "+65 8927 1158",
-  whatsappUrl:
-    "https://api.whatsapp.com/send/?phone=6589271158&text=Hi+Ash%21+I+would+like+to+book+your+photography+%2F+social+media+services.%0A%0ASome+details+of+my+upcoming+event+%2F+marketing+campaign+are+as+follows%3A%0A-+%20&type=phone_number&app_absent=0"
+  whatsappUrl: `https://api.whatsapp.com/send/?phone=6589271158&text=${encodeURIComponent(whatsappMessage)}&type=phone_number&app_absent=0`
 };
 
 export const featuredEventFilm = {
