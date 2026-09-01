@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-23T04:05:37.235Z",
+  "generatedAt": "2026-09-01T16:47:34.520Z",
   "sourceFiles": [
     {
       "name": "_1000364.jpg",
@@ -99,7 +99,8 @@
       "outputLarge": "image-010-large.webp",
       "width": 2800,
       "height": 2100,
-      "aspectRatio": 1.3333
+      "aspectRatio": 1.3333,
+      "outputMedium": "image-010-medium.webp"
     },
     {
       "name": "_1000865.jpg",
@@ -241,8 +242,7 @@
       "outputLarge": "image-024-large.webp",
       "width": 2800,
       "height": 2051,
-      "aspectRatio": 1.3652,
-      "outputMedium": "image-024-medium.webp"
+      "aspectRatio": 1.3652
     },
     {
       "name": "_1012488.jpg",

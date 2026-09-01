@@ -2,7 +2,7 @@
 # photographyType choices: corporate-private-events | stage-work | photoshoot | wedding-rom
 # hidden: true keeps this gallery out of home/photography listings unless ?hidden=1 is in the URL
 # coverImageIndex: N picks the Nth image (1-based, matching image-NNN- output filenames) as the cover instead of the first
-title: Maneesh & Kavyaa — The Proposal
+title: Maneesh & Kavyaa - The Proposal
 date: 2026-09-01
 photographyType: wedding-rom
 client: Maneesh & Kavyaa
