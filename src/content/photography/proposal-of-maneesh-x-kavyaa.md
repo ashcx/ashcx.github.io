@@ -9,6 +9,7 @@ client: Maneesh & Kavyaa
 featuredRank: 4
 categoryRank: 2
 publishStatus: published
+coverImageIndex: 10
 summary: "Maneesh and Kavyaa’s proposal unfolded between two sides of Singapore:
   a quiet, intimate moment in an iconic garden, followed by portraits beneath
   the city lights near Marina Bay Sands. The gallery holds the anticipation,
@@ -23,7 +24,7 @@ guidedContext: "Client and couple: Maneesh and Kavyaa. This proposal session
   significance of the moment, and the contrast between lush garden surroundings
   and Singapore’s illuminated skyline. Do not invent the garden’s name, proposal
   date, or any details that are not visible in the images."
-coverImage: /images/galleries/proposal-of-maneesh-x-kavyaa/image-001-large.webp
+coverImage: /images/galleries/proposal-of-maneesh-x-kavyaa/image-010-large.webp
 ---
 
 
