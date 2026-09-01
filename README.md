@@ -4,6 +4,8 @@ A static portfolio site for photography, social-content work, and data projects.
 It is built with [Astro](https://astro.build), stores content in Markdown/MDX,
 and deploys to GitHub Pages.
 
+Visit the live site: [ashcx.github.io](https://ashcx.github.io/)
+
 There is no database or backend. Content is prepared locally, committed to the
 repository, and published automatically when changes are pushed to `main`.
 
