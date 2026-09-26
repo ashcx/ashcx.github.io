@@ -4,7 +4,9 @@ const galleryShell = document.querySelector("[data-gallery-shell]");
 const gallery = galleryShell?.querySelector("[data-gallery]");
 const imageDataScript = galleryShell?.querySelector("[data-gallery-images]");
 const lightbox = document.querySelector(".lightbox");
-const lightboxImage = lightbox?.querySelector("img");
+const lightboxStage = lightbox?.querySelector(".lightbox-stage");
+const lightboxCounter = lightbox?.querySelector(".lightbox-counter");
+const lightboxLoading = lightbox?.querySelector(".lightbox-loading");
 const closeButton = lightbox?.querySelector(".lightbox-close");
 const prevButton = lightbox?.querySelector(".lightbox-prev");
 const nextButton = lightbox?.querySelector(".lightbox-next");
@@ -18,7 +20,13 @@ const mobileLayout = {
   targetRowHeight: 168
 };
 const images = imageDataScript ? JSON.parse(imageDataScript.textContent || "[]") : [];
+const shots = gallery ? [...gallery.querySelectorAll(".shot")] : [];
+const shotImages = shots.map((shot) => shot.querySelector("img"));
 let activeIndex = -1;
+let imageRequestId = 0;
+let activePreview = null;
+let pendingFullImage = null;
+let loadingTimer = 0;
 let resizeFrame = 0;
 
 function numericRatio(image) {
@@ -100,17 +108,170 @@ function scheduleLayout() {
   });
 }
 
+function restoreActivePreview() {
+  if (!activePreview) return;
+
+  const { element, parent, nextSibling, className, alt, loading } = activePreview;
+  activePreview = null;
+  element.className = className;
+  element.alt = alt;
+  delete element.dataset.lightboxIndex;
+  element.removeAttribute("data-lightbox-preview");
+
+  if (loading === null) element.removeAttribute("loading");
+  else element.setAttribute("loading", loading);
+
+  if (parent?.isConnected) {
+    if (nextSibling?.parentNode === parent) parent.insertBefore(element, nextSibling);
+    else parent.append(element);
+  } else {
+    element.remove();
+    element.removeAttribute("src");
+  }
+}
+
+function clearPendingFullImage() {
+  if (!pendingFullImage) return;
+
+  pendingFullImage.removeAttribute("src");
+  pendingFullImage = null;
+}
+
+function removeFullImages() {
+  lightboxStage?.querySelectorAll(".lightbox-full").forEach((image) => image.remove());
+}
+
+function showLoadingIndicator(requestId) {
+  if (!lightboxLoading) return;
+
+  window.clearTimeout(loadingTimer);
+  lightboxLoading.hidden = true;
+  loadingTimer = window.setTimeout(() => {
+    if (requestId === imageRequestId && pendingFullImage) lightboxLoading.hidden = false;
+  }, 120);
+}
+
+function hideLoadingIndicator(requestId) {
+  if (requestId !== undefined && requestId !== imageRequestId) return;
+
+  window.clearTimeout(loadingTimer);
+  loadingTimer = 0;
+  if (lightboxLoading) lightboxLoading.hidden = true;
+}
+
+function waitForImage(image) {
+  if (typeof image.decode === "function") return image.decode();
+  if (image.complete) {
+    return image.naturalWidth > 0 ? Promise.resolve() : Promise.reject(new Error("Image failed to load"));
+  }
+  return new Promise((resolve, reject) => {
+    image.addEventListener("load", resolve, { once: true });
+    image.addEventListener("error", reject, { once: true });
+  });
+}
+
+function decodeImage(image, source) {
+  image.src = source;
+  return waitForImage(image);
+}
+
+function showThumbnailPreview(index, image, requestId) {
+  if (!lightboxStage) return;
+
+  restoreActivePreview();
+
+  const galleryImage = shotImages[index];
+  const previewImage = galleryImage || new Image();
+  const parent = galleryImage?.parentNode || null;
+  const state = {
+    element: previewImage,
+    parent,
+    nextSibling: parent ? previewImage.nextSibling : null,
+    className: previewImage.className,
+    alt: previewImage.alt,
+    loading: previewImage.getAttribute("loading")
+  };
+
+  previewImage.classList.add("lightbox-preview");
+  previewImage.dataset.lightboxIndex = String(index);
+  previewImage.setAttribute("data-lightbox-preview", "true");
+  previewImage.alt = image.alt || "Selected gallery image";
+  previewImage.loading = "eager";
+  lightboxStage.append(previewImage);
+  activePreview = state;
+
+  const markPreviewReady = () => {
+    if (requestId !== imageRequestId || !lightbox?.classList.contains("is-open")) return;
+    if (!previewImage.complete || previewImage.naturalWidth === 0) return;
+
+    const fullImageIndex = Number(lightboxStage.querySelector(".lightbox-full")?.dataset.lightboxIndex);
+    if (fullImageIndex === index) {
+      restoreActivePreview();
+      return;
+    }
+
+    removeFullImages();
+  };
+
+  if (previewImage.complete && previewImage.naturalWidth > 0) {
+    markPreviewReady();
+  } else {
+    const source = image.thumb || image.large;
+    if (!galleryImage && source) {
+      decodeImage(previewImage, source).then(markPreviewReady).catch(() => {});
+    } else waitForImage(previewImage).then(markPreviewReady).catch(() => {});
+  }
+}
+
+function loadFullImage(index, image, requestId) {
+  if (!lightboxStage || !image.large) {
+    hideLoadingIndicator(requestId);
+    return;
+  }
+
+  const fullImage = new Image();
+  fullImage.className = "lightbox-full";
+  fullImage.alt = image.alt || "Selected gallery image";
+  fullImage.decoding = "async";
+  fullImage.fetchPriority = "high";
+  fullImage.dataset.lightboxIndex = String(index);
+  pendingFullImage = fullImage;
+
+  decodeImage(fullImage, image.large).then(() => {
+    if (requestId !== imageRequestId || !lightbox?.classList.contains("is-open")) return;
+
+    pendingFullImage = null;
+    hideLoadingIndicator(requestId);
+    removeFullImages();
+    restoreActivePreview();
+    lightboxStage.append(fullImage);
+  }).catch(() => {
+    if (requestId === imageRequestId) {
+      pendingFullImage = null;
+      hideLoadingIndicator(requestId);
+    }
+  });
+}
+
 function setLightboxImage(index) {
-  if (!lightbox || !lightboxImage || images.length === 0) return;
+  if (!lightbox || !lightboxStage || images.length === 0) return;
 
   activeIndex = (index + images.length) % images.length;
+  const requestId = ++imageRequestId;
   const image = images[activeIndex];
-  lightboxImage.src = image.large;
-  lightboxImage.alt = image.alt || "Selected gallery image";
+
+  clearPendingFullImage();
+  if (lightboxCounter) {
+    lightboxCounter.textContent = `${activeIndex + 1} / ${images.length}`;
+    lightboxCounter.setAttribute("aria-label", `Image ${activeIndex + 1} of ${images.length}`);
+  }
+  showLoadingIndicator(requestId);
+  showThumbnailPreview(activeIndex, image, requestId);
+  loadFullImage(activeIndex, image, requestId);
 }
 
 function openLightbox(index) {
-  if (!lightbox || !lightboxImage || images.length === 0) return;
+  if (!lightbox || !lightboxStage || images.length === 0) return;
 
   setLightboxImage(index);
   lightbox.classList.add("is-open");
@@ -119,25 +280,29 @@ function openLightbox(index) {
 }
 
 function closeLightbox() {
-  if (!lightbox || !lightboxImage) return;
+  if (!lightbox || !lightboxStage) return;
 
+  imageRequestId += 1;
+  clearPendingFullImage();
+  hideLoadingIndicator();
+  restoreActivePreview();
+  removeFullImages();
   lightbox.classList.remove("is-open");
   lightbox.setAttribute("aria-hidden", "true");
-  lightboxImage.removeAttribute("src");
   activeIndex = -1;
 }
 
 function showPreviousImage() {
-  if (activeIndex === -1) return;
+  if (activeIndex === -1 || images.length < 2) return;
   setLightboxImage(activeIndex - 1);
 }
 
 function showNextImage() {
-  if (activeIndex === -1) return;
+  if (activeIndex === -1 || images.length < 2) return;
   setLightboxImage(activeIndex + 1);
 }
 
-gallery?.querySelectorAll(".shot").forEach((shot) => {
+shots.forEach((shot) => {
   const index = Number(shot.dataset.index || 0);
   const image = images[index] || {};
   shot.dataset.ratio = String(numericRatio(image));
