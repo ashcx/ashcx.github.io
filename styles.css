@@ -2242,8 +2242,8 @@ p {
 
 .lightbox-stage img {
   grid-area: 1 / 1;
-  width: auto;
-  height: auto;
+  width: 100%;
+  height: 100%;
   max-width: min(100%, calc(100vw - 184px));
   max-height: calc(100vh - 144px);
   border-radius: 18px;
@@ -2273,7 +2273,7 @@ p {
   padding: 8px 12px;
   background: rgba(255, 250, 241, 0.08);
   color: var(--paper-bright);
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   line-height: 1;
   pointer-events: none;
 }
@@ -2840,6 +2840,7 @@ p {
   .lightbox-nav {
     width: 42px;
     height: 42px;
+    top: calc(50% + 20px);
   }
 
   .lightbox-nav svg {
