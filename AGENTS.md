@@ -77,9 +77,11 @@ the importer prompts for missing fields in an interactive terminal. It accepts
 optional metadata such as `title`, `photographyType`, `publishStatus`,
 `hidden`, `coverImageIndex`, `client`, and `googlePhotosUrl`.
 
-The importer generates 480px thumbnails and 2800px large images, names them by
-their natural-sort source order, and records source size, modification time,
-dimensions, and output names in the manifest. Matching unchanged sources are
+The importer generates 480px thumbnails and large images up to 2550px on the
+long edge, names them by their natural-sort source order, and records source
+size, modification time, dimensions, and output names in the manifest. Large
+images use WebP quality 75 and a 550 KiB size target, lowering quality in
+5-point steps to a minimum of 40 when needed. Matching unchanged sources are
 reused. `coverImageIndex` is 1-based and selects a cover; otherwise the first
 image is used.
 

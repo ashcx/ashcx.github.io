@@ -24,8 +24,10 @@ let promptInterface;
 
 const thumbLongEdge = 480;
 const mediumLongEdge = 1152;
-const largeLongEdge = 2800;
-const maxOutputBytes = 600 * 1024;
+const largeLongEdge = 2550;
+const largeQuality = 75;
+const thumbMaxBytes = 600 * 1024;
+const largeMaxBytes = 550 * 1024;
 const mediumMaxBytes = 130 * 1024;
 const minQuality = 40;
 const qualityStep = 5;
@@ -190,7 +192,7 @@ async function readManifest(manifestPath) {
 }
 
 async function encodeWebp(inputPath, longEdge, quality, forThumb = false, options = {}) {
-  const maxBytes = options.maxBytes ?? maxOutputBytes;
+  const maxBytes = options.maxBytes ?? thumbMaxBytes;
   const effort = options.effort ?? 4;
   let pipeline = sharp(inputPath).rotate().toColorspace("srgb");
 
@@ -302,7 +304,9 @@ async function processGallery({ folderName, folderPath }) {
   // UV_THREADPOOL_SIZE (cpuCount) already bounds how many run natively at once.
   const needsEncode = records.filter((record) => !record.canReuse);
   await Promise.all(needsEncode.map((record) => writeWebp(record.sourcePath, record.thumbPath, thumbLongEdge, 65, true)));
-  const largeResults = await Promise.all(needsEncode.map((record) => writeWebp(record.sourcePath, record.largePath, largeLongEdge, 80)));
+  const largeResults = await Promise.all(needsEncode.map((record) =>
+    writeWebp(record.sourcePath, record.largePath, largeLongEdge, largeQuality, false, { maxBytes: largeMaxBytes })
+  ));
   needsEncode.forEach((record, index) => {
     const large = largeResults[index];
     record.width = large.width;
