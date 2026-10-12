@@ -10,12 +10,24 @@ import type { PhotographyEntry } from "@lib/content";
 import { getGalleryCover, getGalleryImages, getHomePortraitCover, getMediumPortraitImages } from "@lib/gallery-images";
 import type { GalleryImage } from "@lib/gallery-images";
 import EventFilmFeature from "@components/EventFilmFeature.astro";
-import { featuredEventFilm, sections, site } from "@lib/site";
+import { featuredEventFilm, sections } from "@lib/site";
 
 const photos = published(await getCollection("photography"));
 const contentItems = published(await getCollection("content-work"));
 const allRankedPhotos = rankPhotographyForAll(photos);
-const latestPhotos = splitHidden(allRankedPhotos, 2);
+const homepageFeatureSlugs = [
+  "corporate-night-safari-experience-for-visa-leadership",
+  "h-ai-ai-festival-empowering-women-in-tech",
+  "eat-the-world-corporate-networking-food-tasting-experience",
+  "starrylight-paints-2024-new-year-celebration-fringe-activities"
+];
+const homepagePhotos = homepageFeatureSlugs
+  .map((slug) => photos.find((photo) => entrySlug(photo) === slug))
+  .filter((photo): photo is PhotographyEntry => Boolean(photo && !photo.data.hidden));
+const homepageWorkItems = splitHidden(
+  [...homepagePhotos, ...allRankedPhotos.filter((photo) => photo.data.hidden)],
+  homepagePhotos.length
+);
 const socialHighlights = contentItems.filter((item) => item.data.contentType === "embed");
 
 const corporateCoverUrl = (photo: PhotographyEntry) =>
@@ -84,25 +96,23 @@ const pageCover = visibleCoverPhoto
 const ogImage = carouselSlides[0]?.portrait || pageCover;
 ---
 
-<BaseLayout title={site.title} description={site.description} active="home" image={ogImage}>
+<BaseLayout
+  title="Event Photography & Video Singapore | Ash Chong"
+  description="Singapore-based freelance photographer and videographer for corporate events, private celebrations, and social content shoots. Explore Ash Chong's work and check availability."
+  active="home"
+  image={ogImage}
+  fullTitle={true}
+>
   <section class="home-hero" aria-labelledby="hero-title">
     <div class="home-hero-copy home-intro-grid">
       <div class="home-name-block">
-        <h1 id="hero-title">Hi, I'm <span class="home-name-line">Ash.</span></h1>
+        <h1 id="hero-title">Photography and video for events and businesses in Singapore.</h1>
       </div>
-      <ul class="identity-list" aria-label="Short description">
-        <li>Event photographer</li>
-        <li>Social content creator</li>
-        <li>Digital strategist</li>
-      </ul>
       <div class="home-intro-block">
-        <p class="hero-lede">
-          Helping businesses turn meaningful moments into stories that build
-          trust and drive growth.
-        </p>
+        <p class="hero-lede">I'm Ash, a freelance photographer and videographer covering corporate events, private celebrations, and social content shoots. Tell me what you're planning, and we can discuss the coverage and deliverables you need.</p>
         <div class="hero-actions">
-          <a class="button button-dark" href="#corporate-work">Find out more</a>
-          <a class="button button-accent" href="/contact/">Contact me</a>
+          <a class="button button-dark" href="#corporate-work">Explore my work</a>
+          <a class="button button-accent" href="/contact/">Check availability</a>
         </div>
       </div>
       {
@@ -173,7 +183,7 @@ const ogImage = carouselSlides[0]?.portrait || pageCover;
           </div>
           <a class="button button-dark" href="/photography/">Explore photography</a>
         </div>
-        <WorkGrid items={latestPhotos} />
+        <WorkGrid items={homepageWorkItems} />
         <div class="home-section-footer">
           <a class="button button-dark" href="/photography/">View all galleries</a>
         </div>
@@ -181,13 +191,16 @@ const ogImage = carouselSlides[0]?.portrait || pageCover;
     )
   }
 
-  {sections.content && <HomeSocialHighlights items={socialHighlights} />}
-
-  {sections.content && (
+  {sections.video && (
     <section class="home-section home-event-film" aria-labelledby="home-event-film-title">
       <EventFilmFeature {...featuredEventFilm} id="home-event-film-title" loading="lazy" />
+      <div class="home-section-footer">
+        <a class="button button-accent" href="/videography/">Explore event video</a>
+      </div>
     </section>
   )}
+
+  {sections.content && <HomeSocialHighlights items={socialHighlights} />}
 
   <TestimonialsSection showRule={false} />
 

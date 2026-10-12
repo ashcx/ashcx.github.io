@@ -1,0 +1,90 @@
+---
+const steps = [
+  {
+    title: "Share your brief",
+    description: "Send your date, location, and what you need covered."
+  },
+  {
+    title: "Agree scope and fee",
+    description: "We'll confirm the coverage, deliverables, and price before booking."
+  },
+  {
+    title: "The shoot",
+    description: "I'll work from the agreed brief and programme."
+  },
+  {
+    title: "Receive your work",
+    description: "Your photographs or video will be delivered on the agreed schedule."
+  }
+];
+---
+
+<section class="booking-process" aria-labelledby="booking-process-title">
+  <div class="content-section-rule"></div>
+  <h2 id="booking-process-title">How booking works</h2>
+  <ol>
+    {steps.map((step) => (
+      <li>
+        <h3>{step.title}</h3>
+        <p>{step.description}</p>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<style>
+  .booking-process {
+    width: min(var(--max), calc(100% - var(--gutter) * 2));
+    margin: 0 auto;
+    padding: clamp(54px, 7vw, 84px) 0;
+  }
+
+  .booking-process h2 {
+    margin-bottom: clamp(30px, 4vw, 46px);
+    text-align: center;
+  }
+
+  .booking-process ol {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(18px, 2.5vw, 32px);
+    margin: 0;
+    padding: 0;
+    list-style-position: inside;
+  }
+
+  .booking-process li {
+    border-top: 1px solid var(--hairline);
+    padding-top: 18px;
+  }
+
+  .booking-process li::marker {
+    color: var(--accent);
+    font-weight: 800;
+  }
+
+  .booking-process h3 {
+    display: inline;
+    margin: 0 0 12px 6px;
+    font-size: clamp(1rem, 1.4vw, 1.2rem);
+  }
+
+  .booking-process li p {
+    margin: 12px 0 0;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  @media (max-width: 900px) {
+    .booking-process ol {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      row-gap: 28px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .booking-process ol {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

@@ -8,19 +8,21 @@ import "../../styles.css";
 interface Props {
   title?: string;
   description?: string;
-  active?: "home" | "photography" | "content" | "data" | "contact";
+  active?: "home" | "photography" | "video" | "content" | "data" | "contact";
   image?: string;
+  fullTitle?: boolean;
 }
 
 const {
   title = site.title,
   description = site.description,
   active = "home",
-  image
+  image,
+  fullTitle = false
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const pageTitle = title === site.title ? title : `${title} / ${site.title}`;
+const pageTitle = fullTitle || title === site.title ? title : `${title} / ${site.title}`;
 const ogImage = image ? new URL(image, Astro.site).toString() : undefined;
 ---
 

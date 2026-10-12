@@ -2,7 +2,7 @@
 
 Date: 12 October 2026
 
-Status: Planning only. Website implementation has not been authorised by this document.
+Status: Website changes implemented and verified on 13 October 2026; pending PR review. Contact form remains deferred. Not merged or deployed.
 
 Objective: Make Ash's photography and event-video services easier to understand and book, while retaining varied work and leaving Social media unchanged.
 
@@ -13,7 +13,7 @@ Objective: Make Ash's photography and event-video services easier to understand 
 - Improve the existing homepage introduction without adding a portrait or biography section.
 - Establish Event Video as a service at `/videography/`.
 - Clarify Photography and Event Video scope using verified operating details.
-- Retain WhatsApp and add a short enquiry form, subject to a working submission destination.
+- Retain WhatsApp and tailor photography/video enquiry messages. Contact-form implementation is deferred.
 - Curate homepage photography examples without removing other portfolio categories.
 - Improve the HR WorkTech photography presentation and Airwallex event-film presentation.
 - Add contextual booking prompts to photography galleries and Event Video.
@@ -24,7 +24,7 @@ Objective: Make Ash's photography and event-video services easier to understand 
 
 - Renaming Social media, changing `/content/`, changing its offers, prices, copy, ordering, or management scope.
 - Editing the homepage Social media section's contents or examples. Moving Event Video before it is permitted.
-- Publishing an email address, purchasing a domain, changing email accounts, or migrating hosting.
+- Implementing or setting up the contact form in this release. Also excluded: publishing an email address, purchasing a domain, changing email accounts, or migrating hosting.
 - A personal photograph, About page, new homepage biography, homepage case-study block, or standalone video-project page.
 - Changing the existing $600/$1,400 photography amounts, removal of existing photography services, collection-schema changes, gallery derivative changes, or broad visual redesign. There is no separate short-event tier; half-day and full-day are the only public photography package labels.
 - New capabilities such as livestreaming, drone coverage, multicamera recording, or guaranteed simultaneous solo photo/video coverage.
@@ -48,7 +48,7 @@ The primary assistant owns the implementation plan, all new public-facing wordin
 
 When implementation is explicitly requested, use **GPT-6 Luna with Extra high reasoning** for code writing. The available tool configuration is `model: "gpt-6-luna"`, `reasoning_effort: "xhigh"`, and `fork_turns: "none"`. Give each agent this plan, relevant repository instructions, its exact file allowlist, and its copy subset explicitly. Do not silently substitute another model or reasoning level if the requested configuration is unavailable; report the limitation.
 
-Do not spawn coding subagents during the planning task. The later implementation phase may run at most three coding agents concurrently alongside the primary assistant.
+Implementation is now authorised. Use at most three GPT-6 Luna Extra high coding agents concurrently alongside the primary assistant. The primary assistant remains responsible for public copy and review.
 
 ### Non-negotiable copy ownership
 
@@ -63,12 +63,12 @@ Do not spawn coding subagents during the planning task. The later implementation
 
 | Owner | Allowed implementation area | Dependencies |
 | --- | --- | --- |
-| Agent A — homepage | `src/pages/index.astro`, `src/components/ContactSection.astro` | Primary defines service configuration and copy first |
-| Agent B — service presentation | New `src/pages/videography/index.astro`, Photography page, new process/booking components, gallery route, HR WorkTech Markdown body | Primary creates shared enquiry/configuration contract; Agent B owns shared presentation components |
-| Agent C — enquiries | `src/pages/contact.astro`, new contact-form component and scoped client code | Submission destination decision and primary's configuration contract |
-| Primary assistant | Shared `src/lib/site.ts`, layout active-page type, sitemap, shared stylesheet integration, copy review, final verification and Git delivery | Coordinates all three |
+| Agent A — homepage/shared shell | Homepage, ContactSection, site configuration, layout/Nav types, sitemap, narrow homepage styles | Primary supplies all copy and integration contracts |
+| Agent B — service presentation | Event Video, Photography, new process/prompt components, gallery route, HR WorkTech Markdown, conditional empty film description | Uses Agent C enquiry API and Agent A shell contract |
+| Agent C — enquiries | `src/pages/contact.astro`, new `src/lib/enquiries.ts` and scoped client code | WhatsApp-only; no form or provider setup |
+| Primary assistant | All public copy, action plan, integration/code review, final verification and Git delivery | Coordinates all three; coding agents write implementation code |
 
-Agents must not edit another owner's files. Shared `styles.css` remains primary-owned; agents prefer component-scoped styles and report any required global adjustment. Agents submit changes for primary review; they do not independently commit, push, merge, or deploy.
+Agents must not edit another owner's files. Agent A owns only the narrow homepage changes in shared `styles.css`; other agents use component-scoped styles and report any required global adjustment. Agents submit changes for primary review; they do not independently commit, push, merge, or deploy.
 
 ## 3. Repository observations informing implementation
 
@@ -126,7 +126,11 @@ Required final details: how coverage duration affects the half-day quote, additi
 
 Acceptance: Every new operating promise is traceable to an existing verified commitment or Ash's answer; price values unchanged. Unresolved clarification tasks are explicitly reported as outstanding.
 
-### P4 — Enquiries
+### P4 — WhatsApp enquiries (current release)
+
+Latest instruction supersedes the historical form specification below: no contact form or provider setup in this release. Add `src/lib/enquiries.ts` with service-specific photography/video WhatsApp URLs and an unchanged default URL. Contact stays WhatsApp-only, with primary-authored fallback copy C2A/C7 below. Preselect the appropriate WhatsApp message from `?service=photography` or `?service=video` client-side; unknown values use the original default. Show an Event Video explore-work link when `sections.video` is enabled. Do not display a form, form promise, or inactive submit button. The following form details are retained for later discussion and are not executable tasks now.
+
+#### Deferred form specification
 
 Files: `src/pages/contact.astro`, new form component, scoped client code; primary-owned enquiry helpers in `src/lib/site.ts`.
 
@@ -177,7 +181,7 @@ Acceptance: HR WorkTech accurately states speaker-only scope throughout the affe
 
 Files: new `src/components/BookingPrompt.astro`, gallery route, Event Video page.
 
-Use B1 for all published photography galleries, positioned after gallery content/full-client-gallery link and before related work. Use B2 near the end of Event Video. Primary CTA opens the appropriate WhatsApp message; secondary Send a brief opens Contact with the service preselected. Reuse the same component with supplied variants.
+Use B1 for published event photography galleries and B3 for photoshoot-category galleries, positioned after gallery content/full-client-gallery link and before related work. Use B2 near the end of Event Video. Primary CTA opens the appropriate WhatsApp message. Omit the secondary Send a brief link in this WhatsApp-only release. Reuse the same component with supplied variants.
 
 Acceptance: Correct wording and service selection, one contextual prompt per route, no pop-ups, no changes to lightbox controls or loading, keyboard-visible links.
 
@@ -261,7 +265,7 @@ This is the exact wording available to coding agents. IDs are implementation ref
 - R1 role label/value: **My role** / **Photographer for a speaker-specific assignment.**
 - R1 optional factual labels: **Coverage**, **Delivered work**. Primary supplies additional verified values later.
 - R2 revised project title: **HR WorkTech Summit — Speaker Photography**.
-- R2 revised card summary: **Speaker-focused photography at the HR WorkTech Summit.**
+- R2 revised card summary: **A focused record of one speaker's conference appearance.**
 - R2 revised summary: **Commissioned photography for a speaker at the HR WorkTech Summit, with Ash as the sole photographer for the assignment. Coverage focused on the speaker's participation in the conference.**
 
 ### B — Contextual booking prompts
@@ -271,6 +275,7 @@ This is the exact wording available to coding agents. IDs are implementation ref
 - B1 primary button: **Check availability**
 - B1 secondary link: **Send a brief**
 - B2 uses V6 verbatim.
+- B3 photoshoot heading: **Planning a photoshoot?** Paragraph: **Tell me what you have in mind and when you'd like to shoot.** Button: **Check availability**. Use the photography WhatsApp template.
 
 ### P — Process
 
@@ -287,7 +292,11 @@ This is the exact wording available to coding agents. IDs are implementation ref
 ### C — Contact and form
 
 - C1 page heading: **Tell me about your project.**
-- C2 introduction: **Check availability on WhatsApp, or send a brief using the form below.**
+- C2 deferred-form introduction: **Check availability on WhatsApp, or send a brief using the form below.**
+- C2A current introduction: **Share your date, location, and what you need. WhatsApp is the quickest way to start the conversation.**
+- C7 current explore-work lead: **Browse photography, event video, and social content.**
+- C7 video card label: **Event Video**. Description: **Highlight films, interviews, and speech recordings.** Link: **Explore event video**.
+- C7 Contact metadata description: **Contact Ash for event photography, event video, and social media content enquiries in Singapore.**
 - C3 WhatsApp card title: **Chat on WhatsApp**
 - C3 description: **For a quick availability check or an initial conversation.**
 - C3 button: **Open WhatsApp**
@@ -370,15 +379,15 @@ Each assignment must include:
 Suggested batches:
 
 - Batch 0: primary establishes copy/configuration contracts and resolves factual/form dependencies where possible.
-- Batch 1: Agent A handles P1/P5; Agent B handles P2/P3/P6/P7/P8; Agent C handles P4. Disjoint edits may run concurrently.
-- Batch 2: primary reviews copy, integrates shared configuration/styles, completes P9, and runs final checks.
+- Batch 1: Agent A handles P1/P5; Agent B handles P2/P3/P6/P7/P8; Agent C handles the current WhatsApp-only P4. The form is deferred. Disjoint edits may run concurrently.
+- Batch 2: primary reviews copy and shared integration, delegates any required code fixes, and runs final checks. Agent A implements P9/shared metadata.
 - Batch 3: correct only identified issues; deliver a reviewable PR. Merge/deployment is a separate state.
 
 ## 8. Verification and delivery
 
-### Planning deliverable
+### Planning deliverable (completed before implementation)
 
-Only `action_plan.md` is added now. Run repository-required validation, preserve the existing `.gitignore` edit, and commit/push/open a documentation PR under repository delivery instructions. No coding subagents or website changes are part of that PR.
+Only `action_plan.md` was added in the planning stage. Run repository-required validation, preserve the existing `.gitignore` edit, and commit/push/open a documentation PR under repository delivery instructions. No coding subagents or website changes are part of that PR.
 
 ### Implementation checks
 
@@ -386,6 +395,7 @@ Only `action_plan.md` is added now. Run repository-required validation, preserve
 - Before the build, inspect how generation scripts load `.env`. Merely unsetting a shell variable may not stop a script that reloads `.env`. Ensure AI-generation calls are disabled through an already supported no-key/skip path without revealing credentials or modifying the user's credential files. If none is available, resolve this narrowly with the primary assistant before the full build.
 - Do not invoke `--regenerate`. Review status/diff after the build; exclude unrelated generated changes. Never discard pre-existing user edits while cleaning up build side effects.
 - Check `/`, `/photography/`, `/videography/`, `/contact/`, HR WorkTech, and one other photography gallery in a rendered browser at 360px, 768px, and 1440px.
+- Contact-form submission checks are deferred with the form. Verify current Contact has working WhatsApp and no form promise, and known/unknown service queries select the correct message.
 - Check `/content/` as a regression route: body copy, labels, prices, examples, sorting, and service scope unchanged. The new shared Event Video navigation link is allowed.
 - Verify menu, CTA destinations, form preselection, native validation, keyboard navigation, visible focus, status announcements, and form failure/success handling.
 - Verify video poster/play/loading, photography category filters, hidden galleries, and lightbox controls. Do not expand into a performance rewrite.
@@ -442,18 +452,40 @@ Provider references checked 12 October 2026:
 
 Recheck provider terms at setup; do not promise free custom redirects, custom honeypots, uploads, or automated replies. No uploads or auto-replies are required for this scope.
 
-## 10. Completion checklist
+## 10. Current execution decision
 
-- [ ] Homepage explicitly presents services and Singapore without a personal portrait.
-- [ ] Event Video has its own page, navigation item, section switch, and sitemap entry.
-- [ ] Half-day/full-day presentation retains existing $600/$1,400 starting rates; no third public tier or invented duration caps; variable photo delivery and one-orientation video scope are accurate.
-- [ ] WhatsApp routes use the correct template; Social media retains its existing general template.
-- [ ] Contact form works end to end, or remains explicitly incomplete and unpublished.
-- [ ] Homepage photography features coherent event evidence without removing categories.
-- [ ] HR WorkTech is clearly speaker-only; Airwallex states planning, filming, editing, and delivery, with optional additional films reviewed first.
-- [ ] Contextual prompts appear after work and before related galleries.
-- [ ] Process appears on Photography and Event Video only.
-- [ ] Social media page, offers, content, labels, and featured examples remain unchanged.
-- [ ] All new public copy comes from the primary assistant.
-- [ ] Validation, build, rendered checks, and regression review pass.
+Ash authorised implementation, then explicitly deferred the contact form: "let's discuss the contact form later. make the other changes first." All historical form setup, endpoint, testing, and completion requirements are deferred; no form service account or credentials are needed for this release. No repeated confirmation request for the form is appropriate now.
+
+Current agent contracts: Agent A owns shared navigation/site/layout/sitemap, homepage/ContactSection and narrow global styles; Agent B owns service pages/gallery/project content and new BookingProcess/BookingPrompt; Agent C owns `src/lib/enquiries.ts` and Contact. All code writers use GPT-6 Luna at Extra high; all public copy remains primary-authored.
+
+HR card-summary copy was amended by the primary assistant to avoid title repetition and satisfy the existing validator.
+
+## 11. Completion checklist
+
+- [x] Homepage explicitly presents services and Singapore without a personal portrait.
+- [x] Event Video has its own page, navigation item, section switch, and sitemap entry.
+- [x] Half-day/full-day presentation retains existing $600/$1,400 starting rates; no third public tier or invented duration caps; variable photo delivery and one-orientation video scope are accurate.
+- [x] WhatsApp routes use the correct template; Social media retains its existing general template.
+- [x] Contact form deferred and absent from this release; Contact remains usable through WhatsApp with correct service-specific messages.
+- [x] Homepage photography features coherent event evidence without removing categories.
+- [x] HR WorkTech is clearly speaker-only; Airwallex states planning, filming, editing, and delivery, with optional additional films reviewed first.
+- [x] Contextual prompts appear after work and before related galleries.
+- [x] Process appears on Photography and Event Video only.
+- [x] Social media page, offers, content, labels, and featured examples remain unchanged.
+- [x] All new public copy comes from the primary assistant.
+- [x] Validation, build, rendered checks, and regression review pass.
 - [ ] Scoped commit, push, and attached PR are complete; deployment status is reported accurately.
+
+
+## 12. Implementation verification record — 13 October 2026
+
+- Implementation code written by three GPT-6 Luna Extra high agents; primary assistant supplied/reviewed public copy and requested narrow integration fixes.
+- Final `npm run build` passed, including validation (44 Astro files, zero errors/warnings/hints) and content validation. AI-copy commands skipped through the supported empty `OPENAI_API_KEY` environment value; local env-loader code preserves defined variables. No credential files were changed. No inbox gallery imports were pending.
+- Production preview checked across seven routes at 360px, 768px, and 1440px: 21 route/viewport checks passed, with no page errors or horizontal overflow. Homepage also checked at 820px and 1024px.
+- Verified mobile navigation, featured gallery order, video-before-social order, default/photo/video/unknown Contact query handling, correct WhatsApp phone and actual message newlines, photography category filter, gallery pointer opening/keyboard next/thumbnail preview/Escape, and sitemap inclusion.
+- YouTube click-to-load iframe wiring was tested with the third-party response stubbed. This verifies local player behaviour, not end-to-end external playback or an editorial review of the supplied finished films. Secondary videos are links using source-grounded descriptions; no unverified technical claims were added.
+- Rendered homepage and Event Video screenshots reviewed at desktop and mobile sizes.
+- Source diff confirms Social media page/content/featured component, generated assets, lightbox code, gallery script, collection schemas, build scripts, and package manifests unchanged. Shared navigation adds Event Video.
+- Contact form omitted entirely under Ash's instruction; no provider setup, endpoint, public email, or inactive form added.
+- Existing user `.gitignore` edit remains outside the implementation commit.
+- Local verification scripts/screenshots and installed browser tooling are ignored development artifacts, not release files.

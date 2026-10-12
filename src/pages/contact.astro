@@ -1,20 +1,27 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import TestimonialsSection from "@components/TestimonialsSection.astro";
-import { site } from "@lib/site";
+import { sections } from "@lib/site";
+import { getWhatsAppUrl } from "@lib/enquiries";
 ---
 
-<BaseLayout title="Contact" description="Contact Ash for event photography, social media content, and collaboration enquiries." active="contact">
+<BaseLayout title="Contact" description="Contact Ash for event photography, event video, and social media content enquiries in Singapore." active="contact">
   <section class="contact-page contact-page-intro" aria-labelledby="contact-title">
     <p class="eyebrow">Contact</p>
-    <h1 id="contact-title">Let's talk about your event.</h1>
-    <p>For event coverage, content work, or a collaboration you have in mind, WhatsApp is the fastest way to reach me.</p>
+    <h1 id="contact-title">Tell me about your project.</h1>
+    <p>Share your date, location, and what you need. WhatsApp is the quickest way to start the conversation.</p>
 
     <div class="contact-card-grid contact-card-grid-single">
-      <a class="contact-card" href={site.whatsappUrl}>
+      <a
+        class="contact-card"
+        href={getWhatsAppUrl()}
+        data-contact-whatsapp
+        data-photography-href={getWhatsAppUrl("photography")}
+        data-video-href={getWhatsAppUrl("video")}
+      >
         <span class="meta-label">Contact me</span>
         <strong>Chat on WhatsApp</strong>
-        <small>Best for enquiries, briefs, or just checking availability. I typically reply within the day.</small>
+        <small>For a quick availability check or an initial conversation.</small>
         <span class="contact-link-label button button-whatsapp">Open WhatsApp</span>
       </a>
     </div>
@@ -27,7 +34,7 @@ import { site } from "@lib/site";
     <div class="content-section-rule" />
     <div class="contact-explore">
       <h2 class="contact-explore-subhead">Want to see the work first?</h2>
-      <p class="contact-explore-lead">Browse recent photography and social content.</p>
+      <p class="contact-explore-lead">Browse photography, event video, and social content.</p>
       <div class="contact-explore-grid">
         <a class="contact-explore-card contact-explore-card-photography" href="/photography/">
           <span class="contact-explore-card-copy">
@@ -36,6 +43,15 @@ import { site } from "@lib/site";
           </span>
           <span class="contact-explore-link">Explore photography</span>
         </a>
+        {sections.video && (
+          <a class="contact-explore-card contact-explore-card-video" href="/videography/">
+            <span class="contact-explore-card-copy">
+              <strong>Event Video</strong>
+              <small>Highlight films, interviews, and speech recordings.</small>
+            </span>
+            <span class="contact-explore-link">Explore event video</span>
+          </a>
+        )}
         <a class="contact-explore-card contact-explore-card-social" href="/content/">
           <span class="contact-explore-card-copy">
             <strong>Social media</strong>
@@ -47,3 +63,32 @@ import { site } from "@lib/site";
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  const whatsappLink = document.querySelector<HTMLAnchorElement>("[data-contact-whatsapp]");
+  const requestedService = new URLSearchParams(window.location.search).get("service");
+
+  if (whatsappLink && requestedService === "photography" && whatsappLink.dataset.photographyHref) {
+    whatsappLink.href = whatsappLink.dataset.photographyHref;
+  } else if (whatsappLink && requestedService === "video" && whatsappLink.dataset.videoHref) {
+    whatsappLink.href = whatsappLink.dataset.videoHref;
+  }
+</script>
+
+<style>
+  .contact-explore-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .contact-explore-card-video {
+    background:
+      linear-gradient(135deg, rgba(232, 226, 213, 0.58), transparent 58%),
+      var(--paper-bright);
+  }
+
+  @media (max-width: 760px) {
+    .contact-explore-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>
