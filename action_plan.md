@@ -26,7 +26,7 @@ Objective: Make Ash's photography and event-video services easier to understand 
 - Editing the homepage Social media section's contents or examples. Moving Event Video before it is permitted.
 - Publishing an email address, purchasing a domain, changing email accounts, or migrating hosting.
 - A personal photograph, About page, new homepage biography, homepage case-study block, or standalone video-project page.
-- Price changes, removal of existing photography services, collection-schema changes, gallery derivative changes, or broad visual redesign.
+- Changing the existing $600/$1,400 photography amounts, removal of existing photography services, collection-schema changes, gallery derivative changes, or broad visual redesign. A $900 half-day tier is proposed below; its duration requires confirmation.
 - New capabilities such as livestreaming, drone coverage, multicamera recording, or guaranteed simultaneous solo photo/video coverage.
 - Changing lightbox performance, image pipelines, carousel mechanics, content-generation scripts, or unrelated user work.
 
@@ -106,7 +106,7 @@ Files: new `src/pages/videography/index.astro`; primary-owned site configuration
 Page order:
 
 1. V1–V3 introduction.
-2. Existing Airwallex film feature.
+2. One selected Airwallex film as the lead example, reusing the existing player. Additional Airwallex films may be included as secondary examples after review.
 3. V4 project context; show verified contribution fields only when available.
 4. V5 service-scope rows.
 5. Shared process using P1–P5.
@@ -114,15 +114,15 @@ Page order:
 
 Add `sections.video`, one navigation item, footer support through existing shared navigation, and the sitemap route. Match existing trailing-slash conventions. Do not add a video collection or standalone case-study route.
 
-Acceptance: Route resolves, Event Video is active in navigation, shared visibility switch behaves consistently, player loads on interaction, and the page describes a quote-led offer without invented prices or promises.
+Acceptance: Route resolves, Event Video is active in navigation, shared visibility switch behaves consistently, player loads on interaction, and the page describes a quote-led offer without invented prices or promises. Highlight films, interviews, and full speech recordings are included as confirmed services. Do not imply vertical and horizontal capture are both included.
 
 ### P3 — Photography scope
 
 Files: `src/pages/photography/index.astro`, existing service rows.
 
-Keep current $600/$1,400 starting prices and five-business-day turnaround. Replace ambiguous coverage details only after Ash confirms the facts in section 5. Reuse the pricing configuration; never duplicate amounts as independent sources of truth. Retain current wording for unresolved facts rather than guessing or publishing placeholders.
+Keep current $600/$1,400 amounts. Ash also accepts $900 for half-day coverage. Proposed public structure: Short event coverage from $600 (up to 3 hours); Half-day coverage from $900 (up to 4 hours); Full-day coverage from $1,400 (up to 8 hours). These hour limits are the primary assistant's recommendation, not confirmed operating commitments. Confirm the limits before publishing or changing site configuration. Use three clear rows/cards, with no default photo/video bundle or promotional discount. Reuse the pricing configuration; add a distinct half-day/short-event key rather than accidentally replacing the existing $600 offer. Preserve existing five-business-day wording until Ash confirms any change; it was not reconfirmed in the latest answers.
 
-Required final details: exact entry/full-day hours, whether image quantity varies, additional-hours handling, and expedited availability if offered. Add process P1–P5 here only; do not change Social media's service rows or process.
+Required final details: exact tier hours, additional-hours handling, and expedited availability if offered. Image quantity is confirmed to vary; replace the universal 60–100-image promise with F1. Do not publish a new numerical image allowance. Add process P1–P5 here only; do not change Social media's service rows or process.
 
 Acceptance: Every new operating promise is traceable to an existing verified commitment or Ash's answer; price values unchanged. Unresolved clarification tasks are explicitly reported as outstanding.
 
@@ -144,7 +144,7 @@ Form fields:
 
 Implement accessible labels, appropriate input types/autocomplete, retained values after failures, pending state, duplicate-submit protection, visible success/failure feedback, and lightweight spam protection supported by the chosen provider. Prefer native form functionality; use JavaScript only where it improves state handling/preselection. Do not include secrets in client code.
 
-Submission dependency: the primary assistant should inspect existing in-repo configuration without displaying secrets. If no destination exists, present one concrete static-form integration proposal for Ash's choice and obtain the required endpoint/account configuration. Do not create accounts, accept paid plans, or invent a destination. Build the component locally while this is pending, but do not publish a form that cannot submit. Do not mark this task complete until a real submission is received at the intended destination.
+Submission dependency: Ash confirms no form service exists and authorises proceeding with form setup as part of later implementation, not during this discussion/planning update. Recommend an HTML form embedded directly on `/contact/`, backed by Formspree. Submission stays on the website using AJAX and inline status messages; retain a normal POST fallback. No iframe or external-form link as the main experience. Formspree currently lists a free allowance of 50 submissions per month, private recipient emails, AJAX support, and basic spam filtering; recheck its limits before setup. Use its free tier only if the account is eligible and the current terms fit; no paid plan or upgrade without an explicit instruction. Account sign-in/email verification and the privately receiving inbox remain user-assisted dependencies. Ask for the endpoint or available authenticated setup access when required; never request passwords or expose the inbox in the form action. Build locally while setup is pending, but do not publish a form that cannot submit. Do not mark this task complete until a real submission is received at the intended destination. Use provider-supported free spam filtering; do not assume a custom honeypot is free.
 
 Acceptance: WhatsApp works, service preselection works, no public email address is added, optional questions do not block submission, errors preserve input, and a controlled real submission is received. Use test content written by the primary assistant and avoid sending repeated test messages.
 
@@ -155,21 +155,23 @@ File: `src/pages/index.astro` only where possible.
 Use these existing published, visible galleries in the homepage feature selection:
 
 1. Corporate Night Safari Experience for Visa Leadership.
-2. HR WorkTech Summit — Corporate Conference Highlights.
-3. H+AI — AI Festival Empowering Women in Tech.
-4. Eat The World — Corporate Networking & Food Tasting Experience.
+2. H+AI — AI Festival Empowering Women in Tech.
+3. Eat The World — Corporate Networking & Food Tasting Experience.
+4. Starrylight Paints 2024 New Year Celebration & Fringe Activities.
+
+HR WorkTech is not a lead example of full-event coverage: Ash was the sole photographer commissioned for one speaker, not the entire summit. Retain it as accurately labelled speaker-assignment evidence in the photography portfolio.
 
 Verify actual slugs and publication status before coding. Preserve existing card titles/summaries. If one is unavailable, the primary assistant selects a replacement; the coding agent does not invent one. Do not rewrite carousel selection/mechanics or global category ranks for this task. Do not edit Social media selection, sorting, or copy.
 
 Acceptance: Homepage starts with coherent event evidence; all existing photography categories and gallery routes remain accessible; hidden/draft items remain excluded.
 
-### P6 — Two project presentations
+### P6 — Accurate speaker assignment and curated video evidence
 
-HR WorkTech: add R1 above the image gallery using the existing Markdown body rendering, with a minimal placement adjustment if needed. Include only confirmed assignment facts. Preserve existing image data, cover selection, generated summary, and gallery behaviour.
+HR WorkTech: correct its title/card/summary and add R1 above the image gallery so it clearly describes a speaker-specific assignment. This corrects an earlier assumption in the plan. Do not present it as a commission to cover the whole summit or as direct work for the organiser. Use primary-authored R1/R2 copy; preserve slug, image data, cover selection, and gallery behaviour. Prevent automated summary/card generation from replacing the factual correction using the existing per-entry opt-out if necessary; no generator/schema changes.
 
-Airwallex: use V4 on Event Video. Keep the homepage feature description unchanged. Add a factual contribution line only after confirming filming/editing responsibilities and whether the assignment was direct or collaborative.
+Airwallex: planning, filming, editing, and delivery are confirmed to be Ash's contribution. Apply V4 on Event Video; do not claim direct commissioning or an exclusive relationship. Ash has two additional Airwallex videos uploaded to YouTube. Obtain their URLs and permission/publication status, inspect each, and compare purpose, visuals, and execution. Lead with one strongest film. Add up to two secondary examples only if they demonstrate materially different work; label all three as Airwallex work or a single client grouping. Do not imply a diverse client roster through separate cards. Keep the homepage to one film and preserve its existing description. A repeated client can demonstrate consistency; three near-identical films do not need equal prominence.
 
-Acceptance: Only these two projects receive additional context. No invented coverage hours, asset counts, delivery time, paid/organic metrics, or direct-client relationships. No new homepage case-study section.
+Acceptance: HR WorkTech accurately states speaker-only scope throughout the affected presentation. Airwallex accurately states Ash's full production contribution; only reviewed, publication-cleared videos are displayed. No invented coverage hours, asset counts, delivery time, paid/organic metrics, direct-client relationships, or wider client roster. No new homepage case-study section.
 
 ### P7 — Contextual booking prompts
 
@@ -193,17 +195,17 @@ Acceptance: Distinct accurate titles, no duplicated title suffix, valid canonica
 
 ## 5. Facts and dependencies to resolve during implementation
 
-These are information dependencies, not reasons to stop unrelated implementation. Ask Ash in one concise batch when implementation begins, using any relevant facts already available in the repository first.
+Ash has answered several questions. Do not ask them again. Confirm only the remaining facts below; keep unrelated implementation moving. User-requested discussion and plan updates do not authorise website implementation.
 
 | Dependency | Needed for | Safe treatment while unresolved |
 | --- | --- | --- |
-| Exact hours included at $600 and $1,400 | P3 | Keep existing published pricing wording; report clarification pending |
-| Image count by coverage length and overtime policy | P3 | Preserve existing claims; add no new numbers/policies |
-| Video turnaround, revisions, finished lengths, and supported formats | P2 | Use quote-specific scope copy V5; no universal promise |
+| Confirm proposed 3-hour/$600, 4-hour/$900, 8-hour/$1,400 tiers | P3 | Amounts known; proposed durations remain unpublished until confirmed |
+| Overtime policy and whether five-business-day delivery still applies | P3 | Image quantity varies: use F1, with no fixed numerical promise; preserve existing turnaround pending changes |
+| Video turnaround, revisions, and finished lengths | P2 | Highlight films/interviews/full speeches confirmed; one capture orientation chosen by purpose, using V5 |
 | Whether combined coverage is available with collaborators | P2 | Use the staffing disclaimer in V5; do not promise an available crew |
-| HR WorkTech role, actual deliverables, and coverage duration | P6 | Publish only R1's source-supported event context; omit missing factual fields |
-| Airwallex filming/editing contribution and commissioning relationship | P6 | Retain existing neutral film description; omit contribution fields |
-| Form destination/provider and privately receiving email | P4 | Keep WhatsApp live; unfinished form stays unpublished |
+| HR WorkTech actual deliverables and duration, if needed | P6 | Sole photographer for one speaker confirmed; use R1/R2 and omit unconfirmed counts/hours |
+| Two additional Airwallex URLs, publication clearance, and optional commissioning context | P6 | Planning/filming/editing/delivery confirmed; one lead film, optional distinct secondary examples; no direct-client assumption |
+| Formspree account/endpoint and privately receiving inbox | P4 | Embedded form recommended and setup authorised for later implementation; no external account setup now |
 
 Do not publish brackets, TODO text, invented values, or unconfirmed claims. A release can omit dependent enhancements, but they must remain visibly incomplete in the task report.
 
@@ -227,13 +229,17 @@ This is the exact wording available to coding agents. IDs are implementation ref
 
 - V1 eyebrow/navigation label: **Event Video**
 - V2 heading: **Event films that bring people back to the moment.**
-- V3 introduction: **Event highlight films for conferences, company gatherings, and private celebrations in Singapore. Share your programme and how you plan to use the video, and we can discuss the coverage and finished edit.**
+- V3 introduction: **Highlight films, interviews, and full speech recordings for events in Singapore. Share your programme and how you plan to use the video, and we can discuss the coverage and finished edit.**
 - V4 context heading: **About this film**
 - V4 source-supported context: **Airwallex's Ecom North Singapore Summit brought together retail and e-commerce operators. This film captures the people, conversations, and atmosphere of the event.**
-- V4 optional factual labels: **My contribution**, **Coverage**, **Delivered work**. Values require the primary assistant's verified copy; omit rows without values.
+- V4 contribution label: **My contribution**. Value: **Planning, filming, editing, and delivery.**
+- V4 optional factual labels: **Coverage**, **Delivered work**. Additional values require the primary assistant's verified copy; omit rows without values.
+- V4 optional grouped-film heading: **More video work for Airwallex**. Titles and descriptions for the two additional films must be written by the primary assistant after inspection; coding agents may not write them.
 - V5 scope heading: **Agree the details before the shoot.**
 - V5 Coverage: **Coverage is quoted around your programme, venue, and the moments you need captured.**
-- V5 Finished edit: **The quote sets out the finished video, its length, and the agreed delivery formats.**
+- V5 Services: **Highlight films, interviews, and full speech recordings can be scoped around your event.**
+- V5 Finished edit: **The quote sets out the finished video, its length, and the agreed delivery format.**
+- V5 Format: **Filming is planned for either horizontal or vertical video, depending on where it will be used. If you need both, include that in your brief so we can agree the approach and scope.**
 - V5 Delivery and revisions: **Turnaround and included revisions are agreed as part of the project scope.**
 - V5 Photography and video: **If you need both, share the brief so we can establish whether additional crew would be needed.**
 - V6 enquiry heading: **Need a highlight film for your event?**
@@ -244,8 +250,12 @@ This is the exact wording available to coding agents. IDs are implementation ref
 ### R — HR WorkTech
 
 - R1 heading: **About this assignment**
-- R1 source-supported paragraph: **Photography from the HR WorkTech Summit, covering panel discussions, speakers, and delegate portraits. The event explored HR technology and the future of work in the AI era.**
-- R1 optional factual labels: **My role**, **Coverage**, **Delivered work**. Do not fill these from assumptions; primary supplies verified values later.
+- R1 paragraph: **Commissioned photography for a speaker at the HR WorkTech Summit. I handled the assignment as the sole photographer, with coverage focused on the speaker's participation in the conference.**
+- R1 role label/value: **My role** / **Photographer for a speaker-specific assignment.**
+- R1 optional factual labels: **Coverage**, **Delivered work**. Primary supplies additional verified values later.
+- R2 revised project title: **HR WorkTech Summit — Speaker Photography**.
+- R2 revised card summary: **Speaker-focused photography at the HR WorkTech Summit.**
+- R2 revised summary: **Commissioned photography for a speaker at the HR WorkTech Summit, with Ash as the sole photographer for the assignment. Coverage focused on the speaker's participation in the conference.**
 
 ### B — Contextual booking prompts
 
@@ -329,7 +339,14 @@ Keep newlines when URL-encoding. Preserve the existing general template for unto
 
 ### F — Photography fact-dependent copy
 
-Do not finalise revised pricing prose until hours and deliverables are confirmed. The primary assistant will provide exact replacement rows, retaining configured prices. Luna agents must not infer a maximum of three hours from the current 2–3-hour description or invent full-day hours.
+- F1 Deliverables: **The number of edited photographs varies with the length and programme of the event. We'll discuss the expected delivery when agreeing your coverage.**
+- F2 proposed tier label/value: **Short event coverage** / **From $600 for up to 3 hours.**
+- F3 proposed tier label/value: **Half-day coverage** / **From $900 for up to 4 hours.**
+- F4 proposed tier label/value: **Full-day coverage** / **From $1,400 for up to 8 hours.**
+
+F1 is ready to implement when authorised. F2–F4 are proposal copy, not approved duration commitments; publish only after Ash confirms. Do not present these as researched market rates. The $600 minimum remains applicable to short assignments; do not invent prorated hourly rates. Overtime and other policy copy must come from the primary assistant after confirmation.
+
+All proposed amounts are in SGD. Add a visible **Prices in SGD.** label beside the pricing section when implementing the confirmed structure. Planned coverage tiers are not an overtime rate schedule; confirm extension pricing separately.
 
 ## 7. Coding-agent task template
 
@@ -378,15 +395,35 @@ Only `action_plan.md` is added now. Run repository-required validation, preserve
 - Do not equate a pushed branch or PR with a live deployment. Do not merge/deploy unless authorised by the active implementation request.
 - If later merged/deployed, verify the Pages workflow and the live affected routes before reporting the website as shipped.
 
-## 9. Completion checklist
+## 9. Discussion decisions and remaining choices
+
+Latest clarification: Ash usually charges $600 for 2–3-hour events, $1,400 for full-day coverage, and may charge $900 for half-day. Image quantities vary. Video services include highlight films, interviews, and full speeches. Ash normally plans one capture orientation: vertical for Instagram, horizontal for LinkedIn/website according to the brief; these are his usual choices, not platform restrictions. HR WorkTech was a sole-photographer assignment for one speaker. Ash handled Airwallex planning, filming, editing, and delivery and has two more videos on YouTube. No form provider exists yet; Ash is open to setup, while this turn remains discussion and planning only.
+
+Recommendations recorded, not assumed approved commitments:
+
+1. Three photography tiers: $600/up to 3 hours, $900/up to 4 hours, $1,400/up to 8 hours. This is a proposed packaging decision; confirm durations and overtime handling before implementation.
+2. Quote photo quantities by assignment, with no universal 60–100-image promise.
+3. Plan one video orientation per brief. Vertical-only delivery does not move an event film out of Event Video; existing Social media work remains untouched. Multiple orientations are a separate scoping discussion, not a default inclusion.
+4. Retain HR WorkTech as useful speaker-specific evidence, correct its wording, and remove it from the homepage lead selection for whole-event work.
+5. One prominent Airwallex film, with up to two distinct secondary examples after reviewing URLs and publication clearance. Do not manufacture breadth or hide repeat-client evidence.
+6. Embed the contact form within `/contact/`; use Formspree behind it, with on-page feedback and private email notifications. WhatsApp remains alongside it.
+
+Provider references checked 12 October 2026:
+
+- Formspree HTML integration: https://formspree.io/html/
+- Formspree plan limits and AJAX/private-email support: https://formspree.io/plans
+
+Recheck provider terms at setup; do not promise free custom redirects, custom honeypots, uploads, or automated replies. No uploads or auto-replies are required for this scope.
+
+## 10. Completion checklist
 
 - [ ] Homepage explicitly presents services and Singapore without a personal portrait.
 - [ ] Event Video has its own page, navigation item, section switch, and sitemap entry.
-- [ ] Photography and Event Video scope contains no invented commitments or changed prices.
+- [ ] Existing $600/$1,400 amounts retained; proposed $900 tier and hour limits confirmed before publishing; variable photo delivery and one-orientation video scope are accurate.
 - [ ] WhatsApp routes use the correct template; Social media retains its existing general template.
 - [ ] Contact form works end to end, or remains explicitly incomplete and unpublished.
 - [ ] Homepage photography features coherent event evidence without removing categories.
-- [ ] HR WorkTech and Airwallex receive only verified, primary-authored context.
+- [ ] HR WorkTech is clearly speaker-only; Airwallex states planning, filming, editing, and delivery, with optional additional films reviewed first.
 - [ ] Contextual prompts appear after work and before related galleries.
 - [ ] Process appears on Photography and Event Video only.
 - [ ] Social media page, offers, content, labels, and featured examples remain unchanged.
