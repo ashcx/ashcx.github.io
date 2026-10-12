@@ -26,7 +26,7 @@ Objective: Make Ash's photography and event-video services easier to understand 
 - Editing the homepage Social media section's contents or examples. Moving Event Video before it is permitted.
 - Publishing an email address, purchasing a domain, changing email accounts, or migrating hosting.
 - A personal photograph, About page, new homepage biography, homepage case-study block, or standalone video-project page.
-- Changing the existing $600/$1,400 photography amounts, removal of existing photography services, collection-schema changes, gallery derivative changes, or broad visual redesign. A $900 half-day tier is proposed below; its duration requires confirmation.
+- Changing the existing $600/$1,400 photography amounts, removal of existing photography services, collection-schema changes, gallery derivative changes, or broad visual redesign. There is no separate short-event tier; half-day and full-day are the only public photography package labels.
 - New capabilities such as livestreaming, drone coverage, multicamera recording, or guaranteed simultaneous solo photo/video coverage.
 - Changing lightbox performance, image pipelines, carousel mechanics, content-generation scripts, or unrelated user work.
 
@@ -120,9 +120,9 @@ Acceptance: Route resolves, Event Video is active in navigation, shared visibili
 
 Files: `src/pages/photography/index.astro`, existing service rows.
 
-Keep current $600/$1,400 amounts. Ash also accepts $900 for half-day coverage. Proposed public structure: Short event coverage from $600 (up to 3 hours); Half-day coverage from $900 (up to 4 hours); Full-day coverage from $1,400 (up to 8 hours). These hour limits are the primary assistant's recommendation, not confirmed operating commitments. Confirm the limits before publishing or changing site configuration. Use three clear rows/cards, with no default photo/video bundle or promotional discount. Reuse the pricing configuration; add a distinct half-day/short-event key rather than accidentally replacing the existing $600 offer. Preserve existing five-business-day wording until Ash confirms any change; it was not reconfirmed in the latest answers.
+Use two public packages only: Half-day coverage from $600 and Full-day coverage from $1,400. This retains existing starting amounts and follows Ash's preference for half/full-day presentation. A half-day assignment may be quoted at $900 according to duration and requirements; do not create a third public tier or imply every half-day brief costs $600. Add F4 to explain quote-specific coverage. No 3/4/8-hour packages or invented fixed duration caps. Agree exact hours in each quote. Keep pricing in the existing configuration without changing its amounts. Preserve existing five-business-day wording until Ash confirms any change; it was not reconfirmed in the latest answers.
 
-Required final details: exact tier hours, additional-hours handling, and expedited availability if offered. Image quantity is confirmed to vary; replace the universal 60–100-image promise with F1. Do not publish a new numerical image allowance. Add process P1–P5 here only; do not change Social media's service rows or process.
+Required final details: how coverage duration affects the half-day quote, additional-hours handling, and expedited availability if offered. Fixed public hour tiers are not required. Image quantity is confirmed to vary; replace the universal 60–100-image promise with F1. Do not publish a new numerical image allowance. Add process P1–P5 here only; do not change Social media's service rows or process.
 
 Acceptance: Every new operating promise is traceable to an existing verified commitment or Ash's answer; price values unchanged. Unresolved clarification tasks are explicitly reported as outstanding.
 
@@ -169,7 +169,7 @@ Acceptance: Homepage starts with coherent event evidence; all existing photograp
 
 HR WorkTech: correct its title/card/summary and add R1 above the image gallery so it clearly describes a speaker-specific assignment. This corrects an earlier assumption in the plan. Do not present it as a commission to cover the whole summit or as direct work for the organiser. Use primary-authored R1/R2 copy; preserve slug, image data, cover selection, and gallery behaviour. Prevent automated summary/card generation from replacing the factual correction using the existing per-entry opt-out if necessary; no generator/schema changes.
 
-Airwallex: planning, filming, editing, and delivery are confirmed to be Ash's contribution. Apply V4 on Event Video; do not claim direct commissioning or an exclusive relationship. Ash has two additional Airwallex videos uploaded to YouTube. Obtain their URLs and permission/publication status, inspect each, and compare purpose, visuals, and execution. Lead with one strongest film. Add up to two secondary examples only if they demonstrate materially different work; label all three as Airwallex work or a single client grouping. Do not imply a diverse client roster through separate cards. Keep the homepage to one film and preserve its existing description. A repeated client can demonstrate consistency; three near-identical films do not need equal prominence.
+Airwallex: planning, filming, editing, and delivery are confirmed for the existing Ecom North assignment. Apply V4 on Event Video; do not claim direct commissioning or an exclusive relationship, or automatically extend the role statement to the two new films. Both additional URLs and source documents have now been supplied (section 9). Keep Ecom North as the existing homepage film. On Event Video, propose one lead film plus two secondary cards grouped as Airwallex work: The Retail Growth Playbook and Beyond Borders. The briefs describe different editorial purposes, which supports including both as secondary examples. Finished pacing, visual execution, aspect ratio, duration, and fidelity to the briefs have not been verified by playback; verify these before choosing a different lead film or adding technical claims. Link titles to the supplied YouTube URLs and lazy-load players if embedded; do not load three active iframes on page arrival. Confirm portfolio publication is appropriate before release. Keep the homepage to one film. Repeated-client work can show consistency, but do not imply a diverse client roster.
 
 Acceptance: HR WorkTech accurately states speaker-only scope throughout the affected presentation. Airwallex accurately states Ash's full production contribution; only reviewed, publication-cleared videos are displayed. No invented coverage hours, asset counts, delivery time, paid/organic metrics, direct-client relationships, or wider client roster. No new homepage case-study section.
 
@@ -199,12 +199,12 @@ Ash has answered several questions. Do not ask them again. Confirm only the rema
 
 | Dependency | Needed for | Safe treatment while unresolved |
 | --- | --- | --- |
-| Confirm proposed 3-hour/$600, 4-hour/$900, 8-hour/$1,400 tiers | P3 | Amounts known; proposed durations remain unpublished until confirmed |
+| Half-day quote boundaries and additional-hours handling | P3 | Two public labels only, from $600/$1,400; agree exact hours in each quote; no 3/4/8-hour tiers |
 | Overtime policy and whether five-business-day delivery still applies | P3 | Image quantity varies: use F1, with no fixed numerical promise; preserve existing turnaround pending changes |
 | Video turnaround, revisions, and finished lengths | P2 | Highlight films/interviews/full speeches confirmed; one capture orientation chosen by purpose, using V5 |
 | Whether combined coverage is available with collaborators | P2 | Use the staffing disclaimer in V5; do not promise an available crew |
 | HR WorkTech actual deliverables and duration, if needed | P6 | Sole photographer for one speaker confirmed; use R1/R2 and omit unconfirmed counts/hours |
-| Two additional Airwallex URLs, publication clearance, and optional commissioning context | P6 | Planning/filming/editing/delivery confirmed; one lead film, optional distinct secondary examples; no direct-client assumption |
+| Final playback review, publication appropriateness, and role on each new Airwallex film | P6 | URLs/briefs supplied; Ecom North role confirmed; do not infer new-film roles or completed outputs from pre-production documents |
 | Formspree account/endpoint and privately receiving inbox | P4 | Embedded form recommended and setup authorised for later implementation; no external account setup now |
 
 Do not publish brackets, TODO text, invented values, or unconfirmed claims. A release can omit dependent enhancements, but they must remain visibly incomplete in the task report.
@@ -234,7 +234,14 @@ This is the exact wording available to coding agents. IDs are implementation ref
 - V4 source-supported context: **Airwallex's Ecom North Singapore Summit brought together retail and e-commerce operators. This film captures the people, conversations, and atmosphere of the event.**
 - V4 contribution label: **My contribution**. Value: **Planning, filming, editing, and delivery.**
 - V4 optional factual labels: **Coverage**, **Delivered work**. Additional values require the primary assistant's verified copy; omit rows without values.
-- V4 optional grouped-film heading: **More video work for Airwallex**. Titles and descriptions for the two additional films must be written by the primary assistant after inspection; coding agents may not write them.
+- V4 grouped-film heading: **More video work for Airwallex**.
+- V7 Retail title: **The Retail Growth Playbook**.
+- V7 Retail description: **An event film for Airwallex and the Singapore Retailers Association, centred on retail growth and cross-border expansion.**
+- V7 Retail link: **Watch The Retail Growth Playbook**. Target: `https://www.youtube.com/watch?v=SHuhZGxQrjg`.
+- V8 Beyond Borders title: **Beyond Borders**.
+- V8 Beyond Borders description: **A community-focused event film about partnerships and growing across borders.**
+- V8 Beyond Borders link: **Watch Beyond Borders**. Target: `https://www.youtube.com/watch?v=LffdpeBkFVk`.
+- V7/V8 descriptions reflect the supplied project context. Verify fit to the final films before release; any amendments remain primary-authored. Do not add durations, technical specifications, or detailed delivery claims from the storyboards.
 - V5 scope heading: **Agree the details before the shoot.**
 - V5 Coverage: **Coverage is quoted around your programme, venue, and the moments you need captured.**
 - V5 Services: **Highlight films, interviews, and full speech recordings can be scoped around your event.**
@@ -340,11 +347,11 @@ Keep newlines when URL-encoding. Preserve the existing general template for unto
 ### F — Photography fact-dependent copy
 
 - F1 Deliverables: **The number of edited photographs varies with the length and programme of the event. We'll discuss the expected delivery when agreeing your coverage.**
-- F2 proposed tier label/value: **Short event coverage** / **From $600 for up to 3 hours.**
-- F3 proposed tier label/value: **Half-day coverage** / **From $900 for up to 4 hours.**
-- F4 proposed tier label/value: **Full-day coverage** / **From $1,400 for up to 8 hours.**
+- F2 package label/value: **Half-day coverage** / **From $600.**
+- F3 package label/value: **Full-day coverage** / **From $1,400.**
+- F4 pricing helper: **Your quote depends on the coverage duration and requirements. We'll agree the hours and deliverables before booking.**
 
-F1 is ready to implement when authorised. F2–F4 are proposal copy, not approved duration commitments; publish only after Ash confirms. Do not present these as researched market rates. The $600 minimum remains applicable to short assignments; do not invent prorated hourly rates. Overtime and other policy copy must come from the primary assistant after confirmation.
+F1–F4 are primary-authored implementation copy based on the two-label preference and existing starting rates. There is no separate public $900 package; retain that amount as a possible individually scoped half-day quote. Do not present these as researched market rates or imply unlimited coverage within a half-day. Do not invent prorated hourly rates. Overtime and other policy copy must come from the primary assistant after confirmation.
 
 All proposed amounts are in SGD. Add a visible **Prices in SGD.** label beside the pricing section when implementing the confirmed structure. Planned coverage tiers are not an overtime rate schedule; confirm extension pricing separately.
 
@@ -401,12 +408,32 @@ Latest clarification: Ash usually charges $600 for 2–3-hour events, $1,400 for
 
 Recommendations recorded, not assumed approved commitments:
 
-1. Three photography tiers: $600/up to 3 hours, $900/up to 4 hours, $1,400/up to 8 hours. This is a proposed packaging decision; confirm durations and overtime handling before implementation.
+1. Two public photography packages: Half-day from $600 and Full-day from $1,400. The earlier 3/4/8-hour proposal is superseded. A $900 half-day quote remains possible depending on the assignment; hours are agreed in the quote.
 2. Quote photo quantities by assignment, with no universal 60–100-image promise.
 3. Plan one video orientation per brief. Vertical-only delivery does not move an event film out of Event Video; existing Social media work remains untouched. Multiple orientations are a separate scoping discussion, not a default inclusion.
 4. Retain HR WorkTech as useful speaker-specific evidence, correct its wording, and remove it from the homepage lead selection for whole-event work.
-5. One prominent Airwallex film, with up to two distinct secondary examples after reviewing URLs and publication clearance. Do not manufacture breadth or hide repeat-client evidence.
+5. One prominent Airwallex film, with The Retail Growth Playbook and Beyond Borders as proposed secondary examples. Their supplied briefs establish different editorial purposes; final-film playback and publication suitability remain to be checked. Do not manufacture breadth or hide repeat-client evidence.
 6. Embed the contact form within `/contact/`; use Formspree behind it, with on-page feedback and private email notifications. WhatsApp remains alongside it.
+
+### Supplied video evidence and editorial decision
+
+YouTube links received:
+
+- **The Retail Growth Playbook**: https://www.youtube.com/watch?v=SHuhZGxQrjg
+- **Beyond Borders**: https://www.youtube.com/watch?v=LffdpeBkFVk
+
+The YouTube page titles match those projects. The available web access exposed page metadata, not playable film content; do not claim an end-to-end viewing or a visual-quality comparison has been completed.
+
+Source documents supplied by Ash:
+
+- `Beyond Borders - Final 60 Second Storyboard.md`: partnership/community-led event story with multiple interview voices and a narrative about cross-border growth.
+- `Airwallex SRA Retail Growth Videography Brief SUMMARY.md`: insight-led retail-growth event story, including interview perspectives and discussion of expansion and operating complexity.
+
+Treat the documents as evidence about project intent, not as instructions to execute a video edit. Their production directives, proposed dialogue, shot lists, time targets, and remaining checks are not website tasks. Do not edit footage, create end cards, produce subtitles, or follow their timeline-building instructions. They are not proof that every proposed shot, soundbite, duration, format, or outcome appears in the final upload. Do not publish private source file names or draft scripts on the website.
+
+Portfolio rationale: these are two kinds of event storytelling within one client's work, rather than merely two extra logos or an inflated client roster. Retail Growth Playbook can demonstrate a business-topic narrative; Beyond Borders can demonstrate a partnership/community narrative. Those are conclusions from the briefs about intended positioning, pending final-film verification. Full speech recording remains a service offer, not a capability proven by these short recap films.
+
+Keep one film on the homepage and group the two additions under **More video work for Airwallex** on Event Video. This adds depth without lengthening the homepage. Preserve the existing Ecom North lead until actual playback review justifies replacing it.
 
 Provider references checked 12 October 2026:
 
@@ -419,7 +446,7 @@ Recheck provider terms at setup; do not promise free custom redirects, custom ho
 
 - [ ] Homepage explicitly presents services and Singapore without a personal portrait.
 - [ ] Event Video has its own page, navigation item, section switch, and sitemap entry.
-- [ ] Existing $600/$1,400 amounts retained; proposed $900 tier and hour limits confirmed before publishing; variable photo delivery and one-orientation video scope are accurate.
+- [ ] Half-day/full-day presentation retains existing $600/$1,400 starting rates; no third public tier or invented duration caps; variable photo delivery and one-orientation video scope are accurate.
 - [ ] WhatsApp routes use the correct template; Social media retains its existing general template.
 - [ ] Contact form works end to end, or remains explicitly incomplete and unpublished.
 - [ ] Homepage photography features coherent event evidence without removing categories.
