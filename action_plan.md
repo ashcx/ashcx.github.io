@@ -474,7 +474,7 @@ HR card-summary copy was amended by the primary assistant to avoid title repetit
 - [x] Social media page, offers, content, labels, and featured examples remain unchanged.
 - [x] All new public copy comes from the primary assistant.
 - [x] Validation, build, rendered checks, and regression review pass.
-- [ ] Scoped commit, push, and attached PR are complete; deployment status is reported accurately.
+- [x] Scoped commit, push, and PR are complete; deployment status is reported accurately.
 
 
 ## 12. Implementation verification record — 13 October 2026
@@ -489,3 +489,5 @@ HR card-summary copy was amended by the primary assistant to avoid title repetit
 - Contact form omitted entirely under Ash's instruction; no provider setup, endpoint, public email, or inactive form added.
 - Existing user `.gitignore` edit remains outside the implementation commit.
 - Local verification scripts/screenshots and installed browser tooling are ignored development artifacts, not release files.
+
+Implementation PR: https://github.com/ashcx/ashcx.github.io/pull/7 — open for review; not merged or deployed. The chat attachment tool was invoked but did not return; the PR URL is available directly.
