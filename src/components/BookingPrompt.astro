@@ -11,11 +11,11 @@ const copy = variant === "photoshoot"
     }
   : variant === "photography"
   ? {
-      heading: "Planning an event like this?",
+      heading: "Planning an event?",
       paragraph: "Tell me your date, venue, and coverage requirements."
     }
   : {
-      heading: "Need a highlight film for your event?",
+      heading: "Planning event video coverage?",
       paragraph: "Tell me your date, venue, and what you want the finished video to cover."
     };
 const contactUrl = `/contact/?service=${variant === "video" ? "video" : "photography"}`;
@@ -24,14 +24,14 @@ const contactUrl = `/contact/?service=${variant === "video" ? "video" : "photogr
 <section class:list={["booking-prompt", { "booking-prompt-video": variant === "video" }]} aria-labelledby={`booking-prompt-${variant}-title`}>
   <h2 id={`booking-prompt-${variant}-title`}>{copy.heading}</h2>
   <p>{copy.paragraph}</p>
-  <a class="button button-dark" href={contactUrl}>Discuss your project</a>
+  <a class="button button-dark" href={contactUrl}>Contact me</a>
 </section>
 
 <style>
   .booking-prompt {
     width: min(820px, calc(100% - var(--gutter) * 2));
     margin: 0 auto;
-    padding: clamp(58px, 9vw, 104px) 0;
+    padding: var(--section-space) 0;
     text-align: center;
   }
 
@@ -46,7 +46,7 @@ const contactUrl = `/contact/?service=${variant === "video" ? "video" : "photogr
     color: var(--muted);
     font-size: 1.12rem;
     line-height: 1.55;
-    text-align: left;
+    text-align: center;
   }
 
   .booking-prompt-video p {

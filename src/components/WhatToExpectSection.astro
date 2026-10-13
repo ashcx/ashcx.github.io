@@ -1,7 +1,7 @@
 ---
 interface Row {
   label: string;
-  value: string;
+  value: string | string[];
 }
 
 interface Props {
@@ -10,9 +10,10 @@ interface Props {
   eyebrow?: string;
   heading?: string;
   intro?: string;
+  note?: string;
 }
 
-const { id, rows, eyebrow = "What to expect", heading = "Good to know before you reach out.", intro } = Astro.props;
+const { id, rows, eyebrow = "What to expect", heading = "Good to know before you reach out.", intro, note } = Astro.props;
 ---
 
 <section class="wtx-section" id={id} aria-labelledby={`${id}-title`}>
@@ -24,12 +25,13 @@ const { id, rows, eyebrow = "What to expect", heading = "Good to know before you
     </div>
   </div>
   {intro && <p class="wtx-intro">{intro}</p>}
+  {note && <p class="wtx-note">{note}</p>}
   <dl class="wtx-rows">
     {
       rows.map((row) => (
         <div class="wtx-row">
           <dt>{row.label}</dt>
-          <dd>{row.value}</dd>
+          <dd>{Array.isArray(row.value) ? row.value.map((part) => <span class="wtx-value-part">{part}{" "}</span>) : row.value}</dd>
         </div>
       ))
     }
@@ -39,8 +41,23 @@ const { id, rows, eyebrow = "What to expect", heading = "Good to know before you
 <style>
   .wtx-intro {
     max-width: 680px;
-    margin: 20px 0 24px;
+    margin: 0 auto 24px;
+    text-align: center;
     color: var(--muted);
     line-height: 1.6;
+  }
+  .wtx-note {
+    max-width: 820px;
+    margin: 0 auto 12px;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+
+  .wtx-value-part {
+    display: block;
+  }
+
+  .wtx-value-part + .wtx-value-part {
+    margin-top: 10px;
   }
 </style>

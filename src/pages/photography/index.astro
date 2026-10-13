@@ -15,10 +15,10 @@ import { pricing } from "@lib/site";
 const photographyRows = [
   { label: "Half-day coverage", value: `From $${pricing.photography.halfDay.toLocaleString("en-SG")}.` },
   { label: "Full-day coverage", value: `From $${pricing.photography.fullDay.toLocaleString("en-SG")}.` },
-  { label: "Pricing", value: "Your quote depends on the coverage duration and requirements. We'll agree the hours and deliverables before booking." },
-  { label: "Deliverables", value: "The number of edited photographs varies with the length and programme of the event. We'll discuss the expected delivery when agreeing your coverage." },
-  { label: "Turnaround", value: "Edited galleries are delivered within 5 business days." },
-  { label: "Booking", value: "Weekend and peak-season dates book out fast — reach out at least 2 weeks ahead if you can." },
+  { label: "Your quote", value: "Pricing depends on the coverage duration and requirements. We’ll agree the hours and deliverables before booking." },
+  { label: "Photographs", value: "The number of edited photographs varies with the length and programme of the event. We’ll discuss the expected delivery when agreeing your coverage." },
+  { label: "Turnaround", value: "Event galleries are delivered within 3–5 business days. Delivery within 1 business day or on the same day may be available by arrangement. Let’s discuss what you need before booking." },
+  { label: "Booking ahead", value: "If you can, enquire at least 2 weeks ahead, especially for weekends and peak-season dates." },
   { label: "Usage", value: "Images are yours to use for marketing, recaps, and future promotion." }
 ];
 
@@ -61,9 +61,9 @@ const photographySections = [
 <BaseLayout title="Event Photographer Singapore | Ash Chong" description="Corporate and private event photography in Singapore, from conferences and networking events to celebrations. View galleries and discuss coverage with Ash Chong." active="photography" image={pageCover} fullTitle>
   <section class="page-hero photography-page-hero" aria-labelledby="photography-title">
     <p class="eyebrow">Photography</p>
-    <h1 id="photography-title">Your event, captured the way it deserves.</h1>
-    <p>From large conferences to intimate celebrations, I bring the same care and professional eye to every shoot.</p>
-    <p>Corporate and private events are my focus. I also take on creative portrait and celebration work when the story's a good one.</p>
+    <h1 id="photography-title">Events, celebrations, and portraits</h1>
+    <p>I photograph conferences, company gatherings, weddings, and private celebrations in Singapore.</p>
+    <p>You’ll also find portraits and creative shoots in the galleries below.</p>
   </section>
 
   <section class="gallery-index-section photography-browser" aria-label="Photography galleries">
@@ -102,8 +102,7 @@ const photographySections = [
   </section>
 
   <TestimonialsSection />
-  <p class="photography-currency">Prices in SGD.</p>
-  <WhatToExpectSection id="what-to-expect" rows={photographyRows} />
+  <WhatToExpectSection id="what-to-expect" rows={photographyRows} heading="Pricing and delivery" note="Prices in SGD." />
   <BookingProcess />
 
   <script>
@@ -133,13 +132,3 @@ const photographySections = [
     <a class="button button-dark" href={getBriefUrl("photography")}>Let's talk</a>
   </section>
 </BaseLayout>
-
-<style>
-  .photography-currency {
-    width: min(var(--max), calc(100% - var(--gutter) * 2));
-    margin: 0 auto;
-    color: var(--muted);
-    font-size: 0.82rem;
-    text-align: center;
-  }
-</style>

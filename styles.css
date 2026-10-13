@@ -17,6 +17,8 @@
   --gutter: clamp(18px, 3.5vw, 48px);
   --radius: 28px;
   --row-height: 255px;
+  --section-space: clamp(40px, 5vw, 72px);
+  --heading-gap: clamp(24px, 3vw, 40px);
   font-family:
     "SF Pro Display", "SF Pro Text", Inter, "Google Sans", "Aptos", system-ui,
     -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -292,7 +294,7 @@ p {
 }
 
 .page-hero p + p {
-  margin-top: -20px;
+  margin-top: 0;
 }
 
 .home-hero-copy {
@@ -672,7 +674,7 @@ p {
   position: relative;
   isolation: isolate;
   scroll-margin-top: 28px;
-  padding: clamp(58px, 8vw, 96px) 0;
+  padding: var(--section-space) 0;
 }
 
 .home-event-film {
@@ -726,7 +728,7 @@ p {
   margin-right: auto;
   margin-bottom: 20px;
   margin-left: auto;
-  text-align: left;
+  text-align: center;
 }
 
 .home-page .home-section-heading p:not(.eyebrow) {
@@ -1133,7 +1135,7 @@ p {
 .home-contact,
 .page-cta {
   max-width: 820px;
-  padding: clamp(86px, 13vw, 156px) 0;
+  padding: var(--section-space) 0;
   text-align: center;
 }
 
@@ -1266,7 +1268,7 @@ p {
 
 .gallery-section {
   margin-top: clamp(36px, 5vw, 64px);
-  padding-bottom: clamp(56px, 8vw, 88px);
+  padding-bottom: var(--section-space);
 }
 
 .gallery-section .detail-body {
@@ -1304,7 +1306,7 @@ p {
 }
 
 .photography-tab {
-  min-height: 42px;
+  min-height: 44px;
   border: 1px solid var(--hairline);
   border-radius: 999px;
   padding: 8px 16px;
@@ -1351,7 +1353,7 @@ p {
 }
 
 .content-tab {
-  min-height: 42px;
+  min-height: 44px;
   border: 1px solid var(--hairline);
   border-radius: 999px;
   padding: 8px 16px;
@@ -1425,8 +1427,14 @@ p {
   box-shadow: 0 28px 80px rgba(40, 33, 25, 0.1);
 }
 
+.content-embed-window {
+  min-width: 0;
+}
+
 .native-embed {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
   min-height: 540px;
   place-items: center;
 }
@@ -1548,13 +1556,13 @@ p {
 }
 
 .content-section-rule {
-  margin-bottom: clamp(44px, 6vw, 74px);
+  margin-bottom: var(--heading-gap);
   border-top: 1px solid var(--hairline);
 }
 
 /* ── Testimonials ── */
 .testimonials-section {
-  padding: clamp(58px, 8vw, 96px) 0;
+  padding: var(--section-space) 0;
 }
 
 .testimonial-strip {
@@ -1607,8 +1615,9 @@ p {
 
 .testimonial-person {
   display: flex;
-  align-items: center;
-  min-height: 54px; 
+  align-items: flex-start;
+  min-height: 76px;
+  align-self: stretch;
 }
 
 .testimonial-person strong {
@@ -1635,13 +1644,12 @@ p {
   margin-top: clamp(46px, 6vw, 68px);
   margin-right: auto;
   margin-left: auto;
-  padding-top: 24px;
-  border-top: 1px solid var(--hairline);
+  padding-top: 0;
   text-align: center;
 }
 
 .testimonials-cta p {
-  margin: 2vh 0vh 0.2vh 0vh;
+  margin: 0;
   color: var(--ink);
   font-size: 1.12rem;
   line-height: 1.5;
@@ -1649,7 +1657,7 @@ p {
 
 /* ── What to expect ── */
 .wtx-section {
-  padding: clamp(58px, 8vw, 96px) 0;
+  padding: var(--section-space) 0;
 }
 
 .wtx-rows {
@@ -1897,7 +1905,7 @@ p {
 .related-section {
   width: min(var(--max), calc(100% - var(--gutter) * 2));
   margin: 0 auto;
-  padding-bottom: clamp(56px, 8vw, 88px);
+  padding-bottom: var(--section-space);
 }
 
 .related-section .gallery-heading {
@@ -1947,11 +1955,13 @@ p {
 .detail-body {
   max-width: 760px;
   margin: clamp(36px, 6vw, 70px) auto 0;
-  text-align: center;
+  text-align: left;
 }
 
 .detail-body h2 {
   margin-bottom: 18px;
+  font-size: clamp(28px, 3vw, 40px);
+  line-height: 1.15;
 }
 
 .detail-body p {
@@ -2689,8 +2699,8 @@ p {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 42px;
-    min-width: 42px;
+    min-height: 44px;
+    min-width: 44px;
     border: 1px solid rgba(23, 22, 21, 0.1);
     border-radius: 999px;
     padding: 0 12px;
@@ -2791,10 +2801,8 @@ p {
   }
 
   .content-tabs {
-    justify-content: flex-start;
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    padding-bottom: 4px;
+    justify-content: center;
+    flex-wrap: wrap;
   }
 
   .content-tab {
@@ -2845,8 +2853,8 @@ p {
   }
 
   .lightbox-nav {
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
     top: calc(50% + 20px);
   }
 
@@ -3011,5 +3019,45 @@ p {
   .home-carousel-track {
     aspect-ratio: 3 / 2;
     height: auto;
+  }
+}
+
+
+/* Anchored sections remain visible below the sticky navigation. */
+main section[id],
+main h1[id],
+main h2[id] {
+  scroll-margin-top: 100px;
+}
+
+@media (max-width: 810px) {
+  .testimonial-person {
+    min-height: 0;
+  }
+
+  .footer-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+}
+
+
+@media (max-width: 810px) {
+  .content-embed-card:nth-child(even) .content-embed-text {
+    justify-self: start;
+  }
+}
+
+/* Stack before a native social player or its text column becomes cramped. */
+@media (max-width: 960px) {
+  .content-embed-card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .content-embed-card:nth-child(even) .content-embed-window,
+  .content-embed-card:nth-child(even) .content-embed-text {
+    order: initial;
+    justify-self: stretch;
   }
 }

@@ -8,9 +8,9 @@ interface Props {
 
 const { items } = Astro.props;
 const categories = [
-  { id: "corporate", label: "Corporate" },
-  { id: "lifestyle", label: "Lifestyle" },
-  { id: "real-estate", label: "Real estate" }
+  { id: "corporate", label: "Corporate", moreLabel: "More corporate work" },
+  { id: "lifestyle", label: "Lifestyle", moreLabel: "More lifestyle work" },
+  { id: "real-estate", label: "Real estate", moreLabel: "More property videos" }
 ] as const;
 type Category = (typeof categories)[number];
 type SelectedItem = {
@@ -94,14 +94,14 @@ function extractAiSummary(body: string) {
   selectedItems.length > 0 && (
     <section class="home-section home-social-work" aria-labelledby="home-social-title" data-social-embeds>
       <div class="home-section-heading">
-        <p class="eyebrow">Social media reels</p>
+        <p class="eyebrow">Social media</p>
         <div>
-          <h2 id="home-social-title">Content that works as hard as you do.</h2>
+          <h2 id="home-social-title">Short videos for Instagram and TikTok</h2>
           <p>
-            Instagram and TikTok-ready reels that help businesses, entrepreneurs, and brands attract attention, build trust, and convert viewers into customers.
+            I produce, film, and edit reels for Instagram and TikTok, from General Assembly’s career education videos to creator-led retail features and property walkthroughs.
           </p>
         </div>
-        <a class="button button-dark" href="/content/">Explore social media content</a>
+        <a class="button button-dark" href="/content/">Explore social media</a>
       </div>
 
       <div class="home-social-grid">
@@ -147,7 +147,7 @@ function extractAiSummary(body: string) {
                   </div>
                   <a class="home-social-more" href={url}>
                     <span aria-hidden="true">+</span>
-                    View more
+                    {category.moreLabel}
                   </a>
                 </div>
               </article>

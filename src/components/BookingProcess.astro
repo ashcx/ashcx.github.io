@@ -2,20 +2,20 @@
 const steps = [
   {
     title: "Share your plans",
-    description: "Tell me your date, venue, and the moments or content you need.",
+    description: "Tell me your date, venue, and the coverage you need.",
     href: "/contact/"
   },
   {
-    title: "Confirm your booking",
-    description: "Review the coverage, deliverables, fee, and delivery schedule before we book."
+    title: "Agree the details",
+    description: "We’ll confirm the scope, deliverables, fee, and delivery schedule before booking."
   },
   {
     title: "On the day",
-    description: "I’ll photograph or film the agreed brief, with your programme and priorities in mind."
+    description: "I’ll photograph or film the agreed brief, following your programme and priorities."
   },
   {
-    title: "Your finished work",
-    description: "Receive the agreed photographs or video, ready for their intended use."
+    title: "Receive your work",
+    description: "I’ll deliver the agreed photographs or video."
   }
 ];
 ---
@@ -32,7 +32,7 @@ const steps = [
     ))}
   </ol>
   <div class="booking-process-cta">
-    <a class="button button-dark" href="/contact/">Start a conversation</a>
+    <a class="button button-dark" href="/contact/">Contact me</a>
   </div>
 </section>
 
@@ -40,7 +40,12 @@ const steps = [
   .booking-process {
     width: min(var(--max), calc(100% - var(--gutter) * 2));
     margin: 0 auto;
-    padding: clamp(54px, 7vw, 84px) 0;
+    padding: var(--section-space) 0;
+  }
+
+  .booking-process .content-section-rule {
+    border: 0;
+    margin-bottom: 0;
   }
 
   .booking-process h2 {

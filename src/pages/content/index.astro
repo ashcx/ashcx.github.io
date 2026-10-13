@@ -12,11 +12,15 @@ import { pricing, sections } from "@lib/site";
 const contentRows = [
   {
     label: "Pricing",
-    value: `Single pieces start from $${pricing.content.single}. Campaign packages (multiple pieces for a launch or promotion) start from $${pricing.content.campaign}. Ongoing content partnerships start from $${pricing.content.retainer}/month.`
+    value: [
+      `Single pieces: From $${pricing.content.single}.`,
+      `Campaign packages: From $${pricing.content.campaign} for multiple pieces for a launch or promotion.`,
+      `Ongoing partnerships: From $${pricing.content.retainer.toLocaleString("en-SG")} per month.`
+    ]
   },
-  { label: "Scope", value: "A typical monthly scope covers up to 4 pieces across Instagram, TikTok, or LinkedIn, with 1 round of revisions per piece." },
-  { label: "Turnaround", value: "A single video is delivered within 3 business days of filming." },
-  { label: "Commitment", value: "Ongoing partnerships run month-to-month — no lock-in contract." }
+  { label: "Monthly scope", value: "A typical monthly scope covers up to 4 pieces across Instagram, TikTok, or LinkedIn, with 1 round of revisions per piece." },
+  { label: "Turnaround", value: ["A single video is delivered within 3 business days of filming.", "Delivery within 1 business day or on the same day may be available by arrangement. Let’s discuss what you need before booking."] },
+  { label: "Commitment", value: "Ongoing partnerships run month-to-month, with no lock-in contract." }
 ];
 
 const contentItems = published(await getCollection("content-work"));
@@ -31,8 +35,8 @@ const pageCover = featuredCaseStudy?.data.coverImage || embedItems.find((item) =
 <BaseLayout title="Social media" description="Instagram and TikTok-ready social media content for brands, small businesses, and the events that matter to them." active="content" image={pageCover}>
   <section class="page-hero content-page-hero" aria-labelledby="content-title">
     <p class="eyebrow">Social media</p>
-    <h1 id="content-title">Content that tells your story the way it deserves.</h1>
-    <p>Content that helps businesses get noticed, build credibility, and turn attention into opportunities.</p>
+    <h1 id="content-title">Reels for businesses and creators</h1>
+    <p>Selected videos for Instagram and TikTok, including education, lifestyle, and property content.</p>
   </section>
 
   <ContentEmbedGrid items={embedItems} />
@@ -49,8 +53,8 @@ const pageCover = featuredCaseStudy?.data.coverImage || embedItems.find((item) =
   <WhatToExpectSection
     id="what-to-expect"
     rows={contentRows}
-    heading="Plan your next content shoot."
-    intro="Start with a single piece, plan a campaign, or build a regular content schedule. Here’s what to expect before we discuss your brief."
+    heading="Packages and turnaround"
+    intro="Start with one video, plan a campaign, or arrange regular content shoots."
   />
 
   <ContactSection />

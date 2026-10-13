@@ -3,8 +3,8 @@ import { site } from "@lib/site";
 export type EnquiryService = "photography" | "video";
 
 const serviceMessages: Record<EnquiryService, string> = {
-  photography: `Hi Ash! I'd like to check your availability for photography.\n\nDate:\nVenue:\nEvent type:\nCoverage hours:\nRequirements:`,
-  video: `Hi Ash! I'd like to discuss event video coverage.\n\nDate:\nVenue:\nCoverage hours:\nIntended use:\nVideo requirements:`
+  photography: `Hi Ash, I’d like to check your availability for photography.\n\nDate:\nVenue:\nEvent or shoot type:\nCoverage hours:\nRequirements:`,
+  video: `Hi Ash, I’d like to check your availability for event video coverage.\n\nDate:\nVenue:\nCoverage hours:\nIntended use:\nVideo requirements:`
 };
 
 export const getWhatsAppUrl = (service?: EnquiryService): string => {

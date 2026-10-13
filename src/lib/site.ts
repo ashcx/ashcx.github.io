@@ -1,14 +1,11 @@
-const whatsappMessage = `Hi Ash! I’m interested in your photography / social media services.
+const whatsappMessage = `Hi Ash, I’d like to enquire about a project.
 
-Here are some details about my project:
+Service needed:
+Date or timeframe:
+Location:
+Requirements:
 
-- Date:
-- Type of project:
-- Location:
-- Duration:
-- Requirements:
-
-Could you let me know if you're available? Thank you!`;
+Could you let me know your availability?`;
 
 export const site = {
   name: "Ash Chong",
@@ -23,11 +20,11 @@ export const featuredEventFilm = {
   videoId: "BefG_TBCul0",
   posterUrl: "/images/airwallex-ecom-north.webp",
   linkedinUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7493109029649645568/",
-  label: "Event films",
+  label: "Featured event film",
   title: "Airwallex x Ecom North.",
   titleLineTwo: "Built to Scale.",
   description:
-    "Capturing the people, ideas and energy behind Airwallex’s Ecom North Singapore Summit, where 800+ retail and e-commerce operators came together to explore scaling with more efficiency, speed and AI."
+    "A highlight film from the Airwallex × Ecom North Singapore Summit, bringing together speaker sessions, conversations, and moments from the event."
 } as const;
 
 // Single source of truth for published pricing figures — referenced by the
