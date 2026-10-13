@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-01T16:50:06.595Z",
+  "generatedAt": "2026-10-13T03:10:43.505Z",
   "sourceFiles": [
     {
       "name": "_DSC6163.jpg",
@@ -9,7 +9,8 @@
       "outputLarge": "image-001-large.webp",
       "width": 2800,
       "height": 1866,
-      "aspectRatio": 1.5005
+      "aspectRatio": 1.5005,
+      "outputMedium": "image-001-medium.webp"
     },
     {
       "name": "_DSC6218.jpg",
@@ -129,8 +130,7 @@
       "outputLarge": "image-013-large.webp",
       "width": 2800,
       "height": 1831,
-      "aspectRatio": 1.5292,
-      "outputMedium": "image-013-medium.webp"
+      "aspectRatio": 1.5292
     },
     {
       "name": "_DSC6669.jpg",

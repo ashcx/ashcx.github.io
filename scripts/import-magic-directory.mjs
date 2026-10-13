@@ -137,6 +137,7 @@ async function promptForGalleryMarkdown(folderPath, galleryMdPath, parsed, { rea
   console.log("Rank reminder: lower numbers appear first. Use 1 for top-tier highlights; press Enter for 10, the lowest-priority default.");
   const featuredRank = await promptForRank("Featured rank for the All view", existingData.featuredRank);
   const categoryRank = await promptForRank("Category rank for this tab", existingData.categoryRank);
+  const coverImageIndex = await promptForCoverImageIndex(folderPath, existingData);
 
   const data = cleanFrontmatter({
     ...existingData,
@@ -145,7 +146,8 @@ async function promptForGalleryMarkdown(folderPath, galleryMdPath, parsed, { rea
     publishStatus: existingData.publishStatus || "published",
     guidedContext,
     featuredRank,
-    categoryRank
+    categoryRank,
+    coverImageIndex
   });
   const yaml = YAML.stringify(data).trim();
   const raw = `---\n${yaml}\n---\n\n${parsed.content.trim()}\n`;
@@ -160,6 +162,24 @@ function getPromptInterface() {
     promptInterface = createInterface({ input, output });
   }
   return promptInterface;
+}
+
+async function promptForCoverImageIndex(folderPath, existingData) {
+  if (Object.hasOwn(existingData, "coverImageIndex")) {
+    return existingData.coverImageIndex;
+  }
+
+  const images = await listSourceImages(folderPath);
+  console.log("Cover images are numbered in natural filename order:");
+  images.forEach((name, index) => console.log(`  ${index + 1}: ${name}`));
+  const prompt = getPromptInterface();
+  while (true) {
+    const answer = (await prompt.question("Cover image number (blank = 1): ")).trim();
+    if (!answer) return 1;
+    const index = Number(answer);
+    if (Number.isInteger(index) && index >= 1 && index <= images.length) return index;
+    console.log(`Choose a whole number from 1 to ${images.length}, or press Enter for 1.`);
+  }
 }
 
 function hasRank(value) {

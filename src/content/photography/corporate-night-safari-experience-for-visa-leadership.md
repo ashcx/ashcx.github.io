@@ -6,10 +6,10 @@ title: Corporate Night Safari Experience for Visa Leadership
 date: 2026-07-31
 photographyType: corporate-private-events
 client: Visa
-featuredRank: 1
-categoryRank: 1
+featuredRank: 3
+categoryRank: 3
 publishStatus: published
-coverImageIndex: 29
+coverImageIndex: 1
 summary: Visa brought its leadership team and guests together for a private
   night safari, choosing shared experience over a boardroom setting. The evening
   gave senior relationships a memorable way to connect in person. The gallery
@@ -30,7 +30,7 @@ guidedContext: "Client and event: Visa hosted its leadership team and guests at
   mattered to the relationship, then land on how the images get reused. Do not
   just list what the animals or the dinner looked like."
 googlePhotosUrl: https://photos.app.goo.gl/jF4KoZNWXY3mJeem8
-coverImage: /images/galleries/corporate-night-safari-experience-for-visa-leadership/image-029-large.webp
+coverImage: /images/galleries/corporate-night-safari-experience-for-visa-leadership/image-001-large.webp
 ---
 
 
