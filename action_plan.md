@@ -519,3 +519,9 @@ Revision verification: final production build passed with zero Astro errors, war
 - Model preference supersedes the earlier implementation choice: all agents for this revision use GPT-6.1 Sol at medium effort. Primary assistant retains responsibility for public copy.
 
 Verification: production build/validation passed with zero errors, warnings, or hints. Fifteen browser route/viewport checks passed across Home, Photography, Event video, Social media, and Contact at 390, 768, and 1440 pixels, with centered-target checks, no page errors, and no horizontal overflow. Post-click iframe bounds fill the player containers at every tested width. Stubbed player geometry checks were supplemented by loading and visually inspecting both real YouTube videos playing at desktop size. Desktop/mobile screenshots and focused hero, expectations, Contact, and film sections were reviewed. Existing user `.gitignore` changes remain excluded.
+
+### Alignment correction — supersedes section 14 centering rules
+
+The user clarified the intended hierarchy: center page hero blocks (including their short introductory description) and section titles; left-align body paragraphs. Revert broad paragraph, card, booking-step, and testimonial centering. Explicitly left-align remaining body copy in the homepage introduction, shared section descriptions, details, and CTA paragraphs. Keep bounded text columns, responsive layouts, improved Contact typography, removed planning heading, revised enquiry wording, and the loaded-player sizing fix. All correction agents remain GPT-6.1 Sol medium.
+
+Corrected alignment verified: fifteen route/viewport checks passed again, asserting left-aligned body targets and centered video hero/section title; no overflow or page errors. Mobile and desktop rendered screenshots reviewed. Player bounds remain correct at all three widths. Production build/validation passes.
