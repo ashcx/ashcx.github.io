@@ -109,8 +109,7 @@ function extractAiSummary(body: string) {
             return (
               <article class="home-social-card">
                 <span class="meta-label">{category.label}</span>
-                <div class={`home-social-player home-social-player-${item.data.platform}`}
-                  style={item.data.playback === "local" ? `aspect-ratio: ${item.data.videoAspectRatio || 9 / 16}` : undefined}>
+                <div class={`home-social-player home-social-player-${item.data.platform}`}>
                   <SocialMediaPlayer item={item} title={title} variant="home" />
                 </div>
                 <div class="home-social-copy">
@@ -128,11 +127,6 @@ function extractAiSummary(body: string) {
                       </span>
                     ))}
                   </div>
-                  {item.data.playback === "local" && item.data.externalUrl && (
-                    <a class="content-direct-link" href={item.data.externalUrl} target="_blank" rel="noreferrer">
-                      Open {item.data.platform === "tiktok" ? "TikTok" : item.data.platform === "instagram" ? "Instagram" : "LinkedIn"} post
-                    </a>
-                  )}
                   <a class="home-social-more" href={url}>
                     <span aria-hidden="true">+</span>
                     {category.moreLabel}

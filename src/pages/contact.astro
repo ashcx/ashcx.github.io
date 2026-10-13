@@ -1,28 +1,37 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
-import TestimonialsSection from "@components/TestimonialsSection.astro";
 import { sections } from "@lib/site";
 import { getWhatsAppUrl } from "@lib/enquiries";
 ---
 
 <BaseLayout title="Contact" description="Contact Ash for event photography, event video, and social media content enquiries in Singapore." active="contact">
-  <section class="contact-page contact-page-intro" aria-labelledby="contact-title">
-    <p class="eyebrow">Contact</p>
-    <h1 id="contact-title">Let’s work together</h1>
-    <p>Photography, video, and social media content. I usually reply within 24 hours.</p>
-
-    <dialog id="enquiry-dialog" aria-labelledby="enquiry-dialog-title">
-    <div class="enquiry-panel">
-      <button type="button" class="dialog-close" id="close-enquiry" aria-label="Close enquiry form">Close ×</button>
-      <h2 id="enquiry-dialog-title">Tell me about your project</h2>
-      <p class="enquiry-intro">Share what you’re planning, when you need it, and your estimated budget. I’ll get back to you within 24 hours to discuss the scope and next steps.</p>
+  <section class="contact-page" aria-labelledby="contact-title">
+    <header class="contact-intro">
+      <h1 id="contact-title">Let’s work together</h1>
+      <p class="contact-lede">Enquire about photography, video, or social media content.</p>
+      <div class="contact-whatsapp">
+        <a class="button whatsapp-cta" href={getWhatsAppUrl()} data-contact-whatsapp data-photography-href={getWhatsAppUrl("photography")} data-video-href={getWhatsAppUrl("video")} target="_blank" rel="noreferrer">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M21 11.5a9 9 0 0 1-13.4 7.8L3 21l1.6-4.7A9 9 0 1 1 21 11.5Z"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M8 7.5c0 4 2.5 6.5 6.5 7l1-2-2-.8-.8 1c-1.7-.7-2.7-1.7-3.4-3.4l1-.8-.8-2-1.5 1Z"/></svg>
+          Chat on WhatsApp <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </header>
+    <section class="enquiry-panel" aria-labelledby="enquiry-title">
+      <header class="enquiry-heading">
+        <h2 id="enquiry-title">Send an enquiry</h2>
+      </header>
       <form action="https://api.web3forms.com/submit" method="POST" id="enquiry-form">
         <input type="hidden" name="access_key" value="3098e95c-eb3b-418f-92ea-87d82fb41dc2" />
         <input type="hidden" name="subject" value="New portfolio project enquiry" />
         <input type="checkbox" name="botcheck" class="botcheck" tabindex="-1" aria-hidden="true" />
         <label for="enquiry-name">Your name<input id="enquiry-name" name="name" autocomplete="name" maxlength="150" required /></label>
-        <label for="enquiry-email">Email address<input id="enquiry-email" type="email" name="email" autocomplete="email" maxlength="254" required /></label>
-        <label for="enquiry-service">What do you need help with?
+        <label for="enquiry-email">Contact email
+          <input id="enquiry-email" type="email" name="email" autocomplete="email" maxlength="254" required />
+        </label>
+        <label for="enquiry-phone">Phone number
+          <input id="enquiry-phone" type="tel" name="phone" autocomplete="tel" maxlength="50" placeholder="Include country code, e.g. +65" />
+        </label>
+        <label for="enquiry-service">What would you like to book?
           <select id="enquiry-service" name="service" required>
             <option value="" disabled selected>Select a service</option>
             <option value="photography">Photography</option>
@@ -31,112 +40,67 @@ import { getWhatsAppUrl } from "@lib/enquiries";
             <option value="social">Social media content</option>
           </select>
         </label>
-        <label for="enquiry-message">Tell me briefly about your project
-          <span class="field-hint" id="project-hint">Include your company or organisation, location, approximate coverage hours or deliverables, and how you’ll use the work.</span>
-          <textarea id="enquiry-message" name="message" rows="5" maxlength="5000" aria-describedby="project-hint" required></textarea>
-        </label>
         <label for="enquiry-timing">When do you need it?
-          <span class="field-hint" id="timing-hint">Event date or delivery timeline. If flexible, say so.</span>
+          <span class="field-hint" id="timing-hint">Event date or delivery timeline; an estimate is fine.</span>
           <input id="enquiry-timing" name="timeline" maxlength="250" aria-describedby="timing-hint" required />
         </label>
-        <label for="enquiry-budget">What budget have you allocated?
-          <span class="field-hint" id="budget-hint">Total project budget in SGD. For ongoing social content, indicate your monthly budget.</span>
+        <label for="enquiry-budget">Estimated budget (SGD)
+          <span class="field-hint" id="budget-hint">Total project budget, or monthly for ongoing social content.</span>
           <select id="enquiry-budget" name="budget" aria-describedby="budget-hint" required>
             <option value="" disabled selected>Select a budget</option>
             <option>S$600–999</option><option>S$1,000–1,499</option><option>S$1,500–2,499</option><option>S$2,500–4,999</option><option>S$5,000+</option><option>Other / I’d like a recommendation</option>
           </select>
         </label>
-        <p class="field-hint">Your details are processed through Web3Forms and emailed to me to respond to your enquiry.</p>
-        <button type="submit" class="button button-dark">Send enquiry</button>
-        <p id="enquiry-status" role="status" aria-live="polite" tabindex="-1"></p>
-        <p id="enquiry-error" role="alert" hidden>Couldn’t send your enquiry. Your details are still here—please try again or <a href="mailto:ashchong138@gmail.com">email me</a>.</p>
+        <label class="form-wide" for="enquiry-message">Tell me more about your project
+          <span class="field-hint" id="project-hint">Describe your event or project, where it will take place, and what you’d like me to capture or create.</span>
+          <textarea id="enquiry-message" name="message" rows="4" maxlength="5000" aria-describedby="project-hint" required></textarea>
+        </label>
+        <button type="submit" class="button button-dark form-wide">Send enquiry</button>
+        <p class="form-wide" id="enquiry-status" role="status" aria-live="polite" tabindex="-1"></p>
+        <p class="form-wide" id="enquiry-error" role="alert" hidden>Couldn’t send your enquiry. Your details are still here—please try again or <a href="mailto:ashchong138@gmail.com">email me</a>.</p>
       </form>
-    </div>
+    </section>
+    <p class="contact-email-alternative">You can also email me at <a href="mailto:ashchong138@gmail.com?subject=Project%20enquiry">ashchong138@gmail.com</a>.</p>
+    <dialog id="enquiry-success-dialog" aria-labelledby="enquiry-success-title" aria-describedby="enquiry-success-description">
+      <h2 id="enquiry-success-title">Your enquiry has been sent</h2>
+      <p id="enquiry-success-description">Thank you for getting in touch. I’ll review your enquiry and respond within 24 hours.</p>
+      <button type="button" class="button button-dark" id="close-enquiry-success" autofocus>Done</button>
     </dialog>
-    <div class="contact-card-grid">
-      <button type="button" class="contact-card contact-card-form" id="open-enquiry" aria-haspopup="dialog">
-        <span class="meta-label">Enquiry form</span>
-        <strong>Send a brief</strong>
-        <small>Share your scope, timeline, and budget so I can put together a quote.</small>
-        <span class="contact-link-label button button-dark">Open enquiry form</span>
-      </button>
-      <a
-        class="contact-card"
-        href={getWhatsAppUrl()}
-        data-contact-whatsapp
-        data-photography-href={getWhatsAppUrl("photography")}
-        data-video-href={getWhatsAppUrl("video")}
-      >
-        <span class="meta-label">WhatsApp</span>
-        <strong>Chat with me</strong>
-        <small>For time-sensitive enquiries. Share your service, date, and budget.</small>
-        <span class="contact-link-label button button-whatsapp">Open WhatsApp</span>
-      </a>
-
-    </div>
-    <p class="contact-email-alternative">Prefer email? Email me at <a href="mailto:ashchong138@gmail.com?subject=Project%20enquiry">ashchong138@gmail.com</a></p>
-
-  </section>
-
-  <TestimonialsSection showCta={false} />
-
-  <section class="contact-page contact-page-followup" aria-label="Explore more work">
-    <div class="content-section-rule" />
-    <div class="contact-explore">
-      <h2 class="contact-explore-subhead">Want to see the work first?</h2>
-      <p class="contact-explore-lead">Browse photography, event video, and social content.</p>
-      <div class="contact-explore-grid">
-        <a class="contact-explore-card contact-explore-card-photography" href="/photography/">
-          <span class="contact-explore-card-copy">
-            <strong>Photography</strong>
-            <small>Corporate and private event coverage.</small>
-          </span>
-          <span class="contact-explore-link">Explore photography</span>
-        </a>
-        {sections.video && (
-          <a class="contact-explore-card contact-explore-card-video" href="/videography/">
-            <span class="contact-explore-card-copy">
-              <strong>Event video</strong>
-              <small>Highlight films, interviews, and speech recordings.</small>
-            </span>
-            <span class="contact-explore-link">Explore event video</span>
-          </a>
-        )}
-        <a class="contact-explore-card contact-explore-card-social" href="/content/">
-          <span class="contact-explore-card-copy">
-            <strong>Social media</strong>
-            <small>Content for brands and small businesses.</small>
-          </span>
-          <span class="contact-explore-link">Explore social media</span>
-        </a>
-      </div>
-    </div>
   </section>
 </BaseLayout>
 
 <script>
-  const dialog = document.querySelector<HTMLDialogElement>("#enquiry-dialog");
-  const openButton = document.querySelector<HTMLButtonElement>("#open-enquiry");
-  const closeButton = document.querySelector<HTMLButtonElement>("#close-enquiry");
-  const closeDialog = () => dialog?.close();
-  openButton?.addEventListener("click", () => dialog?.showModal());
-  closeButton?.addEventListener("click", closeDialog);
-  dialog?.addEventListener("close", () => {
+  const successDialog = document.querySelector<HTMLDialogElement>("#enquiry-success-dialog");
+  document.querySelector("#close-enquiry-success")?.addEventListener("click", () => successDialog?.close());
+  successDialog?.addEventListener("close", () => {
     document.body.style.overflow = "";
-    openButton?.focus();
-  });
-  openButton?.addEventListener("click", () => { document.body.style.overflow = "hidden"; });
-  dialog?.addEventListener("click", (event) => {
-    const bounds = dialog.getBoundingClientRect();
-    if (event.target === dialog && (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom)) closeDialog();
+    document.querySelector<HTMLButtonElement>('#enquiry-form button[type="submit"]')?.focus({ preventScroll: true });
   });
   const form = document.querySelector<HTMLFormElement>("#enquiry-form");
+  const emailField = document.querySelector<HTMLInputElement>("#enquiry-email");
+  // WHATWG HTML email syntax, equivalent to type="email" validation:
+  // https://html.spec.whatwg.org/multipage/input.html#email-state-(type=email)
+  const emailPattern = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+  const validateEmail = () => {
+    if (!emailField) return;
+    // Empty values use the browser's required-field message.
+    emailField.setCustomValidity(
+      emailField.value && !emailPattern.test(emailField.value)
+        ? "Enter a valid email address, such as name@example.com."
+        : ""
+    );
+  };
+  emailField?.addEventListener("input", validateEmail);
+  emailField?.addEventListener("blur", validateEmail);
+  form?.addEventListener("reset", () => emailField?.setCustomValidity(""));
   const serviceField = document.querySelector<HTMLSelectElement>("#enquiry-service");
   const status = document.querySelector<HTMLParagraphElement>("#enquiry-status");
   const error = document.querySelector<HTMLParagraphElement>("#enquiry-error");
   const button = form?.querySelector<HTMLButtonElement>('button[type="submit"]');
   form?.addEventListener("submit", async (event) => {
     event.preventDefault();
+    validateEmail();
+    if (!form.reportValidity()) return;
     if (!status || !error || !button || button.disabled) return;
     button.disabled = true;
     button.textContent = "Sending…";
@@ -152,8 +116,9 @@ import { getWhatsAppUrl } from "@lib/enquiries";
       const result = await response.json();
       if (!response.ok || result.success !== true) throw new Error("Submission failed");
       form.reset();
-      status.textContent = "Thanks—your enquiry has been sent. I usually reply within 24 hours.";
-      status.focus();
+      status.textContent = "";
+      successDialog?.showModal();
+      document.body.style.overflow = "hidden";
     } catch {
       status.textContent = "";
       error.hidden = false;
@@ -164,8 +129,8 @@ import { getWhatsAppUrl } from "@lib/enquiries";
     }
   });
   const whatsappLink = document.querySelector<HTMLAnchorElement>("[data-contact-whatsapp]");
-  const requestedService = new URLSearchParams(window.location.search).get("service");
-
+  const params = new URLSearchParams(window.location.search);
+  const requestedService = params.get("service");
   if (serviceField && ["photography", "video", "social"].includes(requestedService ?? "")) {
     serviceField.value = requestedService!;
   }
@@ -178,145 +143,46 @@ import { getWhatsAppUrl } from "@lib/enquiries";
 </script>
 
 <style>
-  .contact-card-form { font: inherit; color: inherit; cursor: pointer; }
-  .contact-card-form:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
-  .contact-email-alternative { margin-top: 24px; font-size: .95rem; }
-  .contact-email-alternative a { text-decoration: underline; overflow-wrap: anywhere; }
-  #enquiry-dialog { width: min(760px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); box-sizing: border-box; padding: 28px; border: 1px solid #9c978e; border-radius: 16px; color: inherit; background: var(--paper-bright, #fffdf7); overflow-y: auto; overscroll-behavior: contain; }
-  #enquiry-dialog::backdrop { background: rgba(0, 0, 0, .55); }
-  .enquiry-panel { text-align: left; }
-  .dialog-close { display: block; margin: 0 0 20px auto; padding: 10px 14px; min-height: 44px; font: inherit; cursor: pointer; border: 1px solid #9c978e; border-radius: 8px; background: transparent; color: inherit; }
-  @media (max-width: 760px) { #enquiry-dialog { padding: 20px; } }
-  .enquiry-panel h2 { font-size: clamp(1.75rem, 4vw, 2.25rem); line-height: 1.15; margin-bottom: 16px; }
-  .enquiry-intro { line-height: 1.6; max-width: 58ch; }
-  #enquiry-form { display: grid; gap: 22px; margin-top: 28px; }
-  #enquiry-form label { display: grid; gap: 8px; font-weight: 600; }
-  .field-hint { font-size: .9rem; font-weight: 400; line-height: 1.5; }
+  .contact-page { max-width: 1040px; padding: clamp(74px, 11vw, 140px) 0 96px; text-align: left; }
+  .contact-intro { margin: 0 auto clamp(48px, 6vw, 72px); text-align: center; }
+  .contact-page h1 { margin: 0 auto 24px; line-height: 1.04; }
+  .contact-lede { max-width: 48ch; margin: 0 auto; color: var(--muted); font-size: clamp(1.12rem, 1.6vw, 1.28rem); line-height: 1.6; }
+  .contact-whatsapp { margin-top: 32px; }
+  .whatsapp-cta { gap: 12px; padding: 18px 28px; min-height: 58px; background: #25d366; color: #08210f; border: 1px solid #1ea952; font-size: 1.05rem; box-shadow: 0 8px 24px rgba(18, 71, 36, .12); }
+  .whatsapp-cta:hover { background: #20c35d; border-color: #16893f; }
+  .whatsapp-cta svg { width: 24px; height: 24px; flex-shrink: 0; }
+  .enquiry-panel { max-width: 860px; margin: 0 auto; padding: clamp(28px, 4vw, 52px); border: 1px solid rgba(23, 22, 21, .14); border-radius: 20px; background: var(--paper-bright, #fffdf7); }
+  .enquiry-heading { margin-bottom: 36px; }
+  .enquiry-heading h2 { margin: 0 0 16px; font-size: clamp(1.75rem, 3vw, 2.25rem); line-height: 1.15; letter-spacing: -.025em; }
+  #enquiry-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 28px; }
+  #enquiry-form label { display: flex; flex-direction: column; gap: 10px; min-width: 0; font-weight: 600; line-height: 1.4; }
+  .form-wide { grid-column: 1 / -1; }
+  .field-hint { font-size: .85rem; font-weight: 400; line-height: 1.5; color: var(--muted); }
   #enquiry-form input:not(.botcheck), #enquiry-form select, #enquiry-form textarea {
     width: 100%; min-width: 0; box-sizing: border-box; border: 1px solid #9c978e;
-    border-radius: 8px; padding: 14px; font: inherit; font-size: 16px;
-    color: inherit; background: var(--paper-bright, #fffdf7);
+    border-radius: 8px; padding: 15px; font: inherit; font-size: 16px;
+    color: inherit; background: var(--paper-bright, #fffdf7); margin-top: auto;
   }
   #enquiry-form textarea { resize: vertical; }
-  #enquiry-form :is(input, select, textarea, button):focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+  #enquiry-form :is(input, select, textarea, button):focus-visible, .contact-page a:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
   #enquiry-form .botcheck { display: none; }
-  #enquiry-form button { min-height: 48px; width: 100%; }
+  #enquiry-form button { min-height: 56px; width: 100%; }
   #enquiry-form button:disabled { opacity: .65; cursor: wait; }
   #enquiry-status:empty { display: none; }
+  #enquiry-error { margin: 0; line-height: 1.5; }
   #enquiry-error a { text-decoration: underline; }
-
-  :global(body .floating-contact-button) {
-    display: none;
-  }
-
-  .contact-card-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .contact-card {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    min-width: 0;
-    min-height: 260px;
-    text-align: left;
-  }
-
-  .contact-card strong {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    font-family: inherit;
-    font-weight: 720;
-    font-size: clamp(2rem, 4vw, 2.75rem);
-    letter-spacing: -0.02em;
-    line-height: 1.2;
-  }
-
-  .contact-card small,
-  .contact-explore-card small {
-    margin-right: 0;
-    margin-left: 0;
-    text-align: left;
-  }
-
-  .contact-card small {
-    margin-top: 0;
-    margin-bottom: 24px;
-  }
-
-  .contact-link-label {
-    max-width: 100%;
-    margin-top: auto;
-    justify-content: flex-start;
-    white-space: normal;
-  }
-
-  .contact-card-email strong {
-    max-width: 100%;
-    overflow-wrap: anywhere;
-    font-size: clamp(1rem, 2vw, 1.35rem);
-    letter-spacing: -0.01em;
-    line-height: 1.25;
-  }
-
-  .contact-page h1,
-  .contact-explore-subhead {
-    letter-spacing: -0.01em;
-  }
-
-  .contact-explore-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .contact-explore-card {
-    display: grid;
-    height: auto;
-    min-width: 0;
-    min-height: 240px;
-    grid-template-rows: 1fr auto;
-    gap: 18px;
-    text-align: left;
-  }
-
-  .contact-explore-card-copy {
-    min-width: 0;
-    padding: 12px 0 0;
-  }
-
-  .contact-explore-card strong {
-    font-size: clamp(1.5rem, 2vw, 1.75rem);
-    letter-spacing: -0.01em;
-  }
-
-  .contact-explore-link {
-    min-width: 0;
-    justify-self: start;
-    justify-content: flex-start;
-    gap: 10px;
-    white-space: normal;
-  }
-
-  .contact-explore-card-video {
-    background:
-      linear-gradient(135deg, rgba(232, 226, 213, 0.58), transparent 58%),
-      var(--paper-bright);
-  }
-
-  @media (max-width: 1024px) {
-    .contact-explore-grid {
-      grid-template-columns: minmax(0, 1fr);
-      max-width: 480px;
-      margin-inline: auto;
-    }
-  }
-
-  @media (max-width: 760px) {
-    .contact-card-grid {
-      grid-template-columns: minmax(0, 1fr);
-    }
-
-    .contact-explore-grid {
-      grid-template-columns: minmax(0, 1fr);
-    }
+  .contact-page > .contact-email-alternative { max-width: 860px; margin: 28px auto 0; font-size: 1rem; line-height: 1.7; text-align: center; }
+  .contact-email-alternative a { font-weight: 400; text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+  #enquiry-success-dialog { width: min(480px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); box-sizing: border-box; overflow-y: auto; padding: 32px; border: 1px solid #9c978e; border-radius: 16px; color: inherit; background: var(--paper-bright, #fffdf7); text-align: center; }
+  #enquiry-success-dialog::backdrop { background: rgba(0, 0, 0, .55); }
+  #enquiry-success-dialog h2 { font-size: 2rem; line-height: 1.2; margin: 12px 0; }
+  #enquiry-success-description { line-height: 1.6; margin-bottom: 24px; }
+  @media (max-width: 620px) {
+    .contact-page { padding-top: 64px; padding-bottom: 64px; }
+    .contact-page h1 { font-size: 44px; }
+    .whatsapp-cta { width: 100%; padding: 16px; gap: 10px; font-size: 1rem; }
+    .enquiry-panel { padding: 28px 0 0; border: 0; border-top: 1px solid var(--hairline); border-radius: 0; background: transparent; }
+    .enquiry-heading { margin-bottom: 28px; }
+    #enquiry-form { grid-template-columns: minmax(0, 1fr); gap: 24px; }
   }
 </style>

@@ -46,7 +46,7 @@ const ogImage = image ? new URL(image, Astro.site).toString() : undefined;
       <slot />
     </main>
     <Footer />
-    <FloatingContactButton />
+    {active !== "contact" && <FloatingContactButton />}
     <script>
       const params = new URLSearchParams(window.location.search);
       const revealHidden =

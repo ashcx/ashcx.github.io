@@ -401,6 +401,23 @@ p {
   box-shadow: 0 32px 88px rgba(40, 33, 25, 0.14);
 }
 
+@media (min-width: 621px) {
+  .home-intro-block .hero-lede {
+    font-size: clamp(1.45rem, 2.8vw, 2.2rem);
+    font-weight: 500;
+  }
+}
+
+@media (max-width: 620px) {
+  .identity-list {
+    justify-items: center;
+  }
+
+  .home-intro-block .hero-lede {
+    text-align: center;
+  }
+}
+
 @media (min-width: 811px) and (max-width: 1259px) {
   .home-intro-grid {
     grid-template-columns: minmax(420px, 1fr) minmax(300px, 0.78fr);
