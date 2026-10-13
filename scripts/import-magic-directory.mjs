@@ -93,14 +93,45 @@ async function readGalleryMarkdown(folderPath) {
     });
   }
 
+  if (!Object.prototype.hasOwnProperty.call(parsed.data || {}, "coverImageIndex")) {
+    return promptForGalleryMarkdown(folderPath, galleryMdPath, parsed, {
+      reason: "gallery.md exists, but it has no coverImageIndex."
+    });
+  }
+
   return parsed;
 }
 
 async function promptForGalleryMarkdown(folderPath, galleryMdPath, parsed, { reason }) {
   const folderName = path.basename(folderPath);
   const existingData = parsed.data || {};
+  const hasCoverImageIndex = Object.prototype.hasOwnProperty.call(existingData, "coverImageIndex");
+  const hasRequiredMetadata =
+    Boolean(String(existingData.guidedContext || "").trim()) &&
+    hasRank(existingData.featuredRank) &&
+    hasRank(existingData.categoryRank);
+  const defaultCoverImageIndex = hasCoverImageIndex
+    ? existingData.coverImageIndex
+    : await getExistingCoverImageIndex(folderName);
 
   if (!input.isTTY || !output.isTTY) {
+    const galleryExists = await exists(galleryMdPath);
+    const data = cleanFrontmatter({
+      ...existingData,
+      coverImageIndex: defaultCoverImageIndex
+    });
+    const yaml = YAML.stringify(data).trim();
+    const raw = `---\n${yaml}\n---\n\n${parsed.content.trim()}\n`;
+
+    if (!hasCoverImageIndex && galleryExists) {
+      await writeFile(galleryMdPath, raw);
+      console.log(`Added coverImageIndex: ${defaultCoverImageIndex} to ${path.relative(root, galleryMdPath)}\n`);
+    }
+
+    if (hasRequiredMetadata) {
+      return hasCoverImageIndex ? parsed : matter(raw);
+    }
+
     throw new Error(
       [
         `Gallery "${folderName}" needs mandatory metadata before import.`,
@@ -111,6 +142,7 @@ async function promptForGalleryMarkdown(folderPath, galleryMdPath, parsed, { rea
         "guidedContext: Your mandatory context here.",
         "featuredRank: 10",
         "categoryRank: 10",
+        "coverImageIndex: 1",
         "---"
       ].join("\n")
     );
@@ -137,6 +169,9 @@ async function promptForGalleryMarkdown(folderPath, galleryMdPath, parsed, { rea
   console.log("Rank reminder: lower numbers appear first. Use 1 for top-tier highlights; press Enter for 10, the lowest-priority default.");
   const featuredRank = await promptForRank("Featured rank for the All view", existingData.featuredRank);
   const categoryRank = await promptForRank("Category rank for this tab", existingData.categoryRank);
+  const coverImageIndex = hasCoverImageIndex
+    ? existingData.coverImageIndex
+    : await promptForCoverImageIndex(folderPath, defaultCoverImageIndex);
 
   const data = cleanFrontmatter({
     ...existingData,
@@ -145,7 +180,8 @@ async function promptForGalleryMarkdown(folderPath, galleryMdPath, parsed, { rea
     publishStatus: existingData.publishStatus || "published",
     guidedContext,
     featuredRank,
-    categoryRank
+    categoryRank,
+    coverImageIndex
   });
   const yaml = YAML.stringify(data).trim();
   const raw = `---\n${yaml}\n---\n\n${parsed.content.trim()}\n`;
@@ -153,6 +189,33 @@ async function promptForGalleryMarkdown(folderPath, galleryMdPath, parsed, { rea
   console.log(`Updated ${path.relative(root, galleryMdPath)}\n`);
 
   return matter(raw);
+}
+
+async function getExistingCoverImageIndex(folderName) {
+  const slug = slugify(folderName);
+  const existing = await readExistingContent(path.join(contentRoot, `${slug}.md`));
+  const index = Number(existing.data.coverImageIndex);
+  return Number.isInteger(index) && index >= 1 ? index : 1;
+}
+
+async function promptForCoverImageIndex(folderPath, defaultIndex) {
+  const imageCount = (await listSourceImages(folderPath)).length;
+  const range = imageCount ? `1-${imageCount}` : "1 or higher";
+  const defaultCoverIndex =
+    Number.isInteger(defaultIndex) && defaultIndex >= 1 && (!imageCount || defaultIndex <= imageCount)
+      ? defaultIndex
+      : 1;
+  const prompt = getPromptInterface();
+
+  while (true) {
+    const answer = (await prompt.question(`Cover image index (1-based, ${range}; press Enter for ${defaultCoverIndex}): `)).trim();
+    if (!answer) return defaultCoverIndex;
+
+    const index = Number(answer);
+    if (Number.isInteger(index) && index >= 1 && (!imageCount || index <= imageCount)) return index;
+
+    console.log(`Enter a whole number from 1 to ${imageCount || "the number of source images"}, or press Enter for ${defaultCoverIndex}.`);
+  }
 }
 
 function getPromptInterface() {

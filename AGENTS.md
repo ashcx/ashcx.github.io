@@ -73,9 +73,13 @@ To import a gallery, create `inbox/galleries/<folder>/`, add `.jpg`, `.jpeg`,
 `src/content/photography/<slug>.md` and `public/images/galleries/<slug>/`.
 The folder name is slugified for both destinations. `gallery.md` needs
 `guidedContext`, `featuredRank`, and `categoryRank` in non-interactive runs;
-the importer prompts for missing fields in an interactive terminal. It accepts
-optional metadata such as `title`, `photographyType`, `publishStatus`,
-`hidden`, `coverImageIndex`, `client`, and `googlePhotosUrl`.
+the importer prompts for missing fields in an interactive terminal. Include
+`coverImageIndex` in every `gallery.md`: it is 1-based, defaults to `1` for new
+galleries, and the interactive prompt lets the user select another source
+photo. Existing values are preserved. If an existing file has no selection,
+the importer reuses the current generated gallery value when available and
+otherwise adds `1`. Other optional metadata includes `title`,
+`photographyType`, `publishStatus`, `hidden`, `client`, and `googlePhotosUrl`.
 
 The importer generates 480px thumbnails and large images up to 2550px on the
 long edge, names them by their natural-sort source order, and records source
@@ -83,7 +87,9 @@ size, modification time, dimensions, and output names in the manifest. Large
 images use WebP quality 75 and a 550 KiB size target, lowering quality in
 5-point steps to a minimum of 40 when needed. Matching unchanged sources are
 reused. `coverImageIndex` is 1-based and selects a cover; otherwise the first
-image is used.
+image is used. If it is missing from an existing `gallery.md`, the interactive
+importer asks for it with the current gallery selection or `1` as the default;
+non-interactive imports add that same default automatically.
 
 Treat gallery output as generated: do not manually rename/delete individual
 derivatives or manifests. Removing or renaming source photos can remove stale

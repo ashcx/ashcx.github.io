@@ -33,8 +33,9 @@ content, and creates the production site in `dist/`.
 
 1. Create a folder in `inbox/galleries/` and add the source photos (`.jpg`,
    `.jpeg`, `.png`, or `.webp`). This folder is local-only and is not committed.
-2. Add a `gallery.md` file with the gallery details. The minimum required fields
-   are:
+2. Add a `gallery.md` file with the gallery details. `guidedContext`,
+   `featuredRank`, and `categoryRank` are required; `coverImageIndex` defaults
+   to `1` if omitted:
 
    ```yaml
    ---
@@ -45,13 +46,17 @@ content, and creates the production site in `dist/`.
      Describe what happened, who the event was for, and why the images matter.
    featuredRank: 10
    categoryRank: 10
+   coverImageIndex: 1
    ---
    ```
 
+   `coverImageIndex` is 1-based. The importer defaults it to `1` and lets you
+   choose another source photo in an interactive terminal; an existing value is
+   preserved.
+
    Supported photography types are `corporate-private-events`, `stage-work`,
    `photoshoot`, and `wedding-rom`. Lower rank numbers appear first. Optional
-   fields include `client`, `date`, `coverImageIndex`, `googlePhotosUrl`,
-   `services`, and `tags`.
+   fields include `client`, `date`, `googlePhotosUrl`, `services`, and `tags`.
 
 3. Run the importer or the full build:
 
