@@ -106,8 +106,13 @@ const ogImage = carouselSlides[0]?.portrait || pageCover;
   <section class="home-hero" aria-labelledby="hero-title">
     <div class="home-hero-copy home-intro-grid">
       <div class="home-name-block">
-        <h1 id="hero-title">Photography and video for events and businesses in Singapore.</h1>
+        <h1 id="hero-title">Hi, I'm <span class="home-name-line">Ash.</span></h1>
       </div>
+      <ul class="identity-list" aria-label="Short description">
+        <li>Event photographer</li>
+        <li>Event videographer</li>
+        <li>Social content creator</li>
+      </ul>
       <div class="home-intro-block">
         <p class="hero-lede">I'm Ash, a freelance photographer and videographer covering corporate events, private celebrations, and social content shoots. Tell me what you're planning, and we can discuss the coverage and deliverables you need.</p>
         <div class="hero-actions">
@@ -195,14 +200,14 @@ const ogImage = carouselSlides[0]?.portrait || pageCover;
     <section class="home-section home-event-film" aria-labelledby="home-event-film-title">
       <EventFilmFeature {...featuredEventFilm} id="home-event-film-title" loading="lazy" />
       <div class="home-section-footer">
-        <a class="button button-accent" href="/videography/">Explore event video</a>
+        <a class="button button-paper" href="/videography/">View event films &amp; coverage</a>
       </div>
     </section>
   )}
 
   {sections.content && <HomeSocialHighlights items={socialHighlights} />}
 
-  <TestimonialsSection showRule={false} />
+  <TestimonialsSection showRule={false} showCta={false} />
 
   <ContactSection />
 

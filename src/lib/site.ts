@@ -58,7 +58,7 @@ export const sections = {
 
 const allNavItems = [
   { id: "photography", href: "/photography/", label: "Photography" },
-  { id: "video", href: "/videography/", label: "Event Video" },
+  { id: "video", href: "/videography/", label: "Event video" },
   { id: "content", href: "/content/", label: "Social media" },
   { id: "data", href: "/data/", label: "Data" },
   { id: "contact", href: "/contact/", label: "Contact" }

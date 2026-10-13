@@ -9,9 +9,9 @@ import { getWhatsAppUrl } from "@lib/enquiries";
   <section class="contact-page contact-page-intro" aria-labelledby="contact-title">
     <p class="eyebrow">Contact</p>
     <h1 id="contact-title">Tell me about your project.</h1>
-    <p>Share your date, location, and what you need. WhatsApp is the quickest way to start the conversation.</p>
+    <p>Share your date, location, and what you need. Choose WhatsApp for a quick conversation, or email with your brief.</p>
 
-    <div class="contact-card-grid contact-card-grid-single">
+    <div class="contact-card-grid">
       <a
         class="contact-card"
         href={getWhatsAppUrl()}
@@ -23,6 +23,12 @@ import { getWhatsAppUrl } from "@lib/enquiries";
         <strong>Chat on WhatsApp</strong>
         <small>For a quick availability check or an initial conversation.</small>
         <span class="contact-link-label button button-whatsapp">Open WhatsApp</span>
+      </a>
+      <a class="contact-card contact-card-email" href="mailto:ashchong138@gmail.com?subject=Project%20enquiry">
+        <span class="meta-label">Email me</span>
+        <strong>ashchong138@gmail.com</strong>
+        <small>For project briefs, schedules, and detailed enquiries.</small>
+        <span class="contact-link-label button button-dark">Send an email</span>
       </a>
     </div>
 
@@ -46,7 +52,7 @@ import { getWhatsAppUrl } from "@lib/enquiries";
         {sections.video && (
           <a class="contact-explore-card contact-explore-card-video" href="/videography/">
             <span class="contact-explore-card-copy">
-              <strong>Event Video</strong>
+              <strong>Event video</strong>
               <small>Highlight films, interviews, and speech recordings.</small>
             </span>
             <span class="contact-explore-link">Explore event video</span>
@@ -76,8 +82,53 @@ import { getWhatsAppUrl } from "@lib/enquiries";
 </script>
 
 <style>
+  :global(body .floating-contact-button) {
+    display: none;
+  }
+
+  .contact-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .contact-card-email strong {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    font-size: clamp(1rem, 2vw, 1.35rem);
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+  }
+
+  .contact-page h1,
+  .contact-explore-subhead {
+    letter-spacing: -0.01em;
+  }
+
   .contact-explore-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .contact-explore-card {
+    display: grid;
+    height: auto;
+    min-width: 0;
+    min-height: 240px;
+    grid-template-rows: 1fr auto;
+    gap: 18px;
+  }
+
+  .contact-explore-card-copy {
+    min-width: 0;
+    padding: 12px 0 0;
+  }
+
+  .contact-explore-card strong {
+    letter-spacing: -0.01em;
+  }
+
+  .contact-explore-link {
+    min-width: 0;
+    gap: 10px;
+    white-space: normal;
   }
 
   .contact-explore-card-video {
@@ -86,7 +137,17 @@ import { getWhatsAppUrl } from "@lib/enquiries";
       var(--paper-bright);
   }
 
+  @media (max-width: 1024px) {
+    .contact-explore-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
   @media (max-width: 760px) {
+    .contact-card-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
     .contact-explore-grid {
       grid-template-columns: minmax(0, 1fr);
     }

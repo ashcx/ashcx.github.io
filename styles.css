@@ -307,7 +307,7 @@ p {
   grid-template-columns: minmax(190px, 0.64fr) minmax(280px, 0.92fr) minmax(320px, 0.86fr);
   grid-template-areas:
     "name name portrait"
-    "intro intro portrait";
+    "identity intro portrait";
   gap: clamp(28px, 4vw, 64px) clamp(28px, 5vw, 72px);
   align-items: start;
   text-align: left;
@@ -318,11 +318,17 @@ p {
 }
 
 .home-name-block h1 {
-  max-width: 780px;
+  max-width: 720px;
   margin-bottom: 0;
-  font-size: clamp(3.2rem, 6vw, 5.4rem);
-  letter-spacing: -0.065em;
-  line-height: 0.92;
+  font-size: clamp(5.6rem, 11.8vw, 10.8rem);
+  letter-spacing: -0.075em;
+  line-height: 0.82;
+}
+
+@media (min-width: 811px) {
+  .home-name-line {
+    display: block;
+  }
 }
 
 .home-intro-block {
@@ -333,13 +339,45 @@ p {
   padding-bottom: clamp(6px, 1vw, 16px);
 }
 
+.identity-list {
+  grid-area: identity;
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  align-self: start;
+  padding: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 760;
+  letter-spacing: 0.16em;
+  list-style: none;
+  text-transform: uppercase;
+}
+
+.identity-list li {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  gap: 8px;
+}
+
+.identity-list li:not(:last-child)::after {
+  content: "";
+  display: block;
+  width: 3px;
+  height: 3px;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.55;
+}
+
 .home-intro-block .hero-lede {
   max-width: 520px;
   margin: 0;
   color: var(--ink);
-  font-size: clamp(1.08rem, 1.3vw, 1.2rem);
+  font-size: clamp(1.1rem, 1.3vw, 1.3rem);
   letter-spacing: -0.01em;
-  line-height: 1.55;
+  line-height: 1.5;
 }
 
 .home-intro-block .hero-actions {
@@ -365,13 +403,15 @@ p {
     grid-template-columns: minmax(420px, 1fr) minmax(300px, 0.78fr);
     grid-template-areas:
       "name portrait"
+      "identity portrait"
       "intro portrait";
     column-gap: clamp(36px, 5vw, 58px);
     row-gap: 24px;
     align-items: start;
   }
 
-  .home-intro-block {
+  .home-intro-block,
+  .identity-list {
     max-width: 470px;
   }
 
@@ -647,6 +687,17 @@ p {
 .home-event-film .event-film-feature {
   max-width: 1180px;
   margin: 0 auto;
+}
+
+.home-event-film .button-paper {
+  border: 1px solid var(--paper-bright);
+  background: var(--paper-bright);
+  color: var(--ink);
+}
+
+.home-event-film .button-paper:hover {
+  border-color: var(--paper);
+  background: var(--paper);
 }
 
 .home-section-heading {
@@ -2410,8 +2461,9 @@ p {
     grid-template-columns: 1fr;
     grid-template-areas:
       "name"
-      "intro"
-      "portrait";
+      "portrait"
+      "identity"
+      "intro";
     gap: 30px;
     text-align: center;
   }
@@ -2728,9 +2780,8 @@ p {
 
   .home-name-block h1 {
     max-width: 100%;
-    font-size: clamp(2.5rem, 10.2vw, 4.4rem);
-    line-height: 0.96;
-    white-space: normal;
+    font-size: 16vw;
+    white-space: nowrap;
   }
 
   .content-tabs {

@@ -1,20 +1,21 @@
 ---
 const steps = [
   {
-    title: "Share your brief",
-    description: "Send your date, location, and what you need covered."
+    title: "Share your plans",
+    description: "Tell me your date, venue, and the moments or content you need.",
+    href: "/contact/"
   },
   {
-    title: "Agree scope and fee",
-    description: "We'll confirm the coverage, deliverables, and price before booking."
+    title: "Confirm your booking",
+    description: "Review the coverage, deliverables, fee, and delivery schedule before we book."
   },
   {
-    title: "The shoot",
-    description: "I'll work from the agreed brief and programme."
+    title: "On the day",
+    description: "I’ll photograph or film the agreed brief, with your programme and priorities in mind."
   },
   {
-    title: "Receive your work",
-    description: "Your photographs or video will be delivered on the agreed schedule."
+    title: "Your finished work",
+    description: "Receive the agreed photographs or video, ready for their intended use."
   }
 ];
 ---
@@ -25,11 +26,14 @@ const steps = [
   <ol>
     {steps.map((step) => (
       <li>
-        <h3>{step.title}</h3>
+        <h3>{step.href ? <a href={step.href}>{step.title}</a> : step.title}</h3>
         <p>{step.description}</p>
       </li>
     ))}
   </ol>
+  <div class="booking-process-cta">
+    <a class="button button-dark" href="/contact/">Enquire about a booking</a>
+  </div>
 </section>
 
 <style>
@@ -42,6 +46,7 @@ const steps = [
   .booking-process h2 {
     margin-bottom: clamp(30px, 4vw, 46px);
     text-align: center;
+    letter-spacing: 0;
   }
 
   .booking-process ol {
@@ -67,6 +72,24 @@ const steps = [
     display: inline;
     margin: 0 0 12px 6px;
     font-size: clamp(1rem, 1.4vw, 1.2rem);
+    letter-spacing: 0;
+  }
+
+  .booking-process h3 a {
+    color: inherit;
+    text-decoration-color: transparent;
+    text-underline-offset: 0.16em;
+    transition: text-decoration-color 160ms ease;
+  }
+
+  .booking-process h3 a:hover,
+  .booking-process h3 a:focus-visible {
+    text-decoration-color: currentColor;
+  }
+
+  .booking-process-cta {
+    margin-top: clamp(28px, 4vw, 44px);
+    text-align: center;
   }
 
   .booking-process li p {

@@ -1,6 +1,4 @@
 ---
-import { getWhatsAppUrl } from "@lib/enquiries";
-
 interface Props {
   variant: "photography" | "photoshoot" | "video";
 }
@@ -20,13 +18,13 @@ const copy = variant === "photoshoot"
       heading: "Need a highlight film for your event?",
       paragraph: "Tell me your date, venue, and what you want the finished video to cover."
     };
-const whatsappUrl = getWhatsAppUrl(variant === "video" ? "video" : "photography");
+const contactUrl = `/contact/?service=${variant === "video" ? "video" : "photography"}`;
 ---
 
 <section class="booking-prompt" aria-labelledby={`booking-prompt-${variant}-title`}>
   <h2 id={`booking-prompt-${variant}-title`}>{copy.heading}</h2>
   <p>{copy.paragraph}</p>
-  <a class="button button-dark" href={whatsappUrl}>Check availability</a>
+  <a class="button button-dark" href={contactUrl}>Check availability</a>
 </section>
 
 <style>
@@ -39,6 +37,7 @@ const whatsappUrl = getWhatsAppUrl(variant === "video" ? "video" : "photography"
 
   .booking-prompt h2 {
     margin-bottom: 18px;
+    letter-spacing: 0;
   }
 
   .booking-prompt p {

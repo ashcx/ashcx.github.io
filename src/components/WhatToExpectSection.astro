@@ -9,9 +9,10 @@ interface Props {
   rows: Row[];
   eyebrow?: string;
   heading?: string;
+  intro?: string;
 }
 
-const { id, rows, eyebrow = "What to expect", heading = "Good to know before you reach out." } = Astro.props;
+const { id, rows, eyebrow = "What to expect", heading = "Good to know before you reach out.", intro } = Astro.props;
 ---
 
 <section class="wtx-section" id={id} aria-labelledby={`${id}-title`}>
@@ -22,6 +23,7 @@ const { id, rows, eyebrow = "What to expect", heading = "Good to know before you
       <h2 id={`${id}-title`}>{heading}</h2>
     </div>
   </div>
+  {intro && <p class="wtx-intro">{intro}</p>}
   <dl class="wtx-rows">
     {
       rows.map((row) => (
@@ -33,3 +35,12 @@ const { id, rows, eyebrow = "What to expect", heading = "Good to know before you
     }
   </dl>
 </section>
+
+<style>
+  .wtx-intro {
+    max-width: 680px;
+    margin: 20px 0 24px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+</style>

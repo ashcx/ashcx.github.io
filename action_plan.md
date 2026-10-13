@@ -491,3 +491,20 @@ HR card-summary copy was amended by the primary assistant to avoid title repetit
 - Local verification scripts/screenshots and installed browser tooling are ignored development artifacts, not release files.
 
 Implementation PR: https://github.com/ashcx/ashcx.github.io/pull/7 — open for review; not merged or deployed. The chat attachment tool was invoked but did not return; the PR URL is available directly.
+
+## 13. Preview feedback revisions — 13 October 2026
+
+Scope: revise the existing implementation PR, without merging or deploying.
+
+- Restore the live homepage’s name-led hero, role list, and carousel layout. Keep the approved personal introduction; use Event photographer, Event videographer, and Social content creator as the three roles.
+- Replace the homepage video link with “View event films & coverage” and improve its contrast against the dark section.
+- Give the booking steps clearer descriptions, readable letter spacing, a linked first step, and an “Enquire about a booking” button. Booking remains an enquiry requiring availability/scope confirmation.
+- Route contextual booking prompts to Contact with the relevant service parameter, rather than directly to WhatsApp.
+- Use “Event video” consistently in navigation and visible labels.
+- Redesign the video page around the featured film and a compact editorial brief. Present the two additional films as individual click-to-play embeds in a separate section. Explain highlight films, interviews, and speech recordings instead of the previous long scope table.
+- Remove redundant testimonial CTAs from Home and Social media; improve the Social media “What to expect” introduction without changing rates or promised scope.
+- Fix the Contact portfolio cards’ layout and narrow-screen wrapping.
+- Add the user-approved ashchong138@gmail.com email option alongside WhatsApp. Contact form remains deferred; no provider or endpoint is configured.
+- Primary assistant supplies all new public copy; GPT-6 Luna Extra high agents implement the markup and styling.
+
+Revision verification: final production build passed with zero Astro errors, warnings, or hints. Browser checks passed for Home, Photography, Event video, Contact, and Social media at 360, 768, 1024, and 1440 pixels (20 route/viewport checks), including no horizontal overflow and no clipped portfolio-card content. Three click-to-play player integrations passed with external YouTube responses stubbed. Final Contact checks at 360 and 1440 pixels verified the email link, service-specific WhatsApp message, and removal of the overlapping floating WhatsApp control on Contact only. Desktop/mobile screenshots were inspected. Email-client delivery and real external YouTube playback are outside these local checks.
