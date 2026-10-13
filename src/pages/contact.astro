@@ -1,21 +1,34 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import TestimonialsSection from "@components/TestimonialsSection.astro";
-import { site } from "@lib/site";
+import { sections } from "@lib/site";
+import { getWhatsAppUrl } from "@lib/enquiries";
 ---
 
-<BaseLayout title="Contact" description="Contact Ash for event photography, social media content, and collaboration enquiries." active="contact">
+<BaseLayout title="Contact" description="Contact Ash for event photography, event video, and social media content enquiries in Singapore." active="contact">
   <section class="contact-page contact-page-intro" aria-labelledby="contact-title">
     <p class="eyebrow">Contact</p>
-    <h1 id="contact-title">Let's talk about your event.</h1>
-    <p>For event coverage, content work, or a collaboration you have in mind, WhatsApp is the fastest way to reach me.</p>
+    <h1 id="contact-title">Tell me about your project.</h1>
+    <p>Share your date, location, and what you need. Choose WhatsApp for a quick conversation, or email with your brief.</p>
 
-    <div class="contact-card-grid contact-card-grid-single">
-      <a class="contact-card" href={site.whatsappUrl}>
+    <div class="contact-card-grid">
+      <a
+        class="contact-card"
+        href={getWhatsAppUrl()}
+        data-contact-whatsapp
+        data-photography-href={getWhatsAppUrl("photography")}
+        data-video-href={getWhatsAppUrl("video")}
+      >
         <span class="meta-label">Contact me</span>
         <strong>Chat on WhatsApp</strong>
-        <small>Best for enquiries, briefs, or just checking availability. I typically reply within the day.</small>
+        <small>For a quick availability check or an initial conversation.</small>
         <span class="contact-link-label button button-whatsapp">Open WhatsApp</span>
+      </a>
+      <a class="contact-card contact-card-email" href="mailto:ashchong138@gmail.com?subject=Project%20enquiry">
+        <span class="meta-label">Email me</span>
+        <strong>ashchong138@gmail.com</strong>
+        <small>For project briefs, schedules, and detailed enquiries.</small>
+        <span class="contact-link-label button button-dark">Send an email</span>
       </a>
     </div>
 
@@ -27,7 +40,7 @@ import { site } from "@lib/site";
     <div class="content-section-rule" />
     <div class="contact-explore">
       <h2 class="contact-explore-subhead">Want to see the work first?</h2>
-      <p class="contact-explore-lead">Browse recent photography and social content.</p>
+      <p class="contact-explore-lead">Browse photography, event video, and social content.</p>
       <div class="contact-explore-grid">
         <a class="contact-explore-card contact-explore-card-photography" href="/photography/">
           <span class="contact-explore-card-copy">
@@ -36,6 +49,15 @@ import { site } from "@lib/site";
           </span>
           <span class="contact-explore-link">Explore photography</span>
         </a>
+        {sections.video && (
+          <a class="contact-explore-card contact-explore-card-video" href="/videography/">
+            <span class="contact-explore-card-copy">
+              <strong>Event video</strong>
+              <small>Highlight films, interviews, and speech recordings.</small>
+            </span>
+            <span class="contact-explore-link">Explore event video</span>
+          </a>
+        )}
         <a class="contact-explore-card contact-explore-card-social" href="/content/">
           <span class="contact-explore-card-copy">
             <strong>Social media</strong>
@@ -47,3 +69,124 @@ import { site } from "@lib/site";
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  const whatsappLink = document.querySelector<HTMLAnchorElement>("[data-contact-whatsapp]");
+  const requestedService = new URLSearchParams(window.location.search).get("service");
+
+  if (whatsappLink && requestedService === "photography" && whatsappLink.dataset.photographyHref) {
+    whatsappLink.href = whatsappLink.dataset.photographyHref;
+  } else if (whatsappLink && requestedService === "video" && whatsappLink.dataset.videoHref) {
+    whatsappLink.href = whatsappLink.dataset.videoHref;
+  }
+</script>
+
+<style>
+  :global(body .floating-contact-button) {
+    display: none;
+  }
+
+  .contact-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .contact-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
+    min-height: 260px;
+    text-align: left;
+  }
+
+  .contact-card strong {
+    font-size: clamp(1.4rem, 2vw, 1.75rem);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .contact-card small,
+  .contact-explore-card small {
+    margin-right: 0;
+    margin-left: 0;
+    text-align: left;
+  }
+
+  .contact-card small {
+    margin-bottom: 24px;
+  }
+
+  .contact-link-label {
+    max-width: 100%;
+    margin-top: auto;
+    justify-content: flex-start;
+    white-space: normal;
+  }
+
+  .contact-card-email strong {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    font-size: clamp(1rem, 2vw, 1.35rem);
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+  }
+
+  .contact-page h1,
+  .contact-explore-subhead {
+    letter-spacing: -0.01em;
+  }
+
+  .contact-explore-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .contact-explore-card {
+    display: grid;
+    height: auto;
+    min-width: 0;
+    min-height: 240px;
+    grid-template-rows: 1fr auto;
+    gap: 18px;
+    text-align: left;
+  }
+
+  .contact-explore-card-copy {
+    min-width: 0;
+    padding: 12px 0 0;
+  }
+
+  .contact-explore-card strong {
+    font-size: clamp(1.5rem, 2vw, 1.75rem);
+    letter-spacing: -0.01em;
+  }
+
+  .contact-explore-link {
+    min-width: 0;
+    justify-self: start;
+    justify-content: flex-start;
+    gap: 10px;
+    white-space: normal;
+  }
+
+  .contact-explore-card-video {
+    background:
+      linear-gradient(135deg, rgba(232, 226, 213, 0.58), transparent 58%),
+      var(--paper-bright);
+  }
+
+  @media (max-width: 1024px) {
+    .contact-explore-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 760px) {
+    .contact-card-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .contact-explore-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

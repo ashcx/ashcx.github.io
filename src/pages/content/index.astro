@@ -45,8 +45,13 @@ const pageCover = featuredCaseStudy?.data.coverImage || embedItems.find((item) =
     )
   }
 
-  <TestimonialsSection />
-  <WhatToExpectSection id="what-to-expect" rows={contentRows} />
+  <TestimonialsSection showCta={false} />
+  <WhatToExpectSection
+    id="what-to-expect"
+    rows={contentRows}
+    heading="Plan your next content shoot."
+    intro="Start with a single piece, plan a campaign, or build a regular content schedule. Here’s what to expect before we discuss your brief."
+  />
 
   <ContactSection />
 
@@ -78,3 +83,9 @@ const pageCover = featuredCaseStudy?.data.coverImage || embedItems.find((item) =
     })();
   </script>
 </BaseLayout>
+
+<style>
+  :global(#what-to-expect-title) {
+    letter-spacing: -0.01em;
+  }
+</style>

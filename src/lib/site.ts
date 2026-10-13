@@ -50,6 +50,7 @@ export const pricing = {
 // visited directly (soft-hide), so no routing changes are needed.
 export const sections = {
   photography: true,
+  video: true,
   content: true, // Social media page
   caseStudy: false, // Featured case-study block inside /content/ — no content written yet, kept as a reserved toggle
   data: false
@@ -57,6 +58,7 @@ export const sections = {
 
 const allNavItems = [
   { id: "photography", href: "/photography/", label: "Photography" },
+  { id: "video", href: "/videography/", label: "Event video" },
   { id: "content", href: "/content/", label: "Social media" },
   { id: "data", href: "/data/", label: "Data" },
   { id: "contact", href: "/contact/", label: "Contact" }

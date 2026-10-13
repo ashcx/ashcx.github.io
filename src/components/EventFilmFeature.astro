@@ -33,7 +33,7 @@ const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&r
       <span>{title}</span>
       <span>{titleLineTwo}</span>
     </h2>
-    <p class="event-film-description">{description}</p>
+    {description && <p class="event-film-description">{description}</p>}
   </div>
 
   <div class="event-film-media">
