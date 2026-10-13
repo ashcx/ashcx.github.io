@@ -90,6 +90,38 @@ import { getWhatsAppUrl } from "@lib/enquiries";
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .contact-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 0;
+    min-height: 260px;
+    text-align: center;
+  }
+
+  .contact-card strong {
+    font-size: clamp(1.4rem, 2vw, 1.75rem);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .contact-card small,
+  .contact-explore-card small {
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .contact-card small {
+    margin-bottom: 24px;
+  }
+
+  .contact-link-label {
+    max-width: 100%;
+    margin-top: auto;
+    justify-content: center;
+    white-space: normal;
+  }
+
   .contact-card-email strong {
     max-width: 100%;
     overflow-wrap: anywhere;
@@ -114,6 +146,7 @@ import { getWhatsAppUrl } from "@lib/enquiries";
     min-height: 240px;
     grid-template-rows: 1fr auto;
     gap: 18px;
+    text-align: center;
   }
 
   .contact-explore-card-copy {
@@ -122,11 +155,14 @@ import { getWhatsAppUrl } from "@lib/enquiries";
   }
 
   .contact-explore-card strong {
+    font-size: clamp(1.5rem, 2vw, 1.75rem);
     letter-spacing: -0.01em;
   }
 
   .contact-explore-link {
     min-width: 0;
+    justify-self: center;
+    justify-content: center;
     gap: 10px;
     white-space: normal;
   }

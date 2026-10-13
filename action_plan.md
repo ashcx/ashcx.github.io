@@ -508,3 +508,14 @@ Scope: revise the existing implementation PR, without merging or deploying.
 - Primary assistant supplies all new public copy; GPT-6 Luna Extra high agents implement the markup and styling.
 
 Revision verification: final production build passed with zero Astro errors, warnings, or hints. Browser checks passed for Home, Photography, Event video, Contact, and Social media at 360, 768, 1024, and 1440 pixels (20 route/viewport checks), including no horizontal overflow and no clipped portfolio-card content. Three click-to-play player integrations passed with external YouTube responses stubbed. Final Contact checks at 360 and 1440 pixels verified the email link, service-specific WhatsApp message, and removal of the overlapping floating WhatsApp control on Contact only. Desktop/mobile screenshots were inspected. Email-client delivery and real external YouTube playback are outside these local checks.
+
+## 14. Centered presentation and loaded-player repair — 13 October 2026
+
+- User’s screenshots exposed a missed post-click iframe sizing defect: runtime-created iframe elements do not receive Astro’s scoped style attribute. Apply sizing via `.video-film-media :global(iframe)` so loaded players fill the existing responsive container.
+- Center Event video hero, brief, film titles/descriptions, service descriptions, and booking steps. Remove the planning-note heading and center the retained paragraph in a bounded text column.
+- Replace visible “Check availability” prompts with “Discuss your project”; preserve Contact routes and service parameters.
+- Center shared marketing copy, gallery cards, testimonials, Social media expectation copy, and Contact card content/actions without restructuring the restored homepage hero.
+- Refine Contact heading sizes and equal-height button alignment after visual inspection.
+- Model preference supersedes the earlier implementation choice: all agents for this revision use GPT-6.1 Sol at medium effort. Primary assistant retains responsibility for public copy.
+
+Verification: production build/validation passed with zero errors, warnings, or hints. Fifteen browser route/viewport checks passed across Home, Photography, Event video, Social media, and Contact at 390, 768, and 1440 pixels, with centered-target checks, no page errors, and no horizontal overflow. Post-click iframe bounds fill the player containers at every tested width. Stubbed player geometry checks were supplemented by loading and visually inspecting both real YouTube videos playing at desktop size. Desktop/mobile screenshots and focused hero, expectations, Contact, and film sections were reviewed. Existing user `.gitignore` changes remain excluded.

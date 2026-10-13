@@ -378,10 +378,11 @@ p {
   font-size: clamp(1.1rem, 1.3vw, 1.3rem);
   letter-spacing: -0.01em;
   line-height: 1.5;
+  text-align: center;
 }
 
 .home-intro-block .hero-actions {
-  justify-content: flex-start;
+  justify-content: center;
 }
 
 .home-portrait-card {
@@ -844,7 +845,7 @@ p {
   display: flex;
   flex-direction: column;
   padding: clamp(22px, 3vw, 34px);
-  text-align: left;
+  text-align: center;
 }
 
 .work-card strong {
@@ -862,6 +863,7 @@ p {
   margin: auto 0 0;
   padding-top: clamp(16px, 1.35vw, 22px);
   font-size: 1.08rem;
+  text-align: center;
 }
 
 .work-card .card-summary {
@@ -1105,6 +1107,7 @@ p {
 
 .data-feature-card p:not(.eyebrow) {
   color: rgba(255, 250, 241, 0.68);
+  text-align: center;
 }
 
 .data-feature-card h3 {
@@ -1490,6 +1493,7 @@ p {
 .content-embed-text p {
   color: var(--muted);
   font-size: clamp(1.05rem, 1.55vw, 1.2rem);
+  text-align: center;
 }
 
 .content-embed-text p:last-of-type {
@@ -1595,6 +1599,7 @@ p {
   color: var(--ink);
   font-size: 1.12rem;
   line-height: 1.68;
+  text-align: center;
 }
 
 .testimonial-quote mark {
@@ -1607,6 +1612,8 @@ p {
   display: flex;
   align-items: center;
   min-height: 54px; 
+  justify-content: center;
+  text-align: center;
 }
 
 .testimonial-person strong {
@@ -1683,6 +1690,7 @@ p {
   color: var(--ink);
   font-size: 1rem;
   line-height: 1.6;
+  text-align: center;
 }
 
 .case-study-grid {
@@ -1706,6 +1714,7 @@ p {
 
 .case-study-copy-window p {
   font-size: 1.08rem;
+  text-align: center;
 }
 
 .case-study-copy-window .button {
@@ -1847,6 +1856,7 @@ p {
   max-width: 640px;
   color: rgba(255, 250, 241, 0.72);
   font-size: 1.1rem;
+  text-align: center;
 }
 
 .metrics {
@@ -1940,6 +1950,7 @@ p {
 
 .project-list-card p:not(.eyebrow) {
   max-width: 560px;
+  text-align: center;
 }
 
 .detail-body {
@@ -2121,6 +2132,7 @@ p {
   color: var(--muted);
   font-size: 0.98rem;
   line-height: 1.45;
+  text-align: center;
 }
 
 .contact-explore-link {
@@ -2219,6 +2231,7 @@ p {
   margin-top: 18px;
   color: var(--muted);
   font-size: 1rem;
+  text-align: center;
 }
 
 .contact-link-label {
