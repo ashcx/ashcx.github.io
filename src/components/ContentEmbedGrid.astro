@@ -1,6 +1,7 @@
 ---
 import type { ContentWorkEntry } from "@lib/content";
 import { displayTitle } from "@lib/content";
+import SocialMediaPlayer from "./SocialMediaPlayer.astro";
 import { render } from "astro:content";
 
 interface Props {
@@ -61,21 +62,7 @@ const platformLabels = {
               hidden={defaultCategory !== "all" && normalizedCategory(item.data.socialCategory) !== defaultCategory}
             >
               <div class="content-embed-window">
-                {
-                  item.data.embedHtml ? (
-                    <div class="native-embed" set:html={item.data.embedHtml} />
-                  ) : item.data.coverImage ? (
-                    <a href={item.data.externalUrl || "#"} target="_blank" rel="noreferrer">
-                      <img src={item.data.coverImage} alt={title} loading="lazy" />
-                    </a>
-                  ) : item.data.externalUrl ? (
-                    <a class="content-direct-window" href={item.data.externalUrl} target="_blank" rel="noreferrer">
-                      Open {platformLabels[item.data.platform]} post
-                    </a>
-                  ) : (
-                    ""
-                  )
-                }
+                <SocialMediaPlayer item={item} title={title} />
               </div>
               <div class="content-embed-text">
                 <h3>{title}</h3>

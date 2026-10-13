@@ -3,6 +3,7 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import BookingProcess from "@components/BookingProcess.astro";
 import BookingPrompt from "@components/BookingPrompt.astro";
 import EventFilmFeature from "@components/EventFilmFeature.astro";
+import ProgressiveList from "@components/ProgressiveList.astro";
 import { featuredEventFilm } from "@lib/site";
 
 const eventFilms = [
@@ -46,6 +47,7 @@ const eventFilms = [
   <section class="video-other-work" aria-labelledby="video-other-work-title">
     <div class="video-other-work-inner">
       <h2 id="video-other-work-title">More event films</h2>
+      <ProgressiveList id="event-film-list" initialCount={4}>
       <div class="video-film-grid">
         {eventFilms.map((film) => (
           <article class="video-film-card" aria-labelledby={`film-${film.id}-title`}>
@@ -67,6 +69,7 @@ const eventFilms = [
           </article>
         ))}
       </div>
+      </ProgressiveList>
     </div>
   </section>
 
@@ -233,7 +236,8 @@ const eventFilms = [
   .video-film-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: clamp(24px, 4vw, 54px);
+    column-gap: clamp(24px, 4vw, 54px);
+    row-gap: clamp(48px, 6vw, 80px);
   }
 
   .video-film-card {
@@ -408,7 +412,7 @@ const eventFilms = [
   @media (max-width: 700px) {
     .video-film-grid {
       grid-template-columns: minmax(0, 1fr);
-      gap: 34px;
+      gap: 56px;
     }
 
     .video-service-grid {

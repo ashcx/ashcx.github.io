@@ -1,5 +1,6 @@
 ---
 import type { ContentWorkEntry } from "@lib/content";
+import SocialMediaPlayer from "./SocialMediaPlayer.astro";
 import { displayTitle } from "@lib/content";
 
 interface Props {
@@ -18,11 +19,6 @@ type SelectedItem = {
   item: ContentWorkEntry;
 };
 
-const platformLabels: Record<ContentWorkEntry["data"]["platform"], string> = {
-  instagram: "Instagram",
-  tiktok: "TikTok",
-  linkedin: "LinkedIn"
-};
 
 const selectedItems: SelectedItem[] = categories
   .map((category) => {
@@ -113,22 +109,9 @@ function extractAiSummary(body: string) {
             return (
               <article class="home-social-card">
                 <span class="meta-label">{category.label}</span>
-                <div class={`home-social-player home-social-player-${item.data.platform}`}>
-                  {
-                    item.data.embedHtml ? (
-                      <div class="home-social-embed" set:html={item.data.embedHtml} />
-                    ) : item.data.coverImage ? (
-                      <a href={item.data.externalUrl || "/content/"} target="_blank" rel="noreferrer">
-                        <img src={item.data.coverImage} alt={title} loading="lazy" />
-                      </a>
-                    ) : item.data.externalUrl ? (
-                      <a class="home-social-direct-window" href={item.data.externalUrl} target="_blank" rel="noreferrer">
-                        Open {platformLabels[item.data.platform]} post
-                      </a>
-                    ) : (
-                      <div class="home-social-direct-window">Add an embed or preview image</div>
-                    )
-                  }
+                <div class={`home-social-player home-social-player-${item.data.platform}`}
+                  style={item.data.playback === "local" ? `aspect-ratio: ${item.data.videoAspectRatio || 9 / 16}` : undefined}>
+                  <SocialMediaPlayer item={item} title={title} variant="home" />
                 </div>
                 <div class="home-social-copy">
                   <h3>{title}</h3>
@@ -145,6 +128,11 @@ function extractAiSummary(body: string) {
                       </span>
                     ))}
                   </div>
+                  {item.data.playback === "local" && item.data.externalUrl && (
+                    <a class="content-direct-link" href={item.data.externalUrl} target="_blank" rel="noreferrer">
+                      Open {item.data.platform === "tiktok" ? "TikTok" : item.data.platform === "instagram" ? "Instagram" : "LinkedIn"} post
+                    </a>
+                  )}
                   <a class="home-social-more" href={url}>
                     <span aria-hidden="true">+</span>
                     {category.moreLabel}

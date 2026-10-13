@@ -206,6 +206,18 @@ async function validateContentWork() {
     if (item.data.platform && !allowedContentPlatforms.includes(String(item.data.platform))) {
       warn(`Content item "${item.file}" has invalid platform; instagram fallback will be used.`);
     }
+    if (item.data.playback && !["embed", "local"].includes(item.data.playback)) {
+      fail(`Content item "${item.file}" has invalid playback; use embed or local.`);
+    }
+    if (item.data.playback === "local") {
+      if (!item.data.videoSrc?.startsWith("/videos/") || !(await existsPublic(item.data.videoSrc))) {
+        fail(`Content item "${item.file}" needs an existing local videoSrc under /videos/.`);
+      }
+      if (!item.data.coverImage || !(await existsPublic(item.data.coverImage))) {
+        fail(`Content item "${item.file}" needs an existing coverImage for local playback.`);
+      }
+      if (!item.data.externalUrl) fail(`Content item "${item.file}" needs an externalUrl to its original post.`);
+    }
     const socialCategory = String(item.data.socialCategory || "");
     if (socialCategory === "adult-education") {
       warn(`Content item "${item.file}" uses legacy socialCategory "adult-education"; use "corporate" instead.`);

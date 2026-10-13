@@ -1,0 +1,110 @@
+---
+import type { ContentWorkEntry } from "@lib/content";
+interface Props {
+  item: ContentWorkEntry;
+  title: string;
+  variant?: "home" | "content";
+}
+const { item, title, variant = "content" } = Astro.props;
+const { playback, videoSrc, coverImage, videoAspectRatio, embedHtml, externalUrl, platform } = item.data;
+const platformLabel = { instagram: "Instagram", tiktok: "TikTok", linkedin: "LinkedIn" }[platform];
+---
+
+{playback === "local" && videoSrc && coverImage ? (
+  <div class="local-social-video" data-local-social-video style={`--video-ratio: ${videoAspectRatio || 9 / 16}`}>
+    <video
+      src={videoSrc}
+      poster={coverImage}
+      preload="none"
+      playsinline
+      disablepictureinpicture
+      disableRemotePlayback
+      controlslist="nofullscreen nodownload noremoteplayback"
+      aria-label={title}
+    ></video>
+    <button type="button" class="local-video-toggle" aria-label={`Play ${title}`} aria-pressed="false" data-title={title}>
+      <svg class="local-video-play" width="80" height="80" viewBox="0 0 80 80" aria-hidden="true">
+        <path d="M25 12 Q21 10 21 16 V64 Q21 70 26 67 L65 44 Q71 40 65 36 Z" fill="white" />
+      </svg>
+      <svg class="local-video-pause" width="64" height="64" viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M18 12H28V52H18ZM36 12H46V52H36Z" fill="white" />
+      </svg>
+    </button>
+    <span class="local-video-status" role="status"></span>
+  </div>
+) : embedHtml ? (
+  <div class={variant === "home" ? "home-social-embed" : "native-embed"} set:html={embedHtml} />
+) : coverImage && externalUrl ? (
+  <a href={externalUrl} target="_blank" rel="noreferrer"><img src={coverImage} alt={title} loading="lazy" /></a>
+) : externalUrl ? (
+  <a class={variant === "home" ? "home-social-direct-window" : "content-direct-window"} href={externalUrl} target="_blank" rel="noreferrer">Open {platformLabel} post</a>
+) : null}
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-local-social-video]").forEach((root) => {
+    const video = root.querySelector("video")!;
+    const button = root.querySelector("button")!;
+    const status = root.querySelector<HTMLElement>("[role=status]")!;
+    const update = () => {
+      const playing = !video.paused && !video.ended;
+      root.classList.toggle("is-playing", playing);
+      button.setAttribute("aria-label", `${playing ? "Pause" : "Play"} ${button.dataset.title}`);
+      button.setAttribute("aria-pressed", String(playing));
+    };
+    button.addEventListener("click", async () => {
+      if (!video.paused) { video.pause(); return; }
+      status.textContent = "";
+      document.querySelectorAll<HTMLVideoElement>("[data-local-social-video] video").forEach((other) => {
+        if (other !== video) other.pause();
+      });
+      try { await video.play(); }
+      catch { status.textContent = "Unable to play. Please open the original post below."; }
+    });
+    ["play", "pause", "ended"].forEach((event) => video.addEventListener(event, update));
+    video.addEventListener("error", () => {
+      status.textContent = "Unable to play. Please open the original post below.";
+      update();
+    });
+    // Pause clips when their card is filtered out or scrolled off screen.
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(([entry]) => {
+        if (!entry.isIntersecting) video.pause();
+      }).observe(root);
+    }
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) video.pause();
+    });
+  });
+</script>
+
+<style>
+  .local-social-video {
+    position: relative;
+    width: min(100%, 390px);
+    aspect-ratio: var(--video-ratio);
+    margin-inline: auto;
+    overflow: hidden;
+    border-radius: 24px;
+    background: #111;
+  }
+  video { display: block; width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
+  .local-video-toggle {
+    position: absolute; inset: 0; display: grid; place-items: center;
+    width: 100%; height: 100%; padding: 0; border: 0; border-radius: inherit;
+    background: rgb(0 0 0 / 10%); cursor: pointer; touch-action: manipulation;
+  }
+  svg { filter: drop-shadow(0 2px 10px rgb(0 0 0 / 60%)); }
+  .local-video-pause { display: none; }
+  .is-playing .local-video-toggle { background: transparent; }
+  .is-playing .local-video-play { display: none; }
+  .is-playing .local-video-pause { display: block; opacity: 0; }
+  .is-playing .local-video-toggle:hover .local-video-pause,
+  .is-playing .local-video-toggle:focus-visible .local-video-pause { opacity: 1; }
+  .local-video-toggle:focus-visible { outline: 3px solid white; outline-offset: -6px; }
+  .local-video-status:not(:empty) {
+    position: absolute; bottom: 12px; left: 12px; right: 12px;
+    padding: 12px; color: white; background: rgb(0 0 0 / 80%); pointer-events: none;
+  }
+  :global(.content-embed-window:has(.local-social-video)) { min-height: 0; }
+  :global(.home-social-player) .local-social-video { width: 100%; border-radius: inherit; }
+</style>

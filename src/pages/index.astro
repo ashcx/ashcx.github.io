@@ -198,10 +198,7 @@ const ogImage = carouselSlides[0]?.portrait || pageCover;
 
   {sections.video && (
     <section class="home-section home-event-film" aria-labelledby="home-event-film-title">
-      <EventFilmFeature {...featuredEventFilm} id="home-event-film-title" loading="lazy" />
-      <div class="home-section-footer">
-        <a class="button button-paper" href="/videography/">Explore event video</a>
-      </div>
+      <EventFilmFeature {...featuredEventFilm} id="home-event-film-title" loading="lazy" exploreUrl="/videography/" />
     </section>
   )}
 
@@ -217,7 +214,12 @@ const ogImage = carouselSlides[0]?.portrait || pageCover;
       if (roots.length === 0) return;
 
       const load = () => {
-        ["https://www.instagram.com/embed.js", "https://www.tiktok.com/embed.js"].forEach((src) => {
+        [
+          [".instagram-media", "https://www.instagram.com/embed.js"],
+          [".tiktok-embed", "https://www.tiktok.com/embed.js"]
+        ].forEach(([selector, src]) => {
+          if (!roots.some((root) => root.querySelector(selector))) return;
+          if (document.querySelector(`script[src="${src}"]`)) return;
           const script = document.createElement("script");
           script.src = src;
           script.async = true;

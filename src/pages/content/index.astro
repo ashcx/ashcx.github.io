@@ -65,7 +65,12 @@ const pageCover = featuredCaseStudy?.data.coverImage || embedItems.find((item) =
       if (roots.length === 0) return;
 
       const load = () => {
-        ["https://www.instagram.com/embed.js", "https://www.tiktok.com/embed.js"].forEach((src) => {
+        [
+          [".instagram-media", "https://www.instagram.com/embed.js"],
+          [".tiktok-embed", "https://www.tiktok.com/embed.js"]
+        ].forEach(([selector, src]) => {
+          if (!roots.some((root) => root.querySelector(selector))) return;
+          if (document.querySelector(`script[src="${src}"]`)) return;
           const script = document.createElement("script");
           script.src = src;
           script.async = true;

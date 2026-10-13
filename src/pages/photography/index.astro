@@ -5,6 +5,7 @@ import TestimonialsSection from "@components/TestimonialsSection.astro";
 import WhatToExpectSection from "@components/WhatToExpectSection.astro";
 import BookingProcess from "@components/BookingProcess.astro";
 import WorkGrid from "@components/WorkGrid.astro";
+import ProgressiveList from "@components/ProgressiveList.astro";
 import { photographyTypeName, published } from "@lib/content";
 import { entrySlug } from "@lib/content";
 import { getGalleryCover } from "@lib/gallery-images";
@@ -95,14 +96,14 @@ const photographySections = [
           data-photography-panel={section.id}
           hidden={section.id !== defaultPhotographyType}
         >
-          {section.items.length > 0 ? <WorkGrid items={section.items} /> : <p class="empty-gallery-note">No published galleries in this section yet.</p>}
+          {section.items.length > 0 ? <ProgressiveList id={`photography-items-${section.id}`} initialCount={10}><WorkGrid items={section.items} /></ProgressiveList> : <p class="empty-gallery-note">No published galleries in this section yet.</p>}
         </section>
       ))
     }
   </section>
 
   <TestimonialsSection />
-  <WhatToExpectSection id="what-to-expect" rows={photographyRows} heading="Pricing and delivery" note="Prices in SGD." />
+  <WhatToExpectSection id="what-to-expect" rows={photographyRows} heading="Pricing and delivery" />
   <BookingProcess />
 
   <script>

@@ -9,6 +9,7 @@ interface Props {
   description: string;
   id?: string;
   loading?: "eager" | "lazy";
+  exploreUrl?: string;
 }
 
 const {
@@ -20,7 +21,8 @@ const {
   titleLineTwo,
   description,
   id = "event-film-title",
-  loading = "lazy"
+  loading = "lazy",
+  exploreUrl
 } = Astro.props;
 
 const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
@@ -55,6 +57,7 @@ const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&r
     <a class="event-film-link" href={linkedinUrl} target="_blank" rel="noreferrer">
       View LinkedIn post <span aria-hidden="true">↗</span>
     </a>
+    {exploreUrl && <a class="event-film-link" href={exploreUrl}>Explore event video <span aria-hidden="true">↗</span></a>}
   </div>
 </article>
 
@@ -128,6 +131,8 @@ const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&r
 
   .event-film-footer {
     display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
     justify-content: center;
     margin-top: clamp(34px, 4vw, 48px);
   }

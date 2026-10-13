@@ -1,0 +1,55 @@
+---
+interface Props {
+  id: string;
+  initialCount: number;
+  increment?: number;
+}
+
+const { id, initialCount, increment = 8 } = Astro.props;
+---
+
+<div data-progressive-list data-initial-count={initialCount} data-increment={increment}>
+  <div id={id} data-progressive-items><slot /></div>
+  <div class="progressive-actions">
+    <button class="button button-dark" type="button" data-progressive-more aria-controls={id} hidden>View more</button>
+    <span class="progressive-status" role="status" aria-live="polite" data-progressive-status></span>
+  </div>
+</div>
+
+<script>
+  import { initProgressiveList } from "@lib/progressive-list";
+
+  document.querySelectorAll<HTMLElement>("[data-progressive-list]").forEach(initProgressiveList);
+</script>
+
+<style>
+  [data-progressive-list] :global([data-progressive-item][hidden]),
+  [data-progressive-more][hidden] {
+    display: none !important;
+  }
+
+  .progressive-actions {
+    text-align: center;
+    overflow-anchor: none;
+  }
+
+  [data-progressive-more]:not([hidden]) {
+    margin-top: clamp(32px, 4vw, 48px);
+    cursor: pointer;
+    border: 1px solid var(--charcoal);
+  }
+
+  [data-progressive-more]:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 4px;
+  }
+
+  .progressive-status {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+</style>
