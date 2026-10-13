@@ -199,7 +199,10 @@ async function getExistingCoverImageIndex(folderName) {
 }
 
 async function promptForCoverImageIndex(folderPath, defaultIndex) {
-  const imageCount = (await listSourceImages(folderPath)).length;
+  const images = await listSourceImages(folderPath);
+  const imageCount = images.length;
+  console.log("Cover images are numbered in natural filename order:");
+  images.forEach((name, index) => console.log(`  ${index + 1}: ${name}`));
   const range = imageCount ? `1-${imageCount}` : "1 or higher";
   const defaultCoverIndex =
     Number.isInteger(defaultIndex) && defaultIndex >= 1 && (!imageCount || defaultIndex <= imageCount)

@@ -116,3 +116,28 @@ then deploys `dist/` to GitHub Pages.
 The repository should contain the generated site content and optimized images
 needed by the build. Local-only files such as `inbox/`, `.env`, `node_modules/`,
 `.astro/`, and `dist/` should not be committed.
+
+### Social video playback
+
+Social cards on the homepage and `/content/` share `SocialMediaPlayer.astro`.
+Choose the original network with `platform: instagram`, `tiktok`, or `linkedin`.
+Choose playback independently:
+
+- `playback: embed` (default): use the network's `embedHtml`; `externalUrl` links to the original post. Existing entries need no changes.
+- `playback: local`: use `videoSrc`, `coverImage`, and `videoAspectRatio`; retain `platform` and `externalUrl` for the “Open TikTok/Instagram post” link. Existing `embedHtml` can stay for switching back.
+
+```yaml
+platform: tiktok
+playback: local
+videoSrc: /videos/social/example.mp4
+coverImage: /images/social/example.webp
+videoAspectRatio: 0.5625 # display width / height (9:16); use 1 for a square
+externalUrl: https://www.tiktok.com/@account/video/123
+```
+
+Place web-ready H.264/AAC MP4s in `public/videos/social/` and poster frames in
+`public/images/social/`. Local clips use `preload="none"`, inline playback, and
+one accessible play/pause button. Native controls, fullscreen, picture-in-picture,
+and remote playback are not exposed by the player. The original-post link remains
+available for viewing on the social platform. Browsers or operating systems may
+still offer their own media actions outside the page UI.

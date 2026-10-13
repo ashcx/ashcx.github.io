@@ -1,5 +1,6 @@
 ---
 import type { ContentWorkEntry } from "@lib/content";
+import SocialMediaPlayer from "./SocialMediaPlayer.astro";
 import { displayTitle } from "@lib/content";
 
 interface Props {
@@ -8,9 +9,9 @@ interface Props {
 
 const { items } = Astro.props;
 const categories = [
-  { id: "corporate", label: "Corporate" },
-  { id: "lifestyle", label: "Lifestyle" },
-  { id: "real-estate", label: "Real estate" }
+  { id: "corporate", label: "Corporate", moreLabel: "More corporate work" },
+  { id: "lifestyle", label: "Lifestyle", moreLabel: "More lifestyle work" },
+  { id: "real-estate", label: "Real estate", moreLabel: "More property videos" }
 ] as const;
 type Category = (typeof categories)[number];
 type SelectedItem = {
@@ -18,11 +19,6 @@ type SelectedItem = {
   item: ContentWorkEntry;
 };
 
-const platformLabels: Record<ContentWorkEntry["data"]["platform"], string> = {
-  instagram: "Instagram",
-  tiktok: "TikTok",
-  linkedin: "LinkedIn"
-};
 
 const selectedItems: SelectedItem[] = categories
   .map((category) => {
@@ -94,14 +90,14 @@ function extractAiSummary(body: string) {
   selectedItems.length > 0 && (
     <section class="home-section home-social-work" aria-labelledby="home-social-title" data-social-embeds>
       <div class="home-section-heading">
-        <p class="eyebrow">Social media reels</p>
+        <p class="eyebrow">Social media</p>
         <div>
-          <h2 id="home-social-title">Content that works as hard as you do.</h2>
+          <h2 id="home-social-title">Short videos for Instagram and TikTok</h2>
           <p>
-            Instagram and TikTok-ready reels that help businesses, entrepreneurs, and brands attract attention, build trust, and convert viewers into customers.
+            I produce, film, and edit reels for Instagram and TikTok, from General Assembly’s career education videos to creator-led retail features and property walkthroughs.
           </p>
         </div>
-        <a class="button button-dark" href="/content/">Explore social media content</a>
+        <a class="button button-dark" href="/content/">Explore social media</a>
       </div>
 
       <div class="home-social-grid">
@@ -113,22 +109,9 @@ function extractAiSummary(body: string) {
             return (
               <article class="home-social-card">
                 <span class="meta-label">{category.label}</span>
-                <div class={`home-social-player home-social-player-${item.data.platform}`}>
-                  {
-                    item.data.embedHtml ? (
-                      <div class="home-social-embed" set:html={item.data.embedHtml} />
-                    ) : item.data.coverImage ? (
-                      <a href={item.data.externalUrl || "/content/"} target="_blank" rel="noreferrer">
-                        <img src={item.data.coverImage} alt={title} loading="lazy" />
-                      </a>
-                    ) : item.data.externalUrl ? (
-                      <a class="home-social-direct-window" href={item.data.externalUrl} target="_blank" rel="noreferrer">
-                        Open {platformLabels[item.data.platform]} post
-                      </a>
-                    ) : (
-                      <div class="home-social-direct-window">Add an embed or preview image</div>
-                    )
-                  }
+                <div class={`home-social-player home-social-player-${item.data.platform}`}
+                  style={item.data.playback === "local" ? `aspect-ratio: ${item.data.videoAspectRatio || 9 / 16}` : undefined}>
+                  <SocialMediaPlayer item={item} title={title} variant="home" />
                 </div>
                 <div class="home-social-copy">
                   <h3>{title}</h3>
@@ -145,9 +128,14 @@ function extractAiSummary(body: string) {
                       </span>
                     ))}
                   </div>
+                  {item.data.playback === "local" && item.data.externalUrl && (
+                    <a class="content-direct-link" href={item.data.externalUrl} target="_blank" rel="noreferrer">
+                      Open {item.data.platform === "tiktok" ? "TikTok" : item.data.platform === "instagram" ? "Instagram" : "LinkedIn"} post
+                    </a>
+                  )}
                   <a class="home-social-more" href={url}>
                     <span aria-hidden="true">+</span>
-                    View more
+                    {category.moreLabel}
                   </a>
                 </div>
               </article>

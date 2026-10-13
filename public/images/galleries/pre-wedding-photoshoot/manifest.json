@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-01T16:50:06.597Z",
+  "generatedAt": "2026-10-13T10:55:46.271Z",
   "sourceFiles": [
     {
       "name": "_1010392-Enhanced-NR.jpg",
@@ -9,7 +9,8 @@
       "outputLarge": "image-001-large.webp",
       "width": 2800,
       "height": 2100,
-      "aspectRatio": 1.3333
+      "aspectRatio": 1.3333,
+      "outputMedium": "image-001-medium.webp"
     },
     {
       "name": "_1010409-Enhanced-NR.jpg",
@@ -149,8 +150,7 @@
       "outputLarge": "image-015-large.webp",
       "width": 2800,
       "height": 2100,
-      "aspectRatio": 1.3333,
-      "outputMedium": "image-015-medium.webp"
+      "aspectRatio": 1.3333
     },
     {
       "name": "_1010489-Enhanced-NR.jpg",

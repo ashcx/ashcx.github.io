@@ -3,18 +3,23 @@ import { getCollection } from "astro:content";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import TestimonialsSection from "@components/TestimonialsSection.astro";
 import WhatToExpectSection from "@components/WhatToExpectSection.astro";
+import BookingProcess from "@components/BookingProcess.astro";
 import WorkGrid from "@components/WorkGrid.astro";
+import ProgressiveList from "@components/ProgressiveList.astro";
 import { photographyTypeName, published } from "@lib/content";
 import { entrySlug } from "@lib/content";
 import { getGalleryCover } from "@lib/gallery-images";
 import { rankPhotographyForAll, rankPhotographyForCategory } from "@lib/content";
+import { getBriefUrl } from "@lib/enquiries";
 import { pricing } from "@lib/site";
 
 const photographyRows = [
-  { label: "Pricing", value: `Coverage starts from $${pricing.photography.halfDay} for half-day events (2-3hr), $${pricing.photography.fullDay} for full-day.` },
-  { label: "Deliverables", value: "Every gallery includes 60-100 edited images and a private online gallery to share or download from." },
-  { label: "Turnaround", value: "Edited galleries are delivered within 5 business days." },
-  { label: "Booking", value: "Weekend and peak-season dates book out fast — reach out at least 2 weeks ahead if you can." },
+  { label: "Half-day coverage", value: `From $${pricing.photography.halfDay.toLocaleString("en-SG")}.` },
+  { label: "Full-day coverage", value: `From $${pricing.photography.fullDay.toLocaleString("en-SG")}.` },
+  { label: "Your quote", value: "Pricing depends on the coverage duration and requirements. We’ll agree the hours and deliverables before booking." },
+  { label: "Photographs", value: "The number of edited photographs varies with the length and programme of the event. We’ll discuss the expected delivery when agreeing your coverage." },
+  { label: "Turnaround", value: "Event galleries are delivered within 3–5 business days. Delivery within 1 business day or on the same day may be available by arrangement. Let’s discuss what you need before booking." },
+  { label: "Booking ahead", value: "If you can, enquire at least 2 weeks ahead, especially for weekends and peak-season dates." },
   { label: "Usage", value: "Images are yours to use for marketing, recaps, and future promotion." }
 ];
 
@@ -54,12 +59,12 @@ const photographySections = [
 ];
 ---
 
-<BaseLayout title="Photography" description="Corporate and private event photography in Singapore, covering conferences, workshops, celebrations, and everything in between." active="photography" image={pageCover}>
+<BaseLayout title="Event Photographer Singapore | Ash Chong" description="Corporate and private event photography in Singapore, from conferences and networking events to celebrations. View galleries and discuss coverage with Ash Chong." active="photography" image={pageCover} fullTitle>
   <section class="page-hero photography-page-hero" aria-labelledby="photography-title">
     <p class="eyebrow">Photography</p>
-    <h1 id="photography-title">Your event, captured the way it deserves.</h1>
-    <p>From large conferences to intimate celebrations, I bring the same care and professional eye to every shoot.</p>
-    <p>Corporate and private events are my focus. I also take on creative portrait and celebration work when the story's a good one.</p>
+    <h1 id="photography-title">Events, celebrations, and portraits</h1>
+    <p>I photograph conferences, company gatherings, weddings, and private celebrations in Singapore.</p>
+    <p>You’ll also find portraits and creative shoots in the galleries below.</p>
   </section>
 
   <section class="gallery-index-section photography-browser" aria-label="Photography galleries">
@@ -91,14 +96,15 @@ const photographySections = [
           data-photography-panel={section.id}
           hidden={section.id !== defaultPhotographyType}
         >
-          {section.items.length > 0 ? <WorkGrid items={section.items} /> : <p class="empty-gallery-note">No published galleries in this section yet.</p>}
+          {section.items.length > 0 ? <ProgressiveList id={`photography-items-${section.id}`} initialCount={10}><WorkGrid items={section.items} /></ProgressiveList> : <p class="empty-gallery-note">No published galleries in this section yet.</p>}
         </section>
       ))
     }
   </section>
 
   <TestimonialsSection />
-  <WhatToExpectSection id="what-to-expect" rows={photographyRows} />
+  <WhatToExpectSection id="what-to-expect" rows={photographyRows} heading="Pricing and delivery" />
+  <BookingProcess />
 
   <script>
     const tabs = Array.from(document.querySelectorAll<HTMLElement>("[data-photography-tab]"));
@@ -124,6 +130,6 @@ const photographySections = [
   <section class="page-cta" aria-labelledby="photo-contact-title">
     <h2 id="photo-contact-title">Got an event worth capturing well?</h2>
     <p>Conferences, workshops, networking sessions, or a milestone that matters to you. I'd love to help you cover it.</p>
-    <a class="button button-dark" href="/contact/">Let's talk</a>
+    <a class="button button-dark" href={getBriefUrl("photography")}>Let's talk</a>
   </section>
 </BaseLayout>

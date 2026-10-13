@@ -5,16 +5,14 @@
 title: HR WorkTech Summit — Corporate Conference Highlights
 date: 2026-07-31
 photographyType: corporate-private-events
-featuredRank: 2
-categoryRank: 2
+featuredRank: 1
+categoryRank: 1
 publishStatus: published
 coverImageIndex: 1
-summary: HR WorkTech Summit brought together serious voices on HR technology and
-  work in the AI era. Speakers from DP World and Standard Chartered gave the
-  summit clear weight. The gallery gives organizers polished proof for sponsor
-  decks, speaker outreach, and next year’s promotion.
-cardSummary: Senior voices from DP World and Standard Chartered shaping
-  discussions on HR technology
+summary: Commissioned photography for a speaker at the HR WorkTech Summit, with
+  Ash as the sole photographer for the assignment. Coverage focused on the
+  speaker's participation in the conference.
+cardSummary: A focused record of one speaker's conference appearance.
 guidedContext: "Client and event: the HR WorkTech Summit, a business conference
   on HR technology and the future of work in the AI era. The gallery covers
   panel discussions (one titled around well-being as a strategic imperative in
@@ -32,4 +30,8 @@ googlePhotosUrl: https://photos.app.goo.gl/ZWjVLU2VVXfLSomF6
 coverImage: /images/galleries/hr-worktech-summit-corporate-conference-highlights/image-001-large.webp
 ---
 
+## About this assignment
 
+Commissioned photography for a speaker at the HR WorkTech Summit. I handled the assignment as the sole photographer, with coverage focused on the speaker's participation in the conference.
+
+**My role:** Photographer for a speaker-specific assignment.

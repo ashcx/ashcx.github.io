@@ -1,0 +1,65 @@
+[
+  {
+    "currencyNote": false,
+    "oldBookingLabel": false,
+    "overflow": false,
+    "route": "/",
+    "width": 390
+  },
+  {
+    "currencyNote": false,
+    "oldBookingLabel": false,
+    "overflow": false,
+    "route": "/photography/",
+    "width": 390
+  },
+  {
+    "currencyNote": false,
+    "oldBookingLabel": false,
+    "overflow": false,
+    "route": "/videography/",
+    "width": 390
+  },
+  {
+    "currencyNote": false,
+    "oldBookingLabel": false,
+    "overflow": false,
+    "route": "/",
+    "width": 768
+  },
+  {
+    "currencyNote": false,
+    "oldBookingLabel": false,
+    "overflow": false,
+    "route": "/photography/",
+    "width": 768
+  },
+  {
+    "currencyNote": false,
+    "oldBookingLabel": false,
+    "overflow": false,
+    "route": "/videography/",
+    "width": 768
+  },
+  {
+    "currencyNote": false,
+    "oldBookingLabel": false,
+    "overflow": false,
+    "route": "/",
+    "width": 1440
+  },
+  {
+    "currencyNote": false,
+    "oldBookingLabel": false,
+    "overflow": false,
+    "route": "/photography/",
+    "width": 1440
+  },
+  {
+    "currencyNote": false,
+    "oldBookingLabel": false,
+    "overflow": false,
+    "route": "/videography/",
+    "width": 1440
+  }
+]

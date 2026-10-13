@@ -1,0 +1,117 @@
+---
+const steps = [
+  {
+    title: "Share your plans",
+    description: "Tell me your date, venue, and the coverage you need.",
+    href: "/contact/"
+  },
+  {
+    title: "Confirm the details",
+    description: "We’ll confirm the scope, deliverables, fee, and delivery schedule before booking."
+  },
+  {
+    title: "On the day",
+    description: "I’ll photograph or film the agreed brief, following your programme and priorities."
+  },
+  {
+    title: "Receive your work",
+    description: "I’ll deliver the agreed photographs or video."
+  }
+];
+---
+
+<section class="booking-process" aria-labelledby="booking-process-title">
+  <div class="content-section-rule"></div>
+  <h2 id="booking-process-title">How booking works</h2>
+  <ol>
+    {steps.map((step) => (
+      <li>
+        <h3>{step.href ? <a href={step.href}>{step.title}</a> : step.title}</h3>
+        <p>{step.description}</p>
+      </li>
+    ))}
+  </ol>
+  <div class="booking-process-cta">
+    <a class="button button-dark" href="/contact/">Contact me</a>
+  </div>
+</section>
+
+<style>
+  .booking-process {
+    width: min(var(--max), calc(100% - var(--gutter) * 2));
+    margin: 0 auto;
+    padding: var(--section-space) 0;
+  }
+
+  .booking-process .content-section-rule {
+    border: 0;
+    margin-bottom: 0;
+  }
+
+  .booking-process h2 {
+    margin-bottom: clamp(30px, 4vw, 46px);
+    text-align: center;
+  }
+
+  .booking-process ol {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(18px, 2.5vw, 32px);
+    margin: 0;
+    padding: 0;
+    list-style-position: inside;
+  }
+
+  .booking-process li {
+    border-top: 1px solid var(--hairline);
+    padding-top: 18px;
+  }
+
+  .booking-process li::marker {
+    color: var(--accent);
+    font-weight: 800;
+  }
+
+  .booking-process h3 {
+    display: inline;
+    margin: 0 0 12px 6px;
+    font-size: clamp(1rem, 1.4vw, 1.2rem);
+    letter-spacing: 0;
+  }
+
+  .booking-process h3 a {
+    color: inherit;
+    text-decoration-color: transparent;
+    text-underline-offset: 0.16em;
+    transition: text-decoration-color 160ms ease;
+  }
+
+  .booking-process h3 a:hover,
+  .booking-process h3 a:focus-visible {
+    text-decoration-color: currentColor;
+  }
+
+  .booking-process-cta {
+    margin-top: clamp(28px, 4vw, 44px);
+    text-align: center;
+  }
+
+  .booking-process li p {
+    margin: 12px 0 0;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  @media (max-width: 900px) {
+    .booking-process ol {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      row-gap: 28px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .booking-process ol {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

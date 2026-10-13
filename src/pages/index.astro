@@ -10,12 +10,24 @@ import type { PhotographyEntry } from "@lib/content";
 import { getGalleryCover, getGalleryImages, getHomePortraitCover, getMediumPortraitImages } from "@lib/gallery-images";
 import type { GalleryImage } from "@lib/gallery-images";
 import EventFilmFeature from "@components/EventFilmFeature.astro";
-import { featuredEventFilm, sections, site } from "@lib/site";
+import { featuredEventFilm, sections } from "@lib/site";
 
 const photos = published(await getCollection("photography"));
 const contentItems = published(await getCollection("content-work"));
 const allRankedPhotos = rankPhotographyForAll(photos);
-const latestPhotos = splitHidden(allRankedPhotos, 2);
+const homepageFeatureSlugs = [
+  "corporate-night-safari-experience-for-visa-leadership",
+  "h-ai-ai-festival-empowering-women-in-tech",
+  "eat-the-world-corporate-networking-food-tasting-experience",
+  "starrylight-paints-2024-new-year-celebration-fringe-activities"
+];
+const homepagePhotos = homepageFeatureSlugs
+  .map((slug) => photos.find((photo) => entrySlug(photo) === slug))
+  .filter((photo): photo is PhotographyEntry => Boolean(photo && !photo.data.hidden));
+const homepageWorkItems = splitHidden(
+  [...homepagePhotos, ...allRankedPhotos.filter((photo) => photo.data.hidden)],
+  homepagePhotos.length
+);
 const socialHighlights = contentItems.filter((item) => item.data.contentType === "embed");
 
 const corporateCoverUrl = (photo: PhotographyEntry) =>
@@ -84,7 +96,13 @@ const pageCover = visibleCoverPhoto
 const ogImage = carouselSlides[0]?.portrait || pageCover;
 ---
 
-<BaseLayout title={site.title} description={site.description} active="home" image={ogImage}>
+<BaseLayout
+  title="Event Photography & Video Singapore | Ash Chong"
+  description="Singapore-based freelance photographer and videographer for corporate events, private celebrations, and social content shoots. Explore Ash Chong's work and discuss your project."
+  active="home"
+  image={ogImage}
+  fullTitle={true}
+>
   <section class="home-hero" aria-labelledby="hero-title">
     <div class="home-hero-copy home-intro-grid">
       <div class="home-name-block">
@@ -92,16 +110,13 @@ const ogImage = carouselSlides[0]?.portrait || pageCover;
       </div>
       <ul class="identity-list" aria-label="Short description">
         <li>Event photographer</li>
+        <li>Event videographer</li>
         <li>Social content creator</li>
-        <li>Digital strategist</li>
       </ul>
       <div class="home-intro-block">
-        <p class="hero-lede">
-          Helping businesses turn meaningful moments into stories that build
-          trust and drive growth.
-        </p>
+        <p class="hero-lede">I’m a photographer and videographer based in Singapore, covering corporate events, private celebrations, and social content shoots.</p>
         <div class="hero-actions">
-          <a class="button button-dark" href="#corporate-work">Find out more</a>
+          <a class="button button-dark" href="#corporate-work">Explore my work</a>
           <a class="button button-accent" href="/contact/">Contact me</a>
         </div>
       </div>
@@ -166,14 +181,14 @@ const ogImage = carouselSlides[0]?.portrait || pageCover;
     sections.photography && (
       <section id="corporate-work" class="home-section corporate-work" aria-labelledby="corporate-work-title">
         <div class="home-section-heading">
-          <p class="eyebrow">Event photography</p>
+          <p class="eyebrow">Photography</p>
           <div>
-            <h2 id="corporate-work-title">Built for more than event day.</h2>
-            <p>Professional event coverage that supports marketing, communications, stakeholder engagement, and future promotions.</p>
+            <h2 id="corporate-work-title">Events and celebrations</h2>
+            <p>Event photography for conferences, corporate gatherings, and private celebrations. View selected coverage below.</p>
           </div>
-          <a class="button button-dark" href="/photography/">Explore photography</a>
+          <a class="button button-dark" href="/photography/">View all galleries</a>
         </div>
-        <WorkGrid items={latestPhotos} />
+        <WorkGrid items={homepageWorkItems} />
         <div class="home-section-footer">
           <a class="button button-dark" href="/photography/">View all galleries</a>
         </div>
@@ -181,15 +196,15 @@ const ogImage = carouselSlides[0]?.portrait || pageCover;
     )
   }
 
-  {sections.content && <HomeSocialHighlights items={socialHighlights} />}
-
-  {sections.content && (
+  {sections.video && (
     <section class="home-section home-event-film" aria-labelledby="home-event-film-title">
-      <EventFilmFeature {...featuredEventFilm} id="home-event-film-title" loading="lazy" />
+      <EventFilmFeature {...featuredEventFilm} id="home-event-film-title" loading="lazy" exploreUrl="/videography/" />
     </section>
   )}
 
-  <TestimonialsSection showRule={false} />
+  {sections.content && <HomeSocialHighlights items={socialHighlights} />}
+
+  <TestimonialsSection showRule={false} showCta={false} />
 
   <ContactSection />
 
@@ -199,7 +214,12 @@ const ogImage = carouselSlides[0]?.portrait || pageCover;
       if (roots.length === 0) return;
 
       const load = () => {
-        ["https://www.instagram.com/embed.js", "https://www.tiktok.com/embed.js"].forEach((src) => {
+        [
+          [".instagram-media", "https://www.instagram.com/embed.js"],
+          [".tiktok-embed", "https://www.tiktok.com/embed.js"]
+        ].forEach(([selector, src]) => {
+          if (!roots.some((root) => root.querySelector(selector))) return;
+          if (document.querySelector(`script[src="${src}"]`)) return;
           const script = document.createElement("script");
           script.src = src;
           script.async = true;

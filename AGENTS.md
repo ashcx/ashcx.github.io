@@ -99,7 +99,7 @@ generated files on the next import; review that diff carefully.
 
 Both commands load `.env`, call the OpenAI Responses API only when
 `OPENAI_API_KEY` is set, and otherwise exit successfully without changes. They
-use `OPENAI_MODEL` (default `gpt-5.6-luna`) and
+use `OPENAI_MODEL` (default `gpt-6-luna`) and
 `OPENAI_REASONING_EFFORT` (default `none`); never commit these values or the key.
 
 `npm run social-copy` scans photography and social-content Markdown/MDX files.

@@ -1,0 +1,55 @@
+---
+interface Props {
+  variant: "photography" | "photoshoot" | "video";
+}
+
+const { variant } = Astro.props;
+const copy = variant === "photoshoot"
+  ? {
+      heading: "Planning a photoshoot?",
+      paragraph: "Tell me what you have in mind and when you'd like to shoot."
+    }
+  : variant === "photography"
+  ? {
+      heading: "Planning an event?",
+      paragraph: "Tell me your date, venue, and coverage requirements."
+    }
+  : {
+      heading: "Planning event video coverage?",
+      paragraph: "Tell me your date, venue, and what you want the finished video to cover."
+    };
+const contactUrl = `/contact/?service=${variant === "video" ? "video" : "photography"}`;
+---
+
+<section class:list={["booking-prompt", { "booking-prompt-video": variant === "video" }]} aria-labelledby={`booking-prompt-${variant}-title`}>
+  <h2 id={`booking-prompt-${variant}-title`}>{copy.heading}</h2>
+  <p>{copy.paragraph}</p>
+  <a class="button button-dark" href={contactUrl}>Contact me</a>
+</section>
+
+<style>
+  .booking-prompt {
+    width: min(820px, calc(100% - var(--gutter) * 2));
+    margin: 0 auto;
+    padding: var(--section-space) 0;
+    text-align: center;
+  }
+
+  .booking-prompt h2 {
+    margin-bottom: 18px;
+    letter-spacing: 0;
+  }
+
+  .booking-prompt p {
+    max-width: 640px;
+    margin: 0 auto 28px;
+    color: var(--muted);
+    font-size: 1.12rem;
+    line-height: 1.55;
+    text-align: center;
+  }
+
+  .booking-prompt-video p {
+    text-align: center;
+  }
+</style>
