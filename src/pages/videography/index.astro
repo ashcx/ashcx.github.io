@@ -9,14 +9,12 @@ const eventFilms = [
   {
     id: "SHuhZGxQrjg",
     title: "The Retail Growth Playbook",
-    client: "Airwallex × Singapore Retailers Association",
-    description: "An event film centred on retail growth and cross-border expansion."
+    description: "Retail leaders discuss what it takes to grow beyond Singapore without losing sight of margins. Speaker perspectives and footage from the Airwallex and Singapore Retailers Association session connect the practical lessons with the energy of the room."
   },
   {
     id: "LffdpeBkFVk",
     title: "Beyond Borders",
-    client: "Airwallex",
-    description: "A community-focused event film about partnerships and growing across borders."
+    description: "Growth across borders starts with people sharing what they know. This recap brings together voices from Airwallex, SleekFlow, and ReturnHelper with candid conversations from the e-commerce community."
   }
 ];
 ---
@@ -36,14 +34,11 @@ const eventFilms = [
 
   <section class="video-work" aria-label="Featured event film">
     <div class="video-work-inner">
-      <EventFilmFeature {...featuredEventFilm} description="" id="ecom-north-film-title" loading="lazy" />
+      <EventFilmFeature {...featuredEventFilm} id="ecom-north-film-title" loading="lazy" />
 
       <div class="video-film-context">
-        <h2>The brief</h2>
-        <div>
-          <p>Capture the people, conversations, and atmosphere of Airwallex’s Ecom North Singapore Summit.</p>
-          <p class="video-film-contribution">Planning · Filming · Editing · Delivery</p>
-        </div>
+        <h2>My role</h2>
+        <p>I handled the production from planning through to delivery. Before the shoot, I planned the coverage around the event programme; on the day, I filmed the people, conversations, and atmosphere. I then selected and edited the footage into a highlight film and prepared the finished video for delivery.</p>
       </div>
     </div>
   </section>
@@ -66,7 +61,6 @@ const eventFilms = [
               </button>
             </div>
             <div class="video-film-copy">
-              <p class="video-film-client">{film.client}</p>
               <h3 id={`film-${film.id}-title`}>{film.title}</h3>
               <p>{film.description}</p>
             </div>
@@ -199,12 +193,6 @@ const eventFilms = [
     color: rgba(255, 250, 241, 0.78);
     line-height: 1.55;
     text-align: left;
-  }
-
-  .video-film-contribution {
-    margin-top: 12px !important;
-    color: rgba(255, 250, 241, 0.58) !important;
-    font-size: 0.92rem;
   }
 
   .video-other-work {
@@ -342,15 +330,6 @@ const eventFilms = [
   .video-film-copy {
     padding-top: 20px;
     text-align: left;
-  }
-
-  .video-film-client {
-    margin: 0 0 9px;
-    color: var(--muted);
-    font-size: 0.76rem;
-    font-weight: 760;
-    letter-spacing: 0.08em;
-    line-height: 1.45;
   }
 
   .video-film-copy h3 {

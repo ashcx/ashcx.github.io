@@ -21,7 +21,7 @@ const copy = variant === "photoshoot"
 const contactUrl = `/contact/?service=${variant === "video" ? "video" : "photography"}`;
 ---
 
-<section class="booking-prompt" aria-labelledby={`booking-prompt-${variant}-title`}>
+<section class:list={["booking-prompt", { "booking-prompt-video": variant === "video" }]} aria-labelledby={`booking-prompt-${variant}-title`}>
   <h2 id={`booking-prompt-${variant}-title`}>{copy.heading}</h2>
   <p>{copy.paragraph}</p>
   <a class="button button-dark" href={contactUrl}>Discuss your project</a>
@@ -47,5 +47,9 @@ const contactUrl = `/contact/?service=${variant === "video" ? "video" : "photogr
     font-size: 1.12rem;
     line-height: 1.55;
     text-align: left;
+  }
+
+  .booking-prompt-video p {
+    text-align: center;
   }
 </style>
