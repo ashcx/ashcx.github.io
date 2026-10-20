@@ -29,13 +29,21 @@ const { active = "home" } = Astro.props;
     }
   </nav>
 </header>
+<button class="nav-backdrop" type="button" aria-label="Close navigation menu" tabindex="-1" hidden></button>
 
 <script>
   const navToggle = document.querySelector(".nav-toggle");
   const primaryNavigation = document.querySelector("#primary-navigation");
 
+  const backdrop = document.querySelector<HTMLButtonElement>(".nav-backdrop");
+  const toggleLabel = navToggle?.querySelector(".nav-toggle-label");
+  const mobileMenu = window.matchMedia("(max-width: 620px)");
+
   function setMenuOpen(isOpen: boolean) {
     navToggle?.setAttribute("aria-expanded", String(isOpen));
+    navToggle?.setAttribute("aria-label", isOpen ? "Close navigation menu" : "Open navigation menu");
+    if (toggleLabel) toggleLabel.textContent = isOpen ? "Close" : "Menu";
+    if (backdrop) backdrop.hidden = !isOpen;
     primaryNavigation?.classList.toggle("is-open", isOpen);
     document.body.classList.toggle("nav-is-open", isOpen);
   }
@@ -49,9 +57,25 @@ const { active = "home" } = Astro.props;
     link.addEventListener("click", () => setMenuOpen(false));
   });
 
+  backdrop?.addEventListener("click", () => setMenuOpen(false));
+  mobileMenu.addEventListener("change", () => setMenuOpen(false));
+
   document.addEventListener("keydown", (event) => {
+    if (navToggle?.getAttribute("aria-expanded") !== "true") return;
     if (event.key === "Escape") {
       setMenuOpen(false);
+      (navToggle as HTMLButtonElement).focus();
+    }
+    if (event.key === "Tab") {
+      const links = primaryNavigation?.querySelectorAll<HTMLAnchorElement>("a");
+      const lastLink = links?.[links.length - 1];
+      if (event.shiftKey && document.activeElement === navToggle && lastLink) {
+        event.preventDefault();
+        lastLink.focus();
+      } else if (!event.shiftKey && document.activeElement === lastLink) {
+        event.preventDefault();
+        (navToggle as HTMLButtonElement).focus();
+      }
     }
   });
 
