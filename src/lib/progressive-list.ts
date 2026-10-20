@@ -9,23 +9,37 @@ export function initProgressiveList(root: HTMLElement) {
   const items = Array.from(grid.children).filter((item): item is HTMLElement =>
     item instanceof HTMLElement && (curation || !item.classList.contains("hidden-gallery-card"))
   );
-  let visibleCount = Number(root.dataset.initialCount);
+  const initialCount = Number(root.dataset.initialCount);
+  let visibleCount = initialCount;
   const increment = Number(root.dataset.increment);
 
+  function matchingItems() {
+    const category = grid!.dataset.progressiveFilter || "all";
+    return items.filter((item) => category === "all" || item.dataset.category === category);
+  }
+
   function update() {
-    items.forEach((item, index) => {
+    const matching = matchingItems();
+    const visible = new Set(matching.slice(0, visibleCount));
+    items.forEach((item) => {
       item.dataset.progressiveItem = "";
-      item.hidden = index >= visibleCount;
+      item.hidden = !visible.has(item);
     });
-    button!.hidden = visibleCount >= items.length;
+    button!.hidden = visibleCount >= matching.length;
   }
 
   update();
+  root.addEventListener("progressive-filter-change", () => {
+    visibleCount = initialCount;
+    if (status) status.textContent = "";
+    update();
+  });
   button.addEventListener("click", () => {
-    const firstNewItem = items[visibleCount];
+    const matching = matchingItems();
+    const firstNewItem = matching[visibleCount];
     visibleCount += increment;
     update();
-    if (status) status.textContent = `${Math.min(visibleCount, items.length)} / ${items.length}`;
+    if (status) status.textContent = `${Math.min(visibleCount, matching.length)} / ${matching.length}`;
     const focusTarget = firstNewItem?.matches("a, button") ? firstNewItem : firstNewItem?.querySelector<HTMLElement>("a, button");
     focusTarget?.focus({ preventScroll: true });
   });
