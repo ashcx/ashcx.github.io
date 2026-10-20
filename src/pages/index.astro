@@ -17,9 +17,7 @@ const contentItems = published(await getCollection("content-work"));
 const allRankedPhotos = rankPhotographyForAll(photos);
 const homepageFeatureSlugs = [
   "corporate-night-safari-experience-for-visa-leadership",
-  "h-ai-ai-festival-empowering-women-in-tech",
-  "eat-the-world-corporate-networking-food-tasting-experience",
-  "starrylight-paints-2024-new-year-celebration-fringe-activities"
+  "h-ai-ai-festival-empowering-women-in-tech"
 ];
 const homepagePhotos = homepageFeatureSlugs
   .map((slug) => photos.find((photo) => entrySlug(photo) === slug))
@@ -119,6 +117,11 @@ const ogImage = carouselSlides[0]?.portrait || pageCover;
           <a class="button button-dark" href="#corporate-work">Explore my work</a>
           <a class="button button-accent" href="/contact/">Contact me</a>
         </div>
+        <nav class="hero-service-links" aria-label="Jump to featured work">
+          {sections.photography && <a href="#corporate-work">Photography</a>}
+          {sections.video && <a href="#event-video">Event video</a>}
+          {sections.content && <a href="#social-media">Social media</a>}
+        </nav>
       </div>
       {
         carouselSlides.length > 1 ? (
@@ -186,7 +189,6 @@ const ogImage = carouselSlides[0]?.portrait || pageCover;
             <h2 id="corporate-work-title">Events and celebrations</h2>
             <p>Event photography for conferences, corporate gatherings, and private celebrations. View selected coverage below.</p>
           </div>
-          <a class="button button-dark" href="/photography/">View all galleries</a>
         </div>
         <WorkGrid items={homepageWorkItems} />
         <div class="home-section-footer">
@@ -197,7 +199,7 @@ const ogImage = carouselSlides[0]?.portrait || pageCover;
   }
 
   {sections.video && (
-    <section class="home-section home-event-film" aria-labelledby="home-event-film-title">
+    <section id="event-video" class="home-section home-event-film" aria-labelledby="home-event-film-title">
       <EventFilmFeature {...featuredEventFilm} id="home-event-film-title" loading="lazy" exploreUrl="/videography/" />
     </section>
   )}

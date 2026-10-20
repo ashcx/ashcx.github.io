@@ -88,7 +88,7 @@ function extractAiSummary(body: string) {
 
 {
   selectedItems.length > 0 && (
-    <section class="home-section home-social-work" aria-labelledby="home-social-title" data-social-embeds>
+    <section id="social-media" class="home-section home-social-work" aria-labelledby="home-social-title" data-social-embeds>
       <div class="home-section-heading">
         <p class="eyebrow">Social media</p>
         <div>
@@ -97,17 +97,16 @@ function extractAiSummary(body: string) {
             I produce, film, and edit reels for Instagram and TikTok, from General Assembly’s career education videos to creator-led retail features and property walkthroughs.
           </p>
         </div>
-        <a class="button button-dark" href="/content/">Explore social media</a>
       </div>
 
       <div class="home-social-grid">
         {
-          selectedItems.map(({ category, item }) => {
+          selectedItems.map(({ category, item }, index) => {
             const title = displayTitle(item);
             const url = categoryUrl(category);
             const description = firstSentence(item);
             return (
-              <article class="home-social-card">
+              <article class:list={["home-social-card", { "home-social-desktop-only": index >= 2 }]}>
                 <span class="meta-label">{category.label}</span>
                 <div class={`home-social-player home-social-player-${item.data.platform}`}>
                   <SocialMediaPlayer item={item} title={title} variant="home" />
@@ -136,6 +135,9 @@ function extractAiSummary(body: string) {
             );
           })
         }
+      </div>
+      <div class="home-section-footer">
+        <a class="button button-dark" href="/content/">Explore social media</a>
       </div>
     </section>
   )
