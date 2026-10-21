@@ -13,3 +13,5 @@ Photography and event-video license reference: https://www.pexels.com/license/
 Stock agency license information: https://www.istockphoto.com/legal/license-agreement
 
 Downloaded 2026-10-22. Cropped and resized to 16:10 desktop images and separate square mobile thumbnails, then converted to WebP. The event-video photo shows hands operating a professional video camera, with the operator's face outside the frame. The social-media preview shows a presenter in a bright studio with a microphone, a portrait phone mounted in front, and the presenter and recording indicator visible on its screen. Separate crops retain the full phone screen on desktop and mobile.
+
+Photography and event-video exports were regenerated from original-size Pexels JPEGs at WebP quality 32 for desktop and 28 for mobile (effort 6, smart chroma subsampling). Display assets remain 960 × 600 and 216 × 216. Local originals and previous exports are retained under ignored output/ for future re-export.
