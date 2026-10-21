@@ -59,11 +59,12 @@ function fromFolder(slug: string): GalleryImage[] {
   if (!existsSync(galleryDir)) return [];
 
   const files = readdirSync(galleryDir).filter((file) => file.endsWith(".webp")).sort();
-  const groups = new Map<string, { thumb?: string; large?: string }>();
+  const groups = new Map<string, { thumb?: string; medium?: string; large?: string }>();
   for (const file of files) {
-    const key = file.replace(/-(thumb|large)\.webp$/, "").replace(/\.webp$/, "");
+    const key = file.replace(/-(thumb|medium|large)\.webp$/, "").replace(/\.webp$/, "");
     const group = groups.get(key) || {};
     if (file.includes("-thumb.webp")) group.thumb = file;
+    else if (file.includes("-medium.webp")) group.medium = file;
     else if (file.includes("-large.webp")) group.large = file;
     else group.large = file;
     groups.set(key, group);
@@ -71,8 +72,9 @@ function fromFolder(slug: string): GalleryImage[] {
 
   return [...groups.values()]
     .map((group) => ({
-      thumb: publicPath(slug, group.thumb || group.large),
-      large: publicPath(slug, group.large || group.thumb),
+      thumb: publicPath(slug, group.thumb || group.medium || group.large),
+      medium: group.medium ? publicPath(slug, group.medium) : undefined,
+      large: publicPath(slug, group.large || group.medium || group.thumb),
       aspectRatio: 1.5,
       alt: ""
     }))
@@ -138,7 +140,7 @@ export function getHomePortraitCover(slug: string, frontmatterImages: GalleryIma
 
 // Up to `limit` portrait-orientation images from a gallery, best-fit first
 // (closest to the tall home card's ratio). Used by the home hero carousel.
-export function getPortraitImages(slug: string, frontmatterImages: GalleryImage[] = [], limit = 5): GalleryImage[] {
+function getPortraitImages(slug: string, frontmatterImages: GalleryImage[] = [], limit = 5): GalleryImage[] {
   return getGalleryImages(slug, frontmatterImages)
     .map((image, index) => ({ image, index, ratio: imageAspectRatio(image) }))
     .filter((entry): entry is { image: GalleryImage; index: number; ratio: number } =>

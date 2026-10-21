@@ -443,7 +443,7 @@ function extractResponseText(json) {
   for (const item of json.output || []) {
     for (const content of item.content || []) {
       if (content.type === "output_text" && content.text) chunks.push(content.text);
-      if (typeof content.text === "string") chunks.push(content.text);
+      else if (typeof content.text === "string") chunks.push(content.text);
     }
   }
   return chunks.join(" ");

@@ -2,6 +2,7 @@
 import type { ContentWorkEntry } from "@lib/content";
 import { displayTitle } from "@lib/content";
 import SocialMediaPlayer from "./SocialMediaPlayer.astro";
+import ProgressiveList from "./ProgressiveList.astro";
 import { render } from "astro:content";
 
 interface Props {
@@ -16,7 +17,6 @@ const renderedItems = await Promise.all(
     Body: (await render(item)).Content
   }))
 );
-const normalizedCategory = (category: string) => (category === "adult-education" ? "corporate" : category);
 const categories = [
   { id: "all", label: "All" },
   { id: "corporate", label: "Corporate" },
@@ -52,14 +52,15 @@ const platformLabels = {
 
   {
     items.length > 0 ? (
+      <ProgressiveList id="social-post-list" initialCount={4} increment={4}>
       <div class="content-embed-grid">
         {
           renderedItems.map(({ item, title, Body }) => (
             <article
               class="content-embed-card"
               data-content-card
-              data-category={normalizedCategory(item.data.socialCategory)}
-              hidden={defaultCategory !== "all" && normalizedCategory(item.data.socialCategory) !== defaultCategory}
+              data-category={item.data.socialCategory}
+              hidden={defaultCategory !== "all" && item.data.socialCategory !== defaultCategory}
             >
               <div class:list={["content-embed-window", {
                 "content-reel-frame": item.data.playback === "local" || (item.data.platform === "instagram" && !!item.data.embedHtml)
@@ -93,6 +94,7 @@ const platformLabels = {
           ))
         }
       </div>
+      </ProgressiveList>
     ) : (
       <p class="empty-gallery-note">Add content examples in <code>src/content/content-work/</code>.</p>
     )
@@ -102,7 +104,6 @@ const platformLabels = {
 <script>
   const contentFilterRoot = document.querySelector("[data-content-filter-root]");
   const contentFilterButtons = Array.from(document.querySelectorAll<HTMLElement>("[data-content-filter]"));
-  const contentCards = Array.from(document.querySelectorAll<HTMLElement>("[data-content-card]"));
 
   function selectContentFilter(category: string) {
     contentFilterButtons.forEach((button) => {
@@ -111,9 +112,11 @@ const platformLabels = {
       button.setAttribute("aria-selected", String(isActive));
     });
 
-    contentCards.forEach((card) => {
-      card.hidden = category !== "all" && card.dataset.category !== category;
-    });
+    const grid = contentFilterRoot?.querySelector<HTMLElement>(".content-embed-grid");
+    if (grid) {
+      grid.dataset.progressiveFilter = category;
+      grid.dispatchEvent(new Event("progressive-filter-change", { bubbles: true }));
+    }
   }
 
   if (contentFilterRoot) {

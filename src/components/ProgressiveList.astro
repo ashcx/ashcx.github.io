@@ -34,6 +34,8 @@ const { id, initialCount, increment = 8 } = Astro.props;
   }
 
   [data-progressive-more]:not([hidden]) {
+    min-width: 180px;
+    max-width: 100%;
     margin-top: clamp(32px, 4vw, 48px);
     cursor: pointer;
     border: 1px solid var(--charcoal);

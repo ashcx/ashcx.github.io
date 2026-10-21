@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import ContactSection from "@components/ContactSection.astro";
+import HomeServiceLinks from "@components/HomeServiceLinks.astro";
 import HomeSocialHighlights from "@components/HomeSocialHighlights.astro";
 import TestimonialsSection from "@components/TestimonialsSection.astro";
 import WorkGrid from "@components/WorkGrid.astro";
@@ -17,9 +18,7 @@ const contentItems = published(await getCollection("content-work"));
 const allRankedPhotos = rankPhotographyForAll(photos);
 const homepageFeatureSlugs = [
   "corporate-night-safari-experience-for-visa-leadership",
-  "h-ai-ai-festival-empowering-women-in-tech",
-  "eat-the-world-corporate-networking-food-tasting-experience",
-  "starrylight-paints-2024-new-year-celebration-fringe-activities"
+  "h-ai-ai-festival-empowering-women-in-tech"
 ];
 const homepagePhotos = homepageFeatureSlugs
   .map((slug) => photos.find((photo) => entrySlug(photo) === slug))
@@ -64,17 +63,14 @@ for (const slug of portraitSourceSlugs) {
   portraitsBySource.set(slug, entry ? getMediumPortraitImages(slug, entry.data.images, 5) : []);
 }
 const portraitImages: GalleryImage[] = [];
-const portraitCursor = new Map<string, number>();
-let sourceTurn = 0;
 const portraitTarget = walkingTourEntry ? 4 : 5;
-while (portraitImages.length < portraitTarget) {
-  const slug = portraitSourceSlugs[sourceTurn % portraitSourceSlugs.length];
-  sourceTurn += 1;
-  const list = portraitsBySource.get(slug) ?? [];
-  const cursor = portraitCursor.get(slug) ?? 0;
-  if (cursor >= list.length) continue;
-  portraitCursor.set(slug, cursor + 1);
-  portraitImages.push(list[cursor]);
+const portraitRounds = Math.max(0, ...Array.from(portraitsBySource.values(), (images) => images.length));
+for (let index = 0; index < portraitRounds && portraitImages.length < portraitTarget; index += 1) {
+  for (const slug of portraitSourceSlugs) {
+    const image = portraitsBySource.get(slug)?.[index];
+    if (image) portraitImages.push(image);
+    if (portraitImages.length >= portraitTarget) break;
+  }
 }
 
 if (walkingTourEntry) {
@@ -177,6 +173,8 @@ const ogImage = carouselSlides[0]?.portrait || pageCover;
     </div>
   </section>
 
+  <HomeServiceLinks />
+
   {
     sections.photography && (
       <section id="corporate-work" class="home-section corporate-work" aria-labelledby="corporate-work-title">
@@ -186,7 +184,6 @@ const ogImage = carouselSlides[0]?.portrait || pageCover;
             <h2 id="corporate-work-title">Events and celebrations</h2>
             <p>Event photography for conferences, corporate gatherings, and private celebrations. View selected coverage below.</p>
           </div>
-          <a class="button button-dark" href="/photography/">View all galleries</a>
         </div>
         <WorkGrid items={homepageWorkItems} />
         <div class="home-section-footer">
@@ -197,7 +194,7 @@ const ogImage = carouselSlides[0]?.portrait || pageCover;
   }
 
   {sections.video && (
-    <section class="home-section home-event-film" aria-labelledby="home-event-film-title">
+    <section id="event-video" class="home-section home-event-film" aria-labelledby="home-event-film-title">
       <EventFilmFeature {...featuredEventFilm} id="home-event-film-title" loading="lazy" exploreUrl="/videography/" />
     </section>
   )}

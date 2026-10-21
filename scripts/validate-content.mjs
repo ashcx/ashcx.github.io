@@ -110,9 +110,6 @@ async function validatePhotography() {
     if (gallery.data.publishStatus && !["draft", "published", "archived"].includes(String(gallery.data.publishStatus))) {
       warn(`Photography gallery "${gallery.file}" has invalid publishStatus; it will render as published.`);
     }
-    if (gallery.data.section && !["corporate-events", "content", "portraits", "personal"].includes(String(gallery.data.section))) {
-      warn(`Photography gallery "${gallery.file}" has invalid section; corporate-events fallback will be used.`);
-    }
     if (gallery.data.photographyType && !allowedPhotographyTypes.includes(String(gallery.data.photographyType))) {
       warn(`Photography gallery "${gallery.file}" has invalid photographyType; corporate-private-events fallback will be used.`);
     }

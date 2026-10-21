@@ -11,11 +11,6 @@ export function published<T extends { data: { publishStatus?: string; date?: Dat
     .sort((a, b) => safeDate(b.data.date).getTime() - safeDate(a.data.date).getTime());
 }
 
-export function featured<T extends { data: { featured?: boolean } }>(items: T[], limit = 2) {
-  const featuredItems = items.filter((item) => item.data.featured);
-  return (featuredItems.length ? featuredItems : items).slice(0, limit);
-}
-
 // Keeps a visible-count guarantee for capped lists: takes `limit` non-hidden items,
 // then appends any hidden ones after so they still render (revealed client-side via ?hidden=1)
 // instead of silently eating into the visible slice.
@@ -65,17 +60,7 @@ export function displayTitle(item: PhotographyEntry | ContentWorkEntry, fallback
   return cleanTitle(data.title) || cleanTitle(data.generatedTitle) || humanizeSlug(entrySlug(item)) || fallback;
 }
 
-export function formatDate(date: Date) {
-  const safe = safeDate(date);
-  if (safe.getTime() === 0) return "";
-  return new Intl.DateTimeFormat("en-SG", {
-    year: "numeric",
-    month: "short",
-    day: "numeric"
-  }).format(safe);
-}
-
-export function safeDate(value: unknown) {
+function safeDate(value: unknown) {
   const date = value instanceof Date ? value : new Date(String(value || ""));
   return Number.isNaN(date.getTime()) ? new Date(0) : date;
 }

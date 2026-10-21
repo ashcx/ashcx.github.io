@@ -34,8 +34,8 @@ content, and creates the production site in `dist/`.
 1. Create a folder in `inbox/galleries/` and add the source photos (`.jpg`,
    `.jpeg`, `.png`, or `.webp`). This folder is local-only and is not committed.
 2. Add a `gallery.md` file with the gallery details. `guidedContext`,
-   `featuredRank`, and `categoryRank` are required; `coverImageIndex` defaults
-   to `1` if omitted:
+   `featuredRank`, and `categoryRank` are required. Include a 1-based
+   `coverImageIndex` to select the cover:
 
    ```yaml
    ---
@@ -50,9 +50,10 @@ content, and creates the production site in `dist/`.
    ---
    ```
 
-   `coverImageIndex` is 1-based. The importer defaults it to `1` and lets you
-   choose another source photo in an interactive terminal; an existing value is
-   preserved.
+   An existing `coverImageIndex` is preserved. When it is missing, the importer
+   prompts in an interactive terminal, using the generated gallery's existing
+   selection or `1` as the default. Non-interactive runs add that same default
+   automatically.
 
    Supported photography types are `corporate-private-events`, `stage-work`,
    `photoshoot`, and `wedding-rom`. Lower rank numbers appear first. Optional
@@ -106,6 +107,10 @@ npm run card-summaries
 ```
 
 Add `-- --regenerate` only when existing generated copy should be refreshed.
+
+Both generators skip drafts and entries with `autoSummary: false`.
+`social-copy` can still update archived entries; `card-summaries` skips them.
+Social case studies are processed only when `autoSummary: true`.
 Never commit `.env` or API keys.
 
 ## Deployment
@@ -124,19 +129,21 @@ Choose the original network with `platform: instagram`, `tiktok`, or `linkedin`.
 Choose playback independently:
 
 - `playback: embed` (default): use the network's `embedHtml`; `externalUrl` links to the original post. Existing entries need no changes.
-- `playback: local`: use `videoSrc`, `coverImage`, and `videoAspectRatio`; retain `platform` and `externalUrl` for the “Open TikTok/Instagram post” link. Existing `embedHtml` can stay for switching back.
+- `playback: local`: use `videoSrc` and `coverImage`; retain `platform` and `externalUrl` for the “Open TikTok/Instagram post” link. Existing `embedHtml` can stay for switching back.
 
 ```yaml
 platform: tiktok
 playback: local
 videoSrc: /videos/social/example.mp4
 coverImage: /images/social/example.webp
-videoAspectRatio: 0.5625 # display width / height (9:16); use 1 for a square
 externalUrl: https://www.tiktok.com/@account/video/123
 ```
 
 Place web-ready H.264/AAC MP4s in `public/videos/social/` and poster frames in
-`public/images/social/`. Local clips use `preload="none"`, inline playback, and
+`public/images/social/`. Local clips intentionally use a uniform 4:5 frame with
+`object-fit: contain`, preserving the full video with letterboxing as needed.
+The optional `videoAspectRatio` field is currently unused by the player and
+does not change this frame. Local clips use `preload="none"`, inline playback, and
 one accessible play/pause button. Native controls, fullscreen, picture-in-picture,
 and remote playback are not exposed by the player. The original-post link remains
 available for viewing on the social platform. Browsers or operating systems may

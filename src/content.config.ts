@@ -82,7 +82,6 @@ const photography = defineCollection({
     autoSummary: looseBoolean.default(true),
     services: stringArray.default([]),
     tags: stringArray.default([]),
-    testimonial: optionalString,
     images: z.array(imageSchema).default([])
   })
 });
@@ -92,11 +91,9 @@ const dataProjects = defineCollection({
   schema: z.object({
     title: stringOrDefault("Untitled project"),
     date: looseDate.default(new Date(0)),
-    featured: looseBoolean.default(false),
     publishStatus,
     summary: optionalString,
     tools: stringArray.default([]),
-    tags: stringArray.default([]),
     githubUrl: optionalString,
     demoUrl: optionalString,
     coverImage: optionalString,
@@ -137,11 +134,9 @@ const contentWork = defineCollection({
     embedHtml: optionalString,
     externalUrl: optionalString,
     coverImage: optionalString,
-    client: optionalString,
     role: optionalString,
     services: stringArray.default([]),
-    metrics: z.array(z.object({ value: z.string(), label: z.string() })).default([]),
-    tags: stringArray.default([])
+    metrics: z.array(z.object({ value: z.string(), label: z.string() })).default([])
   })
 });
 

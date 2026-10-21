@@ -191,205 +191,6 @@ import { featuredEventFilm } from "@lib/site";
     transform: translateX(-50%);
   }
 
-  .aw-teaser {
-    display: grid;
-    width: 100%;
-    grid-template-columns: minmax(0, 1.24fr) minmax(280px, 0.76fr);
-    border: 1px solid var(--soft-line);
-    border-radius: 30px;
-    overflow: hidden;
-    padding: 0;
-    background: var(--charcoal);
-    color: var(--paper-bright);
-    text-align: left;
-    box-shadow: 0 24px 64px rgba(40, 33, 25, 0.14);
-    transition: transform 220ms ease, box-shadow 220ms ease;
-  }
-
-  .aw-teaser:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 30px 76px rgba(40, 33, 25, 0.2);
-  }
-
-  .aw-video-trigger:focus-visible,
-  .aw-teaser-link:focus-visible {
-    outline: 3px solid var(--accent);
-    outline-offset: 4px;
-  }
-
-  .aw-teaser-media {
-    position: relative;
-    display: block;
-    align-self: stretch;
-    min-height: 0;
-    overflow: hidden;
-    background: #202320;
-  }
-
-  .aw-teaser-media img,
-  .aw-teaser-media iframe {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    border: 0;
-    object-fit: cover;
-  }
-
-  .aw-teaser-media img {
-    opacity: 0.88;
-    transition: transform 500ms ease;
-  }
-
-  .aw-teaser:hover .aw-teaser-media img {
-    transform: scale(1.035);
-  }
-
-  .aw-teaser-media iframe:not([data-loaded]) {
-    display: none;
-  }
-
-  .aw-teaser-media::after {
-    position: absolute;
-    inset: 0;
-    content: "";
-    background: linear-gradient(90deg, rgba(18, 19, 18, 0.04), rgba(18, 19, 18, 0.5));
-  }
-
-  .aw-teaser-media[data-loaded]::after {
-    display: none;
-  }
-
-  .aw-teaser-media[data-loaded] img,
-  .aw-teaser-media[data-loaded] .aw-video-trigger {
-    display: none;
-  }
-
-  .aw-video-trigger {
-    position: absolute;
-    inset: 0;
-    z-index: 3;
-    display: block;
-    width: 100%;
-    height: 100%;
-    border: 0;
-    padding: 0;
-    background: transparent;
-    cursor: pointer;
-  }
-
-  .aw-play {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: 3;
-    display: grid;
-    width: 60px;
-    height: 60px;
-    place-items: center;
-    border-radius: 50%;
-    background: rgba(255, 250, 241, 0.93);
-    color: var(--charcoal);
-    transform: translate(-50%, -50%);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  }
-
-  .aw-play span {
-    width: 0;
-    height: 0;
-    margin-left: 4px;
-    border-top: 8px solid transparent;
-    border-bottom: 8px solid transparent;
-    border-left: 12px solid currentColor;
-  }
-
-  .aw-teaser-copy {
-    display: flex;
-    min-width: 0;
-    min-height: 310px;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    padding: clamp(28px, 4vw, 58px);
-  }
-
-  .aw-teaser-meta {
-    margin-bottom: 22px;
-    color: rgba(255, 250, 241, 0.64);
-    font-size: 0.76rem;
-    font-weight: 800;
-    letter-spacing: 0.17em;
-    text-transform: uppercase;
-  }
-
-  .aw-teaser-copy h2 {
-    max-width: 360px;
-    margin: 0 0 18px;
-    color: var(--paper-bright);
-    font-size: clamp(2rem, 4vw, 3.5rem);
-    letter-spacing: -0.075em;
-    line-height: 0.94;
-  }
-
-  .aw-teaser-description {
-    max-width: 340px;
-    margin: 0 0 30px;
-    color: rgba(255, 250, 241, 0.68);
-    font-size: 1rem;
-    line-height: 1.45;
-  }
-
-  .aw-teaser-actions {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 18px;
-  }
-
-  .aw-teaser-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    color: rgba(255, 250, 241, 0.68);
-    font-size: 0.82rem;
-    font-weight: 600;
-    text-decoration: underline;
-    text-decoration-color: rgba(255, 250, 241, 0.28);
-    text-underline-offset: 4px;
-  }
-
-  .aw-teaser-link-primary {
-    min-height: 46px;
-    border: 1px solid var(--accent);
-    border-radius: 999px;
-    padding: 0 18px;
-    background: var(--accent);
-    color: var(--charcoal);
-    font-size: 0.9rem;
-    font-weight: 800;
-    text-decoration: none;
-    transition: transform 180ms ease, background 180ms ease;
-  }
-
-  .aw-teaser-link-primary:hover,
-  .aw-teaser-link-primary:focus-visible {
-    background: var(--paper-bright);
-    color: var(--charcoal);
-    text-decoration: none;
-    transform: translateY(-2px);
-  }
-
-  .aw-teaser-link-primary span {
-    display: grid;
-    width: 28px;
-    height: 28px;
-    place-items: center;
-    border: 1px solid rgba(255, 250, 241, 0.34);
-    border-radius: 50%;
-    font-size: 1rem;
-    border-color: rgba(31, 32, 29, 0.28);
-  }
-
   .aw-preview-notes {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(280px, 0.7fr);
@@ -440,31 +241,8 @@ import { featuredEventFilm } from "@lib/site";
       font-size: clamp(1.22rem, 5vw, 1.7rem);
     }
 
-    .aw-teaser {
-      grid-template-columns: 1fr;
-      border-radius: 26px;
-    }
-
-    .aw-teaser-media,
-    .aw-teaser-copy {
-      min-height: 0;
-    }
-
-    .aw-teaser-media {
-      aspect-ratio: 16 / 9;
-    }
-
-    .aw-teaser-copy {
-      padding: clamp(28px, 5vw, 42px) clamp(26px, 5vw, 48px) clamp(32px, 5vw, 46px);
-    }
-
     .aw-preview-notes > p {
       margin-top: 22px;
-    }
-
-    .aw-teaser-actions {
-      flex-direction: column;
-      align-items: flex-start;
     }
   }
 
@@ -476,19 +254,6 @@ import { featuredEventFilm } from "@lib/site";
 
     .aw-mock-reel {
       min-height: 150px;
-    }
-
-    .aw-teaser-media {
-      aspect-ratio: 16 / 10;
-    }
-
-    .aw-teaser-copy h2 {
-      font-size: clamp(1.95rem, 8.5vw, 2.85rem);
-    }
-
-    .aw-teaser-description {
-      max-width: none;
-      font-size: 0.96rem;
     }
   }
 
@@ -515,22 +280,6 @@ import { featuredEventFilm } from "@lib/site";
 
     .aw-mock-reel strong {
       font-size: 1.08rem;
-    }
-
-    .aw-teaser-link {
-      font-size: 0.78rem;
-    }
-
-    .aw-teaser {
-      border-radius: 22px;
-    }
-
-    .aw-teaser-copy {
-      padding: 26px 22px 30px;
-    }
-
-    .aw-teaser-link-primary {
-      width: 100%;
     }
   }
 </style>

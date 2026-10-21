@@ -54,10 +54,10 @@ const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&r
   </div>
 
   <div class="event-film-footer">
-    <a class="event-film-link" href={linkedinUrl} target="_blank" rel="noreferrer">
-      View LinkedIn post <span aria-hidden="true">↗</span>
+    <a class="button event-film-link" href={linkedinUrl} target="_blank" rel="noreferrer">
+      View LinkedIn post
     </a>
-    {exploreUrl && <a class="event-film-link" href={exploreUrl}>Explore event video <span aria-hidden="true">↗</span></a>}
+    {exploreUrl && <a class="button event-film-link" href={exploreUrl}>Explore event video</a>}
   </div>
 </article>
 
@@ -138,19 +138,9 @@ const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&r
   }
 
   .event-film-link {
-    display: inline-flex;
-    min-height: 54px;
-    align-items: center;
-    gap: 14px;
     border: 1px solid var(--paper-bright);
-    border-radius: 999px;
-    padding: 0 24px;
     background: var(--paper-bright);
     color: var(--charcoal);
-    font-size: 0.96rem;
-    font-weight: 800;
-    text-decoration: none;
-    transition: transform 180ms ease, background 180ms ease;
   }
 
   .event-film-link:hover,
@@ -158,18 +148,6 @@ const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&r
     border-color: var(--paper-deep);
     background: var(--paper-deep);
     color: var(--charcoal);
-    text-decoration: none;
-    transform: translateY(-2px);
-  }
-
-  .event-film-link span {
-    display: grid;
-    width: 32px;
-    height: 32px;
-    place-items: center;
-    border: 1px solid rgba(31, 32, 29, 0.28);
-    border-radius: 50%;
-    font-size: 1rem;
   }
 
   .event-film-trigger:focus-visible,
@@ -291,11 +269,6 @@ const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&r
 
     .event-film-intro h2 {
       font-size: clamp(2.1rem, 10vw, 3rem);
-    }
-
-    .event-film-link {
-      width: min(100%, 340px);
-      justify-content: center;
     }
   }
 </style>
