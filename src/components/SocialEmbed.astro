@@ -39,7 +39,16 @@ const { html, platform, variant = "content" } = Astro.props;
     return scripts.get(src)!;
   }
 
-  async function activate(root: HTMLElement) {
+  const pendingEmbeds = new WeakMap<HTMLElement, Promise<void>>();
+  function activate(root: HTMLElement): Promise<void> {
+    const pending = pendingEmbeds.get(root);
+    if (pending) return pending;
+    const task = renderEmbed(root);
+    pendingEmbeds.set(root, task);
+    return task;
+  }
+
+  async function renderEmbed(root: HTMLElement) {
     // TikTok's script scans the document on startup. Preserve its existing
     // rendering behaviour; Instagram supports processing newly inserted cards.
     if (root.dataset.socialEmbed === "tiktok") {
@@ -48,6 +57,21 @@ const { html, platform, variant = "content" } = Astro.props;
     }
     const template = root.querySelector("template");
     if (!template || root.dataset.loading) return;
+    // The provider script being ready does not mean its iframe has loaded.
+    // Listen before processing so cached iframe loads are caught too.
+    let finish: () => void = () => {};
+    const frameLoaded = new Promise<void>((resolve) => {
+      const onLoad = (event: Event) => {
+        if (event.target instanceof HTMLIFrameElement) finish();
+      };
+      const timeout = setTimeout(() => finish(), 8000);
+      finish = () => {
+        clearTimeout(timeout);
+        root.removeEventListener("load", onLoad, true);
+        resolve();
+      };
+      root.addEventListener("load", onLoad, true);
+    });
     root.dataset.loading = "true";
     root.appendChild(template.content.cloneNode(true));
     try {
@@ -55,15 +79,71 @@ const { html, platform, variant = "content" } = Astro.props;
       (window as EmbedWindow).instgrm?.Embeds.process();
       template.remove();
       root.dataset.loaded = "true";
+      await frameLoaded;
     } catch {
       // Keep the original-post link usable if the provider is blocked/offline.
       root.querySelectorAll(":scope > :not(template)").forEach((node) => node.remove());
+      pendingEmbeds.delete(root);
     } finally {
+      finish();
       delete root.dataset.loading;
     }
   }
 
   const roots = document.querySelectorAll<HTMLElement>("[data-social-embed]");
+  const isDisplayed = (root: HTMLElement) => !root.closest("[hidden]") && !!root.getClientRects().length;
+  function prepareHiddenCard(root: HTMLElement) {
+    const card = root.closest<HTMLElement>("[data-content-card][hidden]");
+    if (!card) return;
+    const visibleWindow = Array.from(document.querySelectorAll<HTMLElement>("[data-content-card]:not([hidden]) .content-embed-window"))
+      .find((element) => element.getBoundingClientRect().width > 0);
+    card.style.setProperty("--embed-preload-width", `${visibleWindow?.getBoundingClientRect().width || 390}px`);
+    card.dataset.embedPreload = "";
+  }
+  // Load displayed cards first, then warm hidden content-page cards one at a
+  // time. Recheck visibility between batches when filters or View more change.
+  let preloadPending = false;
+  const attempted = new WeakSet<HTMLElement>();
+  const preloadPreviews = () => {
+    if (preloadPending) return;
+    preloadPending = true;
+    const load = async () => {
+      try {
+        while (true) {
+          const candidates = Array.from(roots).filter((root) =>
+            root.dataset.socialEmbed === "instagram" && !attempted.has(root) &&
+            (isDisplayed(root) || root.closest("[data-content-filter-root]"))
+          );
+          if (!candidates.length) break;
+          const displayed = candidates.filter(isDisplayed);
+          const batch = displayed.length ? displayed : candidates.slice(0, 1);
+          batch.forEach((root) => {
+            attempted.add(root);
+            if (!isDisplayed(root)) prepareHiddenCard(root);
+          });
+          await Promise.all(batch.map(activate));
+        }
+      } finally {
+        preloadPending = false;
+      }
+    };
+    if ("requestIdleCallback" in window) {
+      window.requestIdleCallback(load, { timeout: 2000 });
+    } else {
+      setTimeout(load, 1000);
+    }
+  };
+  if (document.readyState === "complete") {
+    preloadPreviews();
+  } else {
+    window.addEventListener("load", preloadPreviews, { once: true });
+  }
+
+  const visibilityObserver = new MutationObserver(preloadPreviews);
+  document.querySelectorAll("[data-content-filter-root] [data-progressive-list]").forEach((root) =>
+    visibilityObserver.observe(root, { attributes: true, attributeFilter: ["hidden"], subtree: true })
+  );
+
   if ("IntersectionObserver" in window) {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -83,3 +163,17 @@ const { html, platform, variant = "content" } = Astro.props;
     );
   }
 </script>
+
+<style>
+  /* Give hidden Instagram frames a real width so their images load. The
+     hidden attribute still controls filtering; these cards occupy no space. */
+  :global([data-content-filter-root] [data-progressive-list] [data-content-card][data-progressive-item][hidden][data-embed-preload]) {
+    display: block !important;
+    position: fixed;
+    top: 0;
+    left: -10000px;
+    width: var(--embed-preload-width);
+    visibility: hidden;
+    pointer-events: none;
+  }
+</style>
