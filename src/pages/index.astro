@@ -205,38 +205,6 @@ const ogImage = carouselSlides[0]?.portrait || pageCover;
 
   <ContactSection />
 
-  <script is:inline>
-    (() => {
-      const roots = Array.from(document.querySelectorAll("[data-social-embeds]"));
-      if (roots.length === 0) return;
-
-      const load = () => {
-        [
-          [".instagram-media", "https://www.instagram.com/embed.js"],
-          [".tiktok-embed", "https://www.tiktok.com/embed.js"]
-        ].forEach(([selector, src]) => {
-          if (!roots.some((root) => root.querySelector(selector))) return;
-          if (document.querySelector(`script[src="${src}"]`)) return;
-          const script = document.createElement("script");
-          script.src = src;
-          script.async = true;
-          document.head.appendChild(script);
-        });
-      };
-
-      if ("IntersectionObserver" in window) {
-        const observer = new IntersectionObserver((entries) => {
-          if (entries.some((entry) => entry.isIntersecting)) {
-            observer.disconnect();
-            load();
-          }
-        }, { rootMargin: "800px 0px" });
-        roots.forEach((root) => observer.observe(root));
-      } else {
-        load();
-      }
-    })();
-  </script>
 
   <script>
     const carousel = document.querySelector<HTMLElement>("[data-home-carousel]");

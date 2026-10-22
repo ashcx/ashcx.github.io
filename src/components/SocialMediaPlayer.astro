@@ -1,4 +1,5 @@
 ---
+import SocialEmbed from "./SocialEmbed.astro";
 import type { ContentWorkEntry } from "@lib/content";
 interface Props {
   item: ContentWorkEntry;
@@ -33,7 +34,7 @@ const platformLabel = { instagram: "Instagram", tiktok: "TikTok", linkedin: "Lin
     <span class="local-video-status" role="status"></span>
   </div>
 ) : embedHtml ? (
-  <div class={variant === "home" ? "home-social-embed" : "native-embed"} set:html={embedHtml} />
+  <SocialEmbed html={embedHtml} platform={platform} variant={variant} />
 ) : coverImage && externalUrl ? (
   <a href={externalUrl} target="_blank" rel="noreferrer"><img src={coverImage} alt={title} loading="lazy" /></a>
 ) : externalUrl ? (
@@ -51,7 +52,17 @@ const platformLabel = { instagram: "Instagram", tiktok: "TikTok", linkedin: "Lin
       button.setAttribute("aria-label", `${playing ? "Pause" : "Play"} ${button.dataset.title}`);
       button.setAttribute("aria-pressed", String(playing));
     };
+    const prepare = () => {
+      if (document.hidden || !root.getClientRects().length || video.preload === "auto") return;
+      video.preload = "auto";
+      // Start fetching actual media, rather than metadata alone, before Play.
+      // Never reload an active/previously loaded clip: that would reset playback.
+      if (video.networkState === HTMLMediaElement.NETWORK_EMPTY) video.load();
+    };
+    root.addEventListener("pointerenter", prepare);
+    button.addEventListener("focus", prepare);
     button.addEventListener("click", async () => {
+      prepare();
       if (!video.paused) { video.pause(); return; }
       status.textContent = "";
       document.querySelectorAll<HTMLVideoElement>("[data-local-social-video] video").forEach((other) => {
@@ -68,11 +79,21 @@ const platformLabel = { instagram: "Instagram", tiktok: "TikTok", linkedin: "Lin
     // Pause clips when their card is filtered out or scrolled off screen.
     if ("IntersectionObserver" in window) {
       new IntersectionObserver(([entry]) => {
-        if (!entry.isIntersecting) video.pause();
+        if (entry.isIntersecting) prepare();
+        else {
+          video.pause();
+          video.preload = "none";
+        }
       }).observe(root);
     }
     document.addEventListener("visibilitychange", () => {
-      if (document.hidden) video.pause();
+      if (document.hidden) {
+        video.pause();
+        video.preload = "none";
+      } else {
+        const bounds = root.getBoundingClientRect();
+        if (bounds.bottom > 0 && bounds.top < window.innerHeight) prepare();
+      }
     });
   });
 </script>
