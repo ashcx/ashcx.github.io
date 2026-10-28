@@ -96,8 +96,8 @@ export function getGalleryCover(
   preferredSize: "large" | "medium" = "large"
 ) {
   const images = getGalleryImages(slug, frontmatterImages);
-  const selectedImage = Number.isInteger(coverImageIndex) && coverImageIndex! >= 1
-    ? images[coverImageIndex! - 1]
+  const selectedImage = Number.isInteger(coverImageIndex) && coverImageIndex !== 0 && coverImageIndex !== undefined
+    ? images[coverImageIndex < 0 ? images.length + coverImageIndex : coverImageIndex - 1]
     : undefined;
   if (selectedImage) return selectedImage[preferredSize] || selectedImage.large || selectedImage.thumb || "";
   return coverImage || images[0]?.large || images[0]?.thumb || "";

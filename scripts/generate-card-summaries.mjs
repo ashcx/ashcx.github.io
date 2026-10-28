@@ -7,8 +7,8 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 await loadEnv(path.join(root, ".env"));
 
 const apiKey = process.env.OPENAI_API_KEY;
-const model = process.env.OPENAI_MODEL || "gpt-6-luna";
-const reasoningEffort = process.env.OPENAI_REASONING_EFFORT || "none";
+const model = process.env.OPENAI_MODEL || "gpt-6.1-terra";
+const reasoningEffort = process.env.OPENAI_REASONING_EFFORT || "low";
 const regenerate = process.argv.includes("--regenerate");
 const photographyDir = path.join(root, "src", "content", "photography");
 const minWords = 6;

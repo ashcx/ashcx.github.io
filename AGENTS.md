@@ -72,7 +72,7 @@ To import a gallery, create `inbox/galleries/<folder>/`, add `.jpg`, `.jpeg`,
 `npm run import:magic` (or `npm run build`) and review the generated change to
 `src/content/photography/<slug>.md` and `public/images/galleries/<slug>/`.
 The folder name is slugified for both destinations. `gallery.md` needs
-`guidedContext`, `featuredRank`, and `categoryRank` in non-interactive runs;
+`guidedContext` (at least 100 characters after trimming), `featuredRank`, and `categoryRank` in non-interactive runs;
 the importer prompts for missing fields in an interactive terminal. Include
 `coverImageIndex` in every `gallery.md`: it is 1-based, defaults to `1` for new
 galleries, and the interactive prompt lets the user select another source
@@ -99,8 +99,8 @@ generated files on the next import; review that diff carefully.
 
 Both commands load `.env`, call the OpenAI Responses API only when
 `OPENAI_API_KEY` is set, and otherwise exit successfully without changes. They
-use `OPENAI_MODEL` (default `gpt-6-luna`) and
-`OPENAI_REASONING_EFFORT` (default `none`); never commit these values or the key.
+use `OPENAI_MODEL` (default `gpt-6.1-terra`) and
+`OPENAI_REASONING_EFFORT` (default `low`); never commit these values or the key.
 
 `npm run social-copy` scans photography and social-content Markdown/MDX files.
 It skips `autoSummary: false` and drafts; social case studies run only when
