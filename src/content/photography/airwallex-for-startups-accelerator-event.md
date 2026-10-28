@@ -5,8 +5,8 @@
 generatedTitle: Airwallex Startup Accelerator Event Photography
 date: 2026-10-13
 photographyType: corporate-private-events
-featuredRank: 2
-categoryRank: 2
+featuredRank: 3
+categoryRank: 3
 publishStatus: published
 coverImageIndex: -11
 summary: Airwallex’s Startups Accelerator brought founders and international VC

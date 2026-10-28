@@ -5,8 +5,8 @@
 title: H+AI - AI Festival Empowering Women in Tech
 date: 2026-07-31
 photographyType: corporate-private-events
-featuredRank: 3
-categoryRank: 3
+featuredRank: 2
+categoryRank: 2
 publishStatus: published
 coverImageIndex: 1
 summary: H+AI’s AI Festival was built to make women in tech feel seen and
