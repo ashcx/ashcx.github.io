@@ -13,9 +13,6 @@ export async function getStaticPaths() {
 }
 
 const { item } = Astro.props;
-const { Content } = await item.render();
-const hasBodyContent = Boolean(item.body?.trim());
-const placeBodyBeforeGallery = entrySlug(item) === "hr-worktech-summit-corporate-conference-highlights";
 const photos = published(await getCollection("photography"));
 const others = photos.filter((photo) => entrySlug(photo) !== entrySlug(item));
 const sameType = rankPhotographyForCategory(others.filter((photo) => photo.data.photographyType === item.data.photographyType));
@@ -48,10 +45,8 @@ const heroCoverLarge = coverImage;
   </section>
 
   <section class="gallery-section">
-    {placeBodyBeforeGallery && hasBodyContent && <div class="detail-body"><Content /></div>}
     {galleryImages.length > 0 ? <JustifiedGallery title={title} images={galleryImages} /> : <p class="empty-gallery-note">No images found for this gallery yet.</p>}
     <div class="detail-body">
-      {!placeBodyBeforeGallery && hasBodyContent && <Content />}
       {
         item.data.services.length > 0 && (
           <>
