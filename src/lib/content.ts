@@ -3,7 +3,7 @@ import type { CollectionEntry } from "astro:content";
 export type PhotographyEntry = CollectionEntry<"photography">;
 export type DataProjectEntry = CollectionEntry<"data-projects">;
 export type ContentWorkEntry = CollectionEntry<"content-work">;
-export type PhotographyType = PhotographyEntry["data"]["photographyType"];
+type PhotographyType = PhotographyEntry["data"]["photographyType"];
 
 export function published<T extends { data: { publishStatus?: string; date?: Date } }>(items: T[]) {
   return items

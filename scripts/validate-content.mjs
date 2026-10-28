@@ -44,8 +44,7 @@ async function readContentFiles(collection, extensions) {
       return {
         file,
         slugFromFile: file.replace(/\.(md|mdx)$/, ""),
-        data: parsed.data,
-        body: parsed.content.trim()
+        data: parsed.data
       };
     })
   );
