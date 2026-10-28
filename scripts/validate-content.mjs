@@ -206,8 +206,8 @@ async function validateContentWork() {
       fail(`Content item "${item.file}" has invalid playback; use embed or local.`);
     }
     if (item.data.playback === "local") {
-      if (!item.data.videoSrc?.startsWith("/videos/") || !(await existsPublic(item.data.videoSrc))) {
-        fail(`Content item "${item.file}" needs an existing local videoSrc under /videos/.`);
+      if (!item.data.videoSrc?.startsWith("/media/social/") || !(await existsPublic(item.data.videoSrc))) {
+        fail(`Content item "${item.file}" needs an existing local videoSrc under /media/social/.`);
       }
       if (!item.data.coverImage || !(await existsPublic(item.data.coverImage))) {
         fail(`Content item "${item.file}" needs an existing coverImage for local playback.`);

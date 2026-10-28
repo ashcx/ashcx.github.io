@@ -3,6 +3,7 @@ import { spawn } from "node:child_process";
 const args = process.argv.slice(2);
 const regenerateArgs = args.includes("--regenerate") ? ["--regenerate"] : [];
 
+await run("node", ["scripts/check-public-assets.mjs"]);
 await run("node", ["scripts/import-magic-directory.mjs"]);
 await run("npm", ["run", "social-copy", "--", ...regenerateArgs]);
 await run("npm", ["run", "card-summaries", "--", ...regenerateArgs]);

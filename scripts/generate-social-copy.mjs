@@ -141,8 +141,7 @@ function isPlaceholderTitle(value) {
   if (!title) return false;
   return /^real estate instagram feature\s*\d*$/i.test(title)
     || /^untitled(?:\s+(?:gallery|content piece|post|project))?$/i.test(title)
-    || /^(?:corporate shoot|cosplay)\s+test$/i.test(title)
-    || /^joash pics$/i.test(title);
+    || /^(?:corporate shoot|cosplay)\s+test$/i.test(title);
 }
 
 async function generateTitle(data, kind) {

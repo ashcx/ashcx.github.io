@@ -18,7 +18,7 @@ export const site = {
 
 export const featuredEventFilm = {
   videoId: "BefG_TBCul0",
-  posterUrl: "/images/airwallex-ecom-north.webp",
+  posterUrl: "/media/films/airwallex-ecom-north/poster.webp",
   linkedinUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7493109029649645568/",
   label: "Featured event film",
   title: "Airwallex x Ecom North.",
