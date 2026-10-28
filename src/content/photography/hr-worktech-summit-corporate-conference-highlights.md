@@ -9,10 +9,9 @@ featuredRank: 1
 categoryRank: 1
 publishStatus: published
 coverImageIndex: 1
-summary: Commissioned photography for a speaker at the HR WorkTech Summit, with
-  Ash as the sole photographer for the assignment. Coverage focused on the
-  speaker's participation in the conference.
-cardSummary: A focused record of one speaker's conference appearance.
+summary: Highlights from the HR WorkTech Summit, including panel discussions,
+  speakers, and portraits of delegates.
+cardSummary: Panel discussions and portraits from a conference on the future of work.
 guidedContext: "Client and event: the HR WorkTech Summit, a business conference
   on HR technology and the future of work in the AI era. The gallery covers
   panel discussions (one titled around well-being as a strategic imperative in
@@ -30,8 +29,4 @@ googlePhotosUrl: https://photos.app.goo.gl/ZWjVLU2VVXfLSomF6
 coverImage: /images/galleries/hr-worktech-summit-corporate-conference-highlights/image-001-large.webp
 ---
 
-## About this assignment
 
-Commissioned photography for a speaker at the HR WorkTech Summit. I handled the assignment as the sole photographer, with coverage focused on the speaker's participation in the conference.
-
-**My role:** Photographer for a speaker-specific assignment.
