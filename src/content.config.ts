@@ -42,8 +42,8 @@ const numberOptional = z.preprocess((value) => {
 }, z.number().positive().optional());
 const positiveIntegerOptional = z.preprocess((value) => {
   const number = Number(value);
-  return Number.isInteger(number) && number > 0 ? number : undefined;
-}, z.number().int().positive().optional());
+  return Number.isInteger(number) && number !== 0 ? number : undefined;
+}, z.number().int().refine((number) => number !== 0).optional());
 const rankNumber = z.preprocess((value) => {
   const number = Number(value);
   return Number.isFinite(number) && number > 0 ? number : 10;

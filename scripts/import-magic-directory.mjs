@@ -75,9 +75,9 @@ async function readGalleryMarkdown(folderPath) {
   }
 
   const parsed = matter(await readFile(galleryMdPath, "utf8"));
-  if (!String(parsed.data?.guidedContext || "").trim()) {
+  if (String(parsed.data?.guidedContext || "").trim().length < 100) {
     return promptForGalleryMarkdown(folderPath, galleryMdPath, parsed, {
-      reason: "gallery.md exists, but it has no guidedContext."
+      reason: "gallery.md needs a guidedContext of at least 100 characters."
     });
   }
 
@@ -107,7 +107,7 @@ async function promptForGalleryMarkdown(folderPath, galleryMdPath, parsed, { rea
   const existingData = parsed.data || {};
   const hasCoverImageIndex = Object.prototype.hasOwnProperty.call(existingData, "coverImageIndex");
   const hasRequiredMetadata =
-    Boolean(String(existingData.guidedContext || "").trim()) &&
+    String(existingData.guidedContext || "").trim().length >= 100 &&
     hasRank(existingData.featuredRank) &&
     hasRank(existingData.categoryRank);
   const defaultCoverImageIndex = hasCoverImageIndex
@@ -139,7 +139,7 @@ async function promptForGalleryMarkdown(folderPath, galleryMdPath, parsed, { rea
         "Run `npm run import:magic` locally in an interactive terminal so the importer can ask for details,",
         "or edit gallery.md manually with at least:",
         "---",
-        "guidedContext: Your mandatory context here.",
+        "guidedContext: At least 100 characters describing the event and the details to highlight.",
         "featuredRank: 10",
         "categoryRank: 10",
         "coverImageIndex: 1",
@@ -159,10 +159,10 @@ async function promptForGalleryMarkdown(folderPath, galleryMdPath, parsed, { rea
 
   let guidedContext = String(existingData.guidedContext || "").trim();
 
-  while (!guidedContext) {
-    guidedContext = (await prompt.question("Context (mandatory, used for AI title/description): ")).trim();
-    if (!guidedContext) {
-      console.log("Context is required. Add the useful facts, angle, client value, event type, or moments to highlight.");
+  while (guidedContext.length < 100) {
+    guidedContext = (await prompt.question("Context (mandatory, at least 100 characters, used for AI title/description): ")).trim();
+    if (guidedContext.length < 100) {
+      console.log("Context must be at least 100 characters. Add useful facts, the angle, client value, event type, or moments to highlight.");
     }
   }
 
@@ -195,7 +195,7 @@ async function getExistingCoverImageIndex(folderName) {
   const slug = slugify(folderName);
   const existing = await readExistingContent(path.join(contentRoot, `${slug}.md`));
   const index = Number(existing.data.coverImageIndex);
-  return Number.isInteger(index) && index >= 1 ? index : 1;
+  return Number.isInteger(index) && index !== 0 ? index : 1;
 }
 
 async function promptForCoverImageIndex(folderPath, defaultIndex) {
@@ -205,19 +205,19 @@ async function promptForCoverImageIndex(folderPath, defaultIndex) {
   images.forEach((name, index) => console.log(`  ${index + 1}: ${name}`));
   const range = imageCount ? `1-${imageCount}` : "1 or higher";
   const defaultCoverIndex =
-    Number.isInteger(defaultIndex) && defaultIndex >= 1 && (!imageCount || defaultIndex <= imageCount)
+    Number.isInteger(defaultIndex) && defaultIndex !== 0 && (!imageCount || Math.abs(defaultIndex) <= imageCount)
       ? defaultIndex
       : 1;
   const prompt = getPromptInterface();
 
   while (true) {
-    const answer = (await prompt.question(`Cover image index (1-based, ${range}; press Enter for ${defaultCoverIndex}): `)).trim();
+    const answer = (await prompt.question(`Cover image index (1-based or negative from end, ${range}; press Enter for ${defaultCoverIndex}): `)).trim();
     if (!answer) return defaultCoverIndex;
 
     const index = Number(answer);
-    if (Number.isInteger(index) && index >= 1 && (!imageCount || index <= imageCount)) return index;
+    if (Number.isInteger(index) && index !== 0 && (!imageCount || Math.abs(index) <= imageCount)) return index;
 
-    console.log(`Enter a whole number from 1 to ${imageCount || "the number of source images"}, or press Enter for ${defaultCoverIndex}.`);
+    console.log(`Enter a nonzero whole number within ${imageCount || "the number of source images"}, or press Enter for ${defaultCoverIndex}.`);
   }
 }
 
@@ -327,7 +327,8 @@ async function processGallery({ folderName, folderPath }) {
   const existingContent = await readExistingContent(path.join(contentRoot, `${slug}.md`));
   const coverIndex = Number(galleryData.coverImageIndex ?? existingContent.data.coverImageIndex ?? 1);
   const mediumImages = Array.isArray(galleryData.mediumImages) ? galleryData.mediumImages.map(Number) : [];
-  const mediumSet = new Set([coverIndex, ...mediumImages].filter((n) => Number.isInteger(n) && n >= 1));
+  const resolvedCoverIndex = coverIndex < 0 ? sourceImages.length + coverIndex + 1 : coverIndex;
+  const mediumSet = new Set([resolvedCoverIndex, ...mediumImages].filter((n) => Number.isInteger(n) && n >= 1));
 
   // Pass 1: cheap sequential fs/cache-identity checks only, no encoding yet.
   const records = [];
@@ -434,8 +435,8 @@ async function writeGalleryContent({ folderPath, slug, manifest }) {
   const first = manifest.sourceFiles[0];
   const coverImageIndex = Number(data.coverImageIndex ?? existing.data.coverImageIndex);
   const coverBySelectedIndex =
-    Number.isInteger(coverImageIndex) && coverImageIndex >= 1 && coverImageIndex <= manifest.sourceFiles.length
-      ? manifest.sourceFiles[coverImageIndex - 1]
+    Number.isInteger(coverImageIndex) && coverImageIndex !== 0 && Math.abs(coverImageIndex) <= manifest.sourceFiles.length
+      ? manifest.sourceFiles[coverImageIndex < 0 ? manifest.sourceFiles.length + coverImageIndex : coverImageIndex - 1]
       : undefined;
   const cover = coverBySelectedIndex || first;
 
@@ -467,7 +468,7 @@ async function writeGalleryContent({ folderPath, slug, manifest }) {
   const body = parsed.content.trim() || existing.content.trim();
   await writeFile(
     contentPath,
-    `---\n# photographyType choices: corporate-private-events | stage-work | photoshoot | wedding-rom\n# hidden: true keeps this gallery out of home/photography listings unless ?hidden=1 is in the URL\n# coverImageIndex: N picks the Nth image (1-based, matching image-NNN- output filenames) as the cover instead of the first\n${yaml}\n---\n\n${body}\n`
+    `---\n# photographyType choices: corporate-private-events | stage-work | photoshoot | wedding-rom\n# hidden: true keeps this gallery out of home/photography listings unless ?hidden=1 is in the URL\n# coverImageIndex: N picks the Nth image (1-based); negative values count from the end as the cover instead of the first\n${yaml}\n---\n\n${body}\n`
   );
 }
 
