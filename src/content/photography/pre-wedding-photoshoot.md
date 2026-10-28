@@ -1,7 +1,7 @@
 ---
 # photographyType choices: corporate-private-events | stage-work | photoshoot | wedding-rom
 # hidden: true keeps this gallery out of home/photography listings unless ?hidden=1 is in the URL
-# coverImageIndex: N picks the Nth image (1-based, matching image-NNN- output filenames) as the cover instead of the first
+# coverImageIndex: N picks the Nth image (1-based); negative values count from the end as the cover instead of the first
 title: Alex & ML Pre-Wedding Photoshoot
 date: 2026-07-31
 photographyType: wedding-rom
