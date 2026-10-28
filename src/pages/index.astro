@@ -16,17 +16,7 @@ import { featuredEventFilm, sections } from "@lib/site";
 const photos = published(await getCollection("photography"));
 const contentItems = published(await getCollection("content-work"));
 const allRankedPhotos = rankPhotographyForAll(photos);
-const homepageFeatureSlugs = [
-  "corporate-night-safari-experience-for-visa-leadership",
-  "h-ai-ai-festival-empowering-women-in-tech"
-];
-const homepagePhotos = homepageFeatureSlugs
-  .map((slug) => photos.find((photo) => entrySlug(photo) === slug))
-  .filter((photo): photo is PhotographyEntry => Boolean(photo && !photo.data.hidden));
-const homepageWorkItems = splitHidden(
-  [...homepagePhotos, ...allRankedPhotos.filter((photo) => photo.data.hidden)],
-  homepagePhotos.length
-);
+const homepageWorkItems = splitHidden(allRankedPhotos, 2);
 const socialHighlights = contentItems.filter((item) => item.data.contentType === "embed");
 
 const corporateCoverUrl = (photo: PhotographyEntry) =>
