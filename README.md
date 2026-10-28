@@ -26,8 +26,8 @@ npm run validate
 npm run build
 ```
 
-`npm run build` imports new galleries, generates optional copy, validates the
-content, and creates the production site in `dist/`.
+`npm run build` checks public assets, imports new galleries, generates optional
+copy, validates the content, and creates the production site in `dist/`.
 
 ## Add a photography gallery
 
@@ -134,13 +134,14 @@ Choose playback independently:
 ```yaml
 platform: tiktok
 playback: local
-videoSrc: /videos/social/example.mp4
-coverImage: /images/social/example.webp
+videoSrc: /media/social/example/video.mp4
+coverImage: /media/social/example/poster.webp
 externalUrl: https://www.tiktok.com/@account/video/123
 ```
 
-Place web-ready H.264/AAC MP4s in `public/videos/social/` and poster frames in
-`public/images/social/`. Local clips intentionally use a uniform 4:5 frame with
+Place a web-ready H.264/AAC MP4 and its poster together in
+`public/media/social/<slug>/`, named `video.mp4` and `poster.webp`. Local clips
+intentionally use a uniform 4:5 frame with
 `object-fit: contain`, preserving the full video with letterboxing as needed.
 The optional `videoAspectRatio` field is currently unused by the player and
 does not change this frame. Local clips use `preload="none"`, inline playback, and
@@ -148,3 +149,40 @@ one accessible play/pause button. Native controls, fullscreen, picture-in-pictur
 and remote playback are not exposed by the player. The original-post link remains
 available for viewing on the social platform. Browsers or operating systems may
 still offer their own media actions outside the page UI.
+
+## Asset organization
+
+| Location | Contents |
+| --- | --- |
+| `public/images/galleries/<slug>/` | Generated gallery WebPs and importer manifests |
+| `public/media/services/` | Service card WebPs, including `-mobile.webp` variants |
+| `public/media/social/<slug>/` | Each social clip's `video.mp4` and `poster.webp` |
+| `public/media/films/<slug>/` | Film posters, including the shared Airwallex poster |
+| `src/styles/global.css` | Global stylesheet imported by `BaseLayout.astro` |
+| `docs/assets/service-images.md` | Service image credits, known export settings, and source locations |
+| `inbox/galleries/` | Ignored gallery originals and importer inputs |
+| `inbox/services/` | Ignored service image originals |
+| `output/comparisons/services/` | Ignored previous service exports |
+| `output/experiments/services/` | Ignored superseded source experiments and notes |
+
+Everything in `public/` is copied into the published site. Keep originals,
+experiments, backups, and provenance notes outside that folder. Preserve gallery
+output through the importer. The `joash-pics` gallery and its content entry have
+been retired together. Keep its local source folder out of `inbox/galleries/`
+to prevent a later import from recreating it.
+
+The old `/preview/airwallex/` experiment has been removed. The homepage still
+uses its shared event-film component and settings. Retired asset paths have no
+alias copies.
+
+Run `npm run assets:check` to detect `.DS_Store` and `Thumbs.db` anywhere under
+`public/`. Validation runs this check, and the full build also runs it before
+importing galleries. The check reports unwanted paths and exits with an error.
+It does not delete files.
+
+The [service image provenance record](docs/assets/service-images.md) identifies
+the two local Pexels originals and the missing owner-supplied social image
+original. `inbox/` and `output/` are local storage, so keep a separate backup of
+sources that cannot be recovered from Git or their original provider.
+
+Run `npm run test:assets` to check accepted media paths, missing files, rejected remote videos, and the public-file guard. These checks use temporary fixtures and also run in CI.

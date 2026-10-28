@@ -7,11 +7,13 @@
     "dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev",
     "build": "node scripts/build.mjs",
     "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview",
-    "validate": "ASTRO_TELEMETRY_DISABLED=1 astro check && node scripts/validate-content.mjs",
+    "validate": "npm run assets:check && ASTRO_TELEMETRY_DISABLED=1 astro check && node scripts/validate-content.mjs",
     "import:magic": "node scripts/import-magic-directory.mjs",
     "social-copy": "node scripts/generate-social-copy.mjs",
     "card-summaries": "node scripts/generate-card-summaries.mjs",
-    "check": "npm run validate"
+    "check": "npm run validate",
+    "assets:check": "node scripts/check-public-assets.mjs",
+    "test:assets": "node --test scripts/test-assets.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",

@@ -20,6 +20,9 @@ or database. Content, images, and generated gallery metadata are file-based.
 - `scripts/` — gallery import, AI copy generation, and content validation.
 - `public/images/` — served image assets. Gallery derivatives live in
   `public/images/galleries/<slug>/`.
+- `public/media/` — service images, grouped social clips and posters, and film posters.
+- `src/styles/global.css` — the shared stylesheet imported by the base layout.
+- `docs/assets/` — asset provenance and export instructions.
 - `inbox/galleries/` — local source photos and `gallery.md` input for the gallery
   importer; it is intentionally untracked.
 

@@ -1,0 +1,12 @@
+ts	phase	decision	why	evidence	result
+2026-10-28	frame	Use latest remote main in isolated worktree	Preserve unrelated local edits and current published behavior	git origin/main b8aedfc	baseline
+2026-10-28T14:40:00Z	baseline	Capture current main before moving assets	Keep unrelated user edits outside the PR	/tmp/portfolio-storage-baseline	32 pages captured
+2026-10-28T14:44:00Z	migration	Move media together and global CSS under src/styles	Use one clear location for each published asset group	src/lib/site.ts;src/components/HomeServiceLinks.astro;src/layouts/BaseLayout.astro	11 moved assets and stylesheet retain hashes
+2026-10-28T14:46:00Z	subtraction	Retire Joash gallery preview route and deprecated evidence	User authorized removal of unused gallery and completed experiments	README.md;todo/05-preview-page-decision.md	only two routes removed
+2026-10-28T14:47:00Z	local	Move local originals to inbox and archive experiments separately	Keep original source files out of deployable and temporary directories	/tmp/portfolio-storage-local-moves.json	14 local files preserved by checksum
+2026-10-28T14:48:00Z	verification	Check all emitted local references and remaining asset hashes	Prove moves do not break file links or change image contents	/tmp/portfolio-storage-check-results.json	1361 references resolve; remaining assets unchanged
+2026-10-28T14:49:00Z	verification	Repeat mobile gallery comparison after responsive images load	Initial capture raced image loading so its mismatch was inconclusive	/tmp/portfolio-storage-visual/retry-results.json	all 12 route and viewport comparisons have zero pixel differences
+2026-10-28T14:49:05Z	import	Exercise full build with actual gallery source dataset in independent copy	No-inbox build alone does not prove importer still works	/tmp/portfolio-storage-import-build.log	22 galleries imported;30 pages built;AI disabled
+2026-10-28T14:50:00Z	browser	Exercise carousel filters local video and lightbox on desktop and mobile	Static output alone does not prove client interactions	/tmp/portfolio-storage-visual/interactions.json	both local videos play and pause;retired routes return404;no page errors
+2026-10-28T14:52:00Z	review	Terra independently reviewed code and evidence	Check migration and verification claims before PR	storage_review_terra	no actionable blockers; stage explicit paths only
+2026-10-28T14:54:00Z	review	Luna independently reviewed code and evidence	Second model checks the same migration and limits	storage_review_luna	no actionable findings; external playback remains provider dependent
