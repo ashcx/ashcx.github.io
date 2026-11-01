@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "SF Pro Display";
+  src: url("/fonts/sf-pro-display.woff2") format("woff2");
+  font-weight: 1 1000;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   color-scheme: light;
   --paper: #f7f3eb;

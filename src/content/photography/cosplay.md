@@ -4,22 +4,20 @@
 # coverImageIndex: N picks the Nth image (1-based); negative values count from the end as the cover instead of the first
 generatedTitle: Character Portrait Photoshoot
 date: 2026-07-31
-photographyType: photoshoot
-featuredRank: 1
-categoryRank: 2
-hidden: true
+photographyType: corporate-private-events
+featuredRank: 10
+categoryRank: 10
 publishStatus: published
-coverImageIndex: 1
+coverImageIndex: -5
 summary: This photoshoot leans into character, with styling that gives each
   portrait a clear point of view. Costume details and composed poses add texture
   throughout. The gallery offers a ready set of images that can anchor a
   campaign, portfolio, or announcement.
 cardSummary: Expressive portraits with costume details and composed poses in a
   curated studio set.
-guidedContext: Position this as a photoshoot gallery with strong character,
-  styling, and visual personality. Emphasize expressive portraits, costume
-  details, and a curated set that feels more intentional than casual snapshots.
-coverImage: /images/galleries/cosplay/image-001-large.webp
+guidedContext: cosplay shoots for a friend, it had a lot of people and was held
+  at suntec. it was very cool and had vibrant colours.
+coverImage: /images/galleries/cosplay/image-035-large.webp
 ---
 
 
