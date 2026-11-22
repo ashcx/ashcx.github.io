@@ -1,4 +1,6 @@
 ---
+import { youtubeEmbedUrl } from "@lib/youtube";
+
 interface Props {
   videoId: string;
   posterUrl: string;
@@ -25,7 +27,7 @@ const {
   exploreUrl
 } = Astro.props;
 
-const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
+const embedUrl = youtubeEmbedUrl(videoId);
 ---
 
 <article class="event-film-feature" data-event-film aria-labelledby={id}>
@@ -61,19 +63,21 @@ const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&r
   </div>
 </article>
 
-<script is:inline>
+<script>
+  import { playYouTubeFrame } from "@lib/youtube-player";
+
   const eventFilmCards = Array.from(document.querySelectorAll("[data-event-film]"));
 
   eventFilmCards.forEach((card) => {
     const container = card.querySelector(".event-film-media");
-    const frame = card.querySelector("[data-event-film-frame]");
-    const trigger = card.querySelector("[data-event-film-trigger]");
+    const frame = card.querySelector<HTMLIFrameElement>("[data-event-film-frame]");
+    const trigger = card.querySelector<HTMLElement>("[data-event-film-trigger]");
     const embedUrl = frame?.getAttribute("data-embed-url");
 
     if (!container || !frame || !trigger || !embedUrl) return;
 
     trigger.addEventListener("click", () => {
-      frame.setAttribute("src", embedUrl);
+      playYouTubeFrame(frame, embedUrl);
       frame.setAttribute("data-loaded", "true");
       container.setAttribute("data-loaded", "true");
       trigger.blur();

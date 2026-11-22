@@ -226,6 +226,22 @@ async function validateContentWork() {
   }
 }
 
+async function validateYouTubeEmbeds() {
+  const srcDir = path.join(root, "src");
+  const allowed = new Set(["lib/youtube.ts", "lib/youtube-player.ts"]);
+  const entries = await readdir(srcDir, { recursive: true, withFileTypes: true });
+  for (const entry of entries) {
+    if (!entry.isFile() || !/\.(astro|ts|js|md|mdx)$/.test(entry.name)) continue;
+    const fullPath = path.join(entry.parentPath ?? entry.path, entry.name);
+    const relative = path.relative(srcDir, fullPath).split(path.sep).join("/");
+    if (allowed.has(relative)) continue;
+    if (/youtube(?:-nocookie)?\.com\/(?:embed|iframe_api)/.test(await readFile(fullPath, "utf8"))) {
+      fail(`src/${relative} builds a YouTube embed directly; use youtubeEmbedUrl() and playYouTubeFrame() so player defaults apply.`);
+    }
+  }
+}
+
+await validateYouTubeEmbeds();
 await validatePhotography();
 await validateDataProjects();
 await validateContentWork();
