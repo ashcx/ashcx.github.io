@@ -63,19 +63,21 @@ const embedUrl = youtubeEmbedUrl(videoId);
   </div>
 </article>
 
-<script is:inline>
+<script>
+  import { playYouTubeFrame } from "@lib/youtube-player";
+
   const eventFilmCards = Array.from(document.querySelectorAll("[data-event-film]"));
 
   eventFilmCards.forEach((card) => {
     const container = card.querySelector(".event-film-media");
-    const frame = card.querySelector("[data-event-film-frame]");
-    const trigger = card.querySelector("[data-event-film-trigger]");
+    const frame = card.querySelector<HTMLIFrameElement>("[data-event-film-frame]");
+    const trigger = card.querySelector<HTMLElement>("[data-event-film-trigger]");
     const embedUrl = frame?.getAttribute("data-embed-url");
 
     if (!container || !frame || !trigger || !embedUrl) return;
 
     trigger.addEventListener("click", () => {
-      frame.setAttribute("src", embedUrl);
+      playYouTubeFrame(frame, embedUrl);
       frame.setAttribute("data-loaded", "true");
       container.setAttribute("data-loaded", "true");
       trigger.blur();

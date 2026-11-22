@@ -5,7 +5,8 @@ const EMBED_PLAYER_DEFAULTS = {
   disablekb: "1",
   iv_load_policy: "3",
   cc_load_policy: "0",
-  color: "white"
+  color: "white",
+  enablejsapi: "1"
 } as const;
 
 export function youtubeEmbedUrl(videoId: string): string {
