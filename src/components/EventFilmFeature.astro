@@ -1,4 +1,6 @@
 ---
+import { youtubeEmbedUrl } from "@lib/youtube";
+
 interface Props {
   videoId: string;
   posterUrl: string;
@@ -25,7 +27,7 @@ const {
   exploreUrl
 } = Astro.props;
 
-const embedUrl = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
+const embedUrl = youtubeEmbedUrl(videoId);
 ---
 
 <article class="event-film-feature" data-event-film aria-labelledby={id}>
