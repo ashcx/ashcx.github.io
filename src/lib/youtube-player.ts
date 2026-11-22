@@ -1,5 +1,6 @@
 interface YouTubePlayer {
   getOptions(): string[];
+  getPlayerState(): number;
   unloadModule(name: string): void;
   pauseVideo(): void;
 }
@@ -52,27 +53,37 @@ function hideCaptionsOnce(player: YouTubePlayer) {
   }, CAPTIONS_POLL_MS);
 }
 
+const ENDED = 0;
 const PLAYING = 1;
+const PAUSED = 2;
+const BUFFERING = 3;
 const STALE_PLAYING_MS = 1500;
 
 interface Entry {
   // Undefined until YouTube reports the player ready, and a player that is not ready cannot be paused.
   player?: YouTubePlayer;
-  pausedAt: number;
+  // A PLAYING message before this time came from before the pause, so it must not claim playback.
+  staleUntil: number;
+  // True when the pause is confirmed by a later PAUSED or ENDED message, which ends the stale period early.
+  endsAtPause: boolean;
 }
 
 const entries = new Map<HTMLIFrameElement, Entry>();
 let current: HTMLIFrameElement | undefined;
 
-function pause(entry: Entry) {
-  entry.pausedAt = performance.now();
-  entry.player?.pauseVideo();
+function markStale(entry: Entry, endsAtPause: boolean) {
+  entry.staleUntil = performance.now() + STALE_PLAYING_MS;
+  entry.endsAtPause = endsAtPause;
 }
 
 function claim(frame: HTMLIFrameElement) {
   current = frame;
   for (const [other, entry] of entries) {
-    if (other !== frame) pause(entry);
+    if (other === frame) continue;
+    // Only a video that is playing or about to play has a PLAYING message that could race the pause.
+    const state = entry.player?.getPlayerState();
+    if (state === PLAYING || state === BUFFERING) markStale(entry, true);
+    entry.player?.pauseVideo();
   }
 }
 
@@ -81,7 +92,7 @@ export function playYouTubeFrame(frame: HTMLIFrameElement, embedUrl: string) {
   url.searchParams.set("origin", window.location.origin);
 
   // Claim on the click: autoplay starts before the API attaches, so the first PLAYING event never arrives.
-  const entry: Entry = { pausedAt: -Infinity };
+  const entry: Entry = { staleUntil: 0, endsAtPause: false };
   entries.set(frame, entry);
   claim(frame);
   frame.src = url.href;
@@ -93,15 +104,22 @@ export function playYouTubeFrame(frame: HTMLIFrameElement, embedUrl: string) {
       events: {
         onReady: (event) => {
           entry.player = event.target;
-          if (current !== frame) pause(entry);
+          if (current !== frame) {
+            // Autoplay can still start just after ready, and no message reliably confirms this pause.
+            markStale(entry, false);
+            event.target.pauseVideo();
+          }
           hideCaptionsOnce(event.target);
         },
-        // A viewer pressing play inside a paused video claims playback. A PLAYING message right after this code
-        // paused the video was already in flight, or is its autoplay starting late, so it must not claim it back.
+        // A viewer pressing play inside a paused video claims playback. A PLAYING message while the video is
+        // marked stale was already in flight when it was paused, or is its autoplay starting late.
         onStateChange: (event) => {
-          if (event.data !== PLAYING) return;
-          if (current !== frame && performance.now() - entry.pausedAt < STALE_PLAYING_MS) event.target.pauseVideo();
-          else claim(frame);
+          if (event.data === PLAYING) {
+            if (current !== frame && performance.now() < entry.staleUntil) event.target.pauseVideo();
+            else claim(frame);
+          } else if (entry.endsAtPause && (event.data === PAUSED || event.data === ENDED)) {
+            entry.staleUntil = 0;
+          }
         }
       }
     });
