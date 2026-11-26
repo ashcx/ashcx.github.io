@@ -109,7 +109,7 @@ export function playYouTubeFrame(frame: HTMLIFrameElement, embedUrl: string) {
             markStale(entry, false);
             event.target.pauseVideo();
           }
-          hideCaptionsOnce(event.target);
+          if (url.searchParams.get("cc_load_policy") !== "1") hideCaptionsOnce(event.target);
         },
         // A viewer pressing play inside a paused video claims playback. A PLAYING message while the video is
         // marked stale was already in flight when it was paused, or is its autoplay starting late.
