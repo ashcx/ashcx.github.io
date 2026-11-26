@@ -9,7 +9,8 @@ const EMBED_PLAYER_DEFAULTS = {
   enablejsapi: "1"
 } as const;
 
-export function youtubeEmbedUrl(videoId: string): string {
+export function youtubeEmbedUrl(videoId: string, { captions = false } = {}): string {
   const params = new URLSearchParams(EMBED_PLAYER_DEFAULTS);
+  if (captions) params.set("cc_load_policy", "1");
   return `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}?${params}`;
 }

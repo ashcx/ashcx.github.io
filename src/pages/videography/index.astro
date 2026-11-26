@@ -11,7 +11,8 @@ const eventFilms = [
   {
     id: "lsoooJVGEOg",
     title: "From Vision to Operations",
-    description: "A recap of Resorts World Sentosa and Honeywell Technologies' media showcase on using big data, AI, and intelligent systems to optimize building energy and cooling."
+    description: "A recap of Resorts World Sentosa and Honeywell Technologies' media showcase on using big data, AI, and intelligent systems to optimize building energy and cooling.",
+    captions: true
   },
   {
     id: "SHuhZGxQrjg",
@@ -62,7 +63,7 @@ const eventFilms = [
       <div class="video-film-grid">
         {eventFilms.map((film) => (
           <article class="video-film-card" aria-labelledby={`film-${film.id}-title`}>
-            <div class="video-film-media" data-video-player data-embed-url={youtubeEmbedUrl(film.id)}>
+            <div class="video-film-media" data-video-player data-embed-url={youtubeEmbedUrl(film.id, { captions: film.captions })}>
               <img
                 src={`https://i.ytimg.com/vi/${film.id}/hqdefault.jpg`}
                 alt=""
